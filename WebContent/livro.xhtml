@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Livro</title>
+</h:head>
+<h:body>
+
+	<h:form enctype="multipart/form-data">
+		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
+
+		<p:panel header="Projetos">
+
+			<h:panelGrid columns="2">
+
+				<h:outputText value="Título:" />
+				<p:inputText value="#{livroBean.titulo}" />
+				<h:outputText value="Descrição:" />
+				<p:inputText value="#{livroBean.descricao}" />
+				<h:outputText value="Valor:" />
+				<p:inputText value="#{livroBean.valor}" />
+				<h:outputText value="ISBN:" />
+				<p:inputText value="#{livroBean.isbn}" />
+				<h:outputText value="Número de Páginas:" />
+				<p:inputText value="#{livroBean.numeroPaginas}" />
+				<h:outputText value="Curtidas:" />
+				<p:inputText value="#{livroBean.curtidas}" />
+				<h:outputText value="Ano:" />
+				<p:inputText value="#{livroBean.ano}" />
+				<h:outputText value="Idioma:" />
+				<p:inputText value="#{livroBean.idioma}" />
+				<h:outputText value="Imagem:" />
+				
+				<p:fileUpload 
+					value="#{livroBean.file}"
+					fileUploadListener="#{livroBean.fileUploadListener}" 
+					fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+					multiple="false" mode="advanced" auto="false"
+					update="growl" />
+
+				<h:outputText value="Autor:" />
+				<p:selectOneMenu value="#{livroBean.autor}">
+					<f:selectItems value="#{livroBean.listAutor}" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Categoria:" />
+				<p:selectOneMenu value="#{livroBean.categoria}">
+					<f:selectItems value="#{livroBean.listCategoria}" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Editora:" />
+				<p:selectOneMenu value="#{livroBean.editora}">
+					<f:selectItems value="#{livroBean.listEditora}" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Genero:" />
+				<p:selectOneMenu value="#{livroBean.genero}">
+					<f:selectItems value="#{livroBean.listGenero}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+
+			<h:panelGrid columns="4">
+				<p:commandButton value="Salvar" actionListener="#{livroBean.salvar}" update="growl" />
+				<p:commandButton value="Alterar" actionListener="#{livroBean.alterar}" />
+				<p:commandButton value="Excluir" actionListener="#{livroBean.excluir}" />
+				<p:commandButton value="Novo" actionListener="#{livroBean.novo}" />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+
+</h:body>
+</html>
