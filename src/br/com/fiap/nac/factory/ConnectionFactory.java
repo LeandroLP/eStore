@@ -13,9 +13,9 @@ public class ConnectionFactory {
 		// MYSQL
 
 		String driverName = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost/starship";
+		String url = "jdbc:mysql://localhost:3306/mydb";
 		String username = "root";
-		String password = "fiap";
+		String password = "root";
 
 		// Load the JDBC driver
 		Class.forName(driverName);

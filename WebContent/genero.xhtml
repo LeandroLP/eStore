@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Gênero</title>
+</h:head>
+<h:body>
+
+	<h:form id="form">
+
+		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
+
+		<p:tab title="Cadastro">
+			<h:panelGrid columns="2">
+
+				<p:outputLabel value="Descrição:" />
+				<p:inputText value="#{generoBean.genero.descricao}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="4">
+				<p:commandButton value="Salvar"
+					actionListener="#{generoBean.salvar}" update="growl" />
+				<p:commandButton value="Alterar"
+					actionListener="#{generoBean.alterar}" />
+				<p:commandButton value="Excluir"
+					actionListener="#{generoBean.excluir}" />
+				<p:commandButton value="Novo" actionListener="#{livroBean.novo}" />
+			</h:panelGrid>
+
+			<br />
+
+			<p:dataTable id="lazyDataTable" value="#{generoBean.listGenero}"
+				var="gen" paginator="true" rows="5" selection="#{generoBean.genero}"
+				selectionMode="single"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" lazy="true">
+
+				<p:ajax event="rowSelect" update=":generoDialogForm"
+					oncomplete="generoDetails.show()" />
+
+				<p:column>
+					<f:facet name="header">ID</f:facet>
+					<h:outputText value="#{gen.id}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">Descrição</f:facet>
+					<h:outputText value="#{gen.descricao}" />
+				</p:column>
+			</p:dataTable>
+		</p:tab>
+	</h:form>
+	<p:dialog widgetVar="generoDetails" header="Genero" modal="true">
+		<h:form id="generoDialogForm">
+			<h:panelGrid columns="2">
+				<h:outputText value="Id: " />
+				<h:outputText value="#{generoBean.genero.id}" />
+				<h:outputText value="Name: " />
+				<h:outputText value="#{generoBean.genero.descricao}" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

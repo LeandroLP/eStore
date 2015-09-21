@@ -12,6 +12,8 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
+import br.com.fiap.nac.to.Genero;
+
 @ManagedBean
 @SessionScoped
 public class LivroBean {
@@ -32,9 +34,9 @@ public class LivroBean {
 		this.listEditora = new ArrayList<EditoraBean>();
 		this.listEditora.add(editoraBean);
 
-		GeneroBean generoBean = new GeneroBean();
+		Genero generoBean = new Genero();
 		generoBean.setDescricao("ASD");
-		this.listGenero = new ArrayList<GeneroBean>();
+		this.listGenero = new ArrayList<Genero>();
 		this.listGenero.add(generoBean);
 	}
 
@@ -59,7 +61,7 @@ public class LivroBean {
 	private List<EditoraBean> listEditora;
 
 	private GeneroBean genero;
-	private List<GeneroBean> listGenero;
+	private List<Genero> listGenero;
 
 	private String mensagem;
 
@@ -199,11 +201,11 @@ public class LivroBean {
 		this.genero = genero;
 	}
 
-	public List<GeneroBean> getListGenero() {
+	public List<Genero> getListGenero() {
 		return listGenero;
 	}
 
-	public void setListGenero(List<GeneroBean> listGenero) {
+	public void setListGenero(List<Genero> listGenero) {
 		this.listGenero = listGenero;
 	}
 
@@ -228,16 +230,14 @@ public class LivroBean {
 	// Persistencia
 	public String salvar() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Successful",
-				"Your message: FileUploaded"));
+		context.addMessage(null, new FacesMessage("Successful", "Your message: FileUploaded"));
 		return "livro";
 	}
 
 	public void fileUploadListener(FileUploadEvent event) {
 		this.file = event.getFile();
 
-		FacesMessage msg = new FacesMessage("Succesful", event.getFile()
-				.getFileName() + " is uploaded.");
+		FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 

@@ -1,34 +1,55 @@
 package br.com.fiap.nac.bean;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
+import org.primefaces.model.LazyDataModel;
+
+import br.com.fiap.nac.lazydatamodel.GeneroLazyList;
+import br.com.fiap.nac.to.Genero;
 
 @ManagedBean
 @SessionScoped
 public class GeneroBean {
 
-	private Long id;
-	private String descricao;
-
-	public Long getId() {
-		return id;
+	private Genero genero;
+	private LazyDataModel<Genero> listGenero;
+	
+	@PostConstruct
+	public void load(){
+		listGenero = new GeneroLazyList();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Genero getGenero() {
+		return genero;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public LazyDataModel<Genero> getListGenero() {
+		return listGenero;
 	}
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return descricao;
+	public void setListGenero(LazyDataModel<Genero> listGenero) {
+		this.listGenero = listGenero;
+	}
+
+	public String salvar() {
+		return "genero";
+	}
+
+	public String alterar() {
+		return "genero";
+	}
+
+	public String excluir() {
+		return "genero";
+	}
+	
+	public String novo() {
+		return "genero";
 	}
 }

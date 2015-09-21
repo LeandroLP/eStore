@@ -33,9 +33,9 @@
 					<p:inputText value="#{livroBean.curtidas}" />
 					<h:outputText value="Ano:" />
 					<p:inputText value="#{livroBean.ano}" />
-					<h:outputText value="Idioma:" />
+					<p:outputLabel value="Idioma:" />
 					<p:inputText value="#{livroBean.idioma}" />
-					<h:outputText value="Imagem:" />
+					<p:outputLabel value="Imagem:" />
 
 					<p:fileUpload value="#{livroBean.file}"
 						fileUploadListener="#{livroBean.fileUploadListener}" fileLimit="1"
@@ -52,7 +52,7 @@
 						<f:selectItems value="#{livroBean.listCategoria}" />
 					</p:selectOneMenu>
 
-					<h:outputText value="Editora:" />
+					<p:outputLabel value="Editora:" />
 					<p:selectOneMenu value="#{livroBean.editora}">
 						<f:selectItems value="#{livroBean.listEditora}" />
 					</p:selectOneMenu>
