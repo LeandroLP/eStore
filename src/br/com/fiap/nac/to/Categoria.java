@@ -1,10 +1,11 @@
 package br.com.fiap.nac.to;
 
-public class Genero {
+
+public class Categoria {
 
 	private Integer id;
 	private String descricao;
-
+	
 	public Integer getId() {
 		return id;
 	}

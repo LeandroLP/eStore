@@ -10,72 +10,200 @@
 	<title>Livro</title>
 </h:head>
 <h:body>
+	<h:form id="form">
+		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
+		<p:panel id="panel" header="Autor">
+			<h:panelGrid columns="4">
+				<h:outputText value="Título:" />
+				<p:inputText value="#{livroBean.livro.titulo}" />
+				<h:outputText value="Descrição:" />
+				<p:inputText value="#{livroBean.livro.descricao}" />
+				<h:outputText value="Valor:" />
+				<p:inputText value="#{livroBean.livro.valor}" />
+				<h:outputText value="ISBN:" />
+				<p:inputText value="#{livroBean.livro.isbn}" />
+			</h:panelGrid>
 
-	<h:form enctype="multipart/form-data">
-		<p:tabView dynamic="true" cache="true">
+			<h:panelGrid columns="2">
+				<h:outputText value="Número de Páginas:" />
+				<p:inputText value="#{livroBean.livro.numeroPaginas}" />
+			</h:panelGrid>
+			<h:panelGrid columns="4">
+				<h:outputText value="Curtidas:" />
+				<p:inputText value="#{livroBean.livro.curtidas}" />
+				<h:outputText value="Ano:" />
+				<p:inputText value="#{livroBean.livro.ano}" />
+				<p:outputLabel value="Idioma:" />
+				<p:inputText value="#{livroBean.livro.idioma}" />
 
-			<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Imagem:" />
+				<p:fileUpload value="#{livroBean.file}"
+					fileUploadListener="#{livroBean.fileUploadListener}" fileLimit="1"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false"
+					mode="simple" auto="false" update="growl" />
 
-			<p:tab title="Cadastro">
-				<h:panelGrid columns="2">
 
-					<h:outputText value="Título:" />
-					<p:inputText value="#{livroBean.titulo}" />
-					<h:outputText value="Descrição:" />
-					<p:inputText value="#{livroBean.descricao}" />
-					<h:outputText value="Valor:" />
-					<p:inputText value="#{livroBean.valor}" />
-					<h:outputText value="ISBN:" />
-					<p:inputText value="#{livroBean.isbn}" />
-					<h:outputText value="Número de Páginas:" />
-					<p:inputText value="#{livroBean.numeroPaginas}" />
-					<h:outputText value="Curtidas:" />
-					<p:inputText value="#{livroBean.curtidas}" />
-					<h:outputText value="Ano:" />
-					<p:inputText value="#{livroBean.ano}" />
-					<p:outputLabel value="Idioma:" />
-					<p:inputText value="#{livroBean.idioma}" />
-					<p:outputLabel value="Imagem:" />
+			</h:panelGrid>
+			<h:panelGrid columns="4">
+				<h:outputText value="Autor:" />
+				<p:selectOneMenu value="#{livroBean.livro.autorId}">
+					<f:selectItems value="#{livroBean.livro.listAutor}" var="autores"
+						itemValue="#{autores.autorId}" itemLabel="#{autores.nome}" />
+				</p:selectOneMenu>
+				<h:outputText value="Categoria:" />
+				<p:selectOneMenu value="#{livroBean.livro.categoriaId}">
+					<f:selectItems value="#{livroBean.livro.listCategoria}"
+						var="categorias" itemValue="#{categorias.id}"
+						itemLabel="#{categorias.descricao}" />
+				</p:selectOneMenu>
 
-					<p:fileUpload value="#{livroBean.file}"
-						fileUploadListener="#{livroBean.fileUploadListener}" fileLimit="1"
-						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false"
-						mode="advanced" auto="false" update="growl" />
+				<h:outputText value="Editora:" />
+				<p:selectOneMenu value="#{livroBean.livro.editoraId}">
+					<f:selectItems value="#{livroBean.livro.listEditora}"
+						var="editoras" itemValue="#{editoras.editoraId}"
+						itemLabel="#{editoras.nome}" />
+				</p:selectOneMenu>
 
-					<h:outputText value="Autor:" />
-					<p:selectOneMenu value="#{livroBean.autor}">
-						<f:selectItems value="#{livroBean.listAutor}" />
-					</p:selectOneMenu>
+				<h:outputText value="Genero:" />
+				<p:selectOneMenu value="#{livroBean.livro.generoId}">
+					<f:selectItems value="#{livroBean.livro.listGenero}" var="generos"
+						itemValue="#{generos.id}" itemLabel="#{generos.descricao}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
 
-					<h:outputText value="Categoria:" />
-					<p:selectOneMenu value="#{livroBean.categoria}">
-						<f:selectItems value="#{livroBean.listCategoria}" />
-					</p:selectOneMenu>
 
-					<p:outputLabel value="Editora:" />
-					<p:selectOneMenu value="#{livroBean.editora}">
-						<f:selectItems value="#{livroBean.listEditora}" />
-					</p:selectOneMenu>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar" actionListener="#{livroBean.salvar}"
+					update="@form" />
+				<p:commandButton value="Novo" actionListener="#{livroBean.novo}"
+					update="@form" />
+			</h:panelGrid>
+			<br />
 
-					<h:outputText value="Genero:" />
-					<p:selectOneMenu value="#{livroBean.genero}">
-						<f:selectItems value="#{livroBean.listGenero}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
 
-				<h:panelGrid columns="4">
-					<p:commandButton value="Salvar"
-						actionListener="#{livroBean.salvar}" update="growl" />
-					<p:commandButton value="Alterar"
-						actionListener="#{livroBean.alterar}" />
-					<p:commandButton value="Excluir"
-						actionListener="#{livroBean.excluir}" />
-					<p:commandButton value="Novo" actionListener="#{livroBean.novo}" />
-				</h:panelGrid>
-			</p:tab>
-			<p:tab title="Livros">
-			</p:tab>
-		</p:tabView>
+			<p:dataTable id="livros" var="livro" value="#{livroBean.listLivro}"
+				editable="true">
+
+				<f:facet name="header">
+           			Livros
+       			</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{livroBean.onRowEdit}"
+					process="@this" update=":form:growl" />
+				<p:ajax event="rowEditCancel" listener="#{livroBean.onRowCancel}"
+					process="@this" update=":form:growl" />
+
+				<p:column headerText="Livro Id" style="width:100%">
+					<h:outputText value="#{livro.livroId}" />
+				</p:column>
+				<p:column headerText="Titulo" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.titulo}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.titulo}" style="width:100%"
+								label="}Titulo" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Valor" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.valor}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.valor}" style="width:100%"
+								label="Valor" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="ISBN" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.isbn}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.isbn}" style="width:100%"
+								label="ISBN" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Número de Pagina" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.numeroPagina}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.numeroPagina}" style="width:100%"
+								label="Número de Pagina" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Curtidas" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.curtidas}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.curtidas}" style="width:100%"
+								label="Curtidas" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Ano" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.ano}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.ano}" style="width:100%" label="Ano" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Idioma" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.idioma}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.idioma}" style="width:100%"
+								label="Idioma" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Descrição" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{livro.descricao}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{livro.descricao}" style="width:100%"
+								label="Descrição" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+
+				<p:column style="width:32px">
+					<p:commandLink action="#{livroBean.excluir}"
+						class="ui-icon ui-icon-trash" update="@form" process="@this">
+						<f:setPropertyActionListener target="#{livroBean.livroId}"
+							value="#{livro.livroId}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+
+		</p:panel>
 	</h:form>
 
 </h:body>

@@ -1,6 +1,7 @@
 package br.com.fiap.nac.lazydatamodel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class GeneroLazyList extends LazyDataModel<Genero> {
    	 
         // with datatable pagination limits
     	try {
-			listGeneros = generoDAO.findGeneros(first, pageSize);
+			listGeneros = new ArrayList<Genero>();  
 			listAll = generoDAO.getAll();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

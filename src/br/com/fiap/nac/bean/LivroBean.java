@@ -1,212 +1,58 @@
 package br.com.fiap.nac.bean;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.SQLException;
 import java.util.List;
-
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
 
-import br.com.fiap.nac.to.Genero;
+import br.com.fiap.nac.dao.AutorDAO;
+import br.com.fiap.nac.dao.CategoriaDAO;
+import br.com.fiap.nac.dao.EditoraDAO;
+import br.com.fiap.nac.dao.GeneroDAO;
+import br.com.fiap.nac.dao.LivroDAO;
+import br.com.fiap.nac.to.Autor;
+import br.com.fiap.nac.to.Livro;
 
 @ManagedBean
 @SessionScoped
 public class LivroBean {
 
-	public LivroBean() {
-		AutorBean autorBean = new AutorBean();
-		autorBean.setNome("ASD");
-		this.listAutor = new ArrayList<AutorBean>();
-		this.listAutor.add(autorBean);
-
-		CategoriaBean categoriaBean = new CategoriaBean();
-		categoriaBean.setDescricao("ASD");
-		this.listCategoria = new ArrayList<CategoriaBean>();
-		this.listCategoria.add(categoriaBean);
-
-		EditoraBean editoraBean = new EditoraBean();
-		editoraBean.setNome("ASD");
-		this.listEditora = new ArrayList<EditoraBean>();
-		this.listEditora.add(editoraBean);
-
-		Genero generoBean = new Genero();
-		generoBean.setDescricao("ASD");
-		this.listGenero = new ArrayList<Genero>();
-		this.listGenero.add(generoBean);
-	}
-
-	private Integer id;
-	private String titulo;
-	private String descricao;
-	private Double valor;
-	private Long isbn;
-	private Integer numeroPaginas;
-	private Integer curtidas;
-	private Date ano;
-	private String idioma;
-	private byte[] imagem;
-
-	private AutorBean autor;
-	private List<AutorBean> listAutor;
-
-	private CategoriaBean categoria;
-	private List<CategoriaBean> listCategoria;
-
-	private EditoraBean editora;
-	private List<EditoraBean> listEditora;
-
-	private GeneroBean genero;
-	private List<Genero> listGenero;
-
+	private Livro livro;
+	// private LazyDataModel<Autor> listAutor;
+	private LivroDAO livroDAO;
+	private List<Livro> listLivro;
 	private String mensagem;
+	private UploadedFile file;
 
-	public Integer getId() {
-		return id;
+	public Livro getLivro() {
+		return livro;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setAutor(Livro livro) {
+		this.livro = livro;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public LivroDAO getLivroDAO() {
+		return this.livroDAO;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setLivroDAO(LivroDAO livroDAO) {
+		this.livroDAO = livroDAO;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public List<Livro> getListLivro() {
+		return listLivro;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Double getValor() {
-		return valor;
-	}
-
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
-
-	public Long getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(Long isbn) {
-		this.isbn = isbn;
-	}
-
-	public Integer getNumeroPaginas() {
-		return numeroPaginas;
-	}
-
-	public void setNumeroPaginas(Integer numeroPaginas) {
-		this.numeroPaginas = numeroPaginas;
-	}
-
-	public Integer getCurtidas() {
-		return curtidas;
-	}
-
-	public void setCurtidas(Integer curtidas) {
-		this.curtidas = curtidas;
-	}
-
-	public Date getAno() {
-		return ano;
-	}
-
-	public void setAno(Date ano) {
-		this.ano = ano;
-	}
-
-	public String getIdioma() {
-		return idioma;
-	}
-
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
-	}
-
-	public byte[] getImagem() {
-		return imagem;
-	}
-
-	public void setImagem(byte[] imagem) {
-		this.imagem = imagem;
-	}
-
-	public AutorBean getAutor() {
-		return autor;
-	}
-
-	public void setAutor(AutorBean autor) {
-		this.autor = autor;
-	}
-
-	public List<AutorBean> getListAutor() {
-		return listAutor;
-	}
-
-	public void setListAutor(List<AutorBean> listAutor) {
-		this.listAutor = listAutor;
-	}
-
-	public CategoriaBean getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(CategoriaBean categoria) {
-		this.categoria = categoria;
-	}
-
-	public List<CategoriaBean> getListCategoria() {
-		return listCategoria;
-	}
-
-	public void setListCategoria(List<CategoriaBean> listCategoria) {
-		this.listCategoria = listCategoria;
-	}
-
-	public EditoraBean getEditora() {
-		return editora;
-	}
-
-	public void setEditora(EditoraBean editora) {
-		this.editora = editora;
-	}
-
-	public List<EditoraBean> getListEditora() {
-		return listEditora;
-	}
-
-	public void setListEditora(List<EditoraBean> listEditora) {
-		this.listEditora = listEditora;
-	}
-
-	public GeneroBean getGenero() {
-		return genero;
-	}
-
-	public void setGenero(GeneroBean genero) {
-		this.genero = genero;
-	}
-
-	public List<Genero> getListGenero() {
-		return listGenero;
-	}
-
-	public void setListGenero(List<Genero> listGenero) {
-		this.listGenero = listGenero;
+	public void setListLivro(List<Livro> listLivro) {
+		this.listLivro = listLivro;
 	}
 
 	public String getMensagem() {
@@ -217,8 +63,6 @@ public class LivroBean {
 		this.mensagem = mensagem;
 	}
 
-	private UploadedFile file;
-
 	public UploadedFile getFile() {
 		return file;
 	}
@@ -227,29 +71,143 @@ public class LivroBean {
 		this.file = file;
 	}
 
-	// Persistencia
-	public String salvar() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Successful", "Your message: FileUploaded"));
-		return "livro";
+	@PostConstruct
+	public void init() {
+
+		livroDAO = new LivroDAO();
+		limparCarregar();
+
 	}
 
-	public void fileUploadListener(FileUploadEvent event) {
-		this.file = event.getFile();
+	// Persistencia
+	public String salvar() {
+		
+		livro.setImagem(file.getContents());
+		
+		FacesMessage message = null;
+		try {
+			if (livroDAO.save(livro) != null) {
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Livro cadastrado com sucesso!");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+		}
 
-		FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+
+		limparCarregar();
+
+		return "livro";
 	}
 
 	public String alterar() {
 		return "livro";
 	}
 
-	public String excluir() {
-		return "livro";
+	private Integer livroId;
+
+	public Integer getLivroId() {
+		return livroId;
+	}
+
+	public void setLivroId(Integer livroId) {
+		this.livroId = livroId;
+	}
+
+	public void excluir() {
+
+		FacesMessage message = null;
+		try {
+			if (livroDAO.delete(livroId)) {
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Autor excluída com sucesso!");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null, message);
+
+		limparCarregar();
 	}
 
 	public String novo() {
+		limparCarregar();
+
 		return "livro";
 	}
+
+	public void onRowEdit(RowEditEvent event) {
+		Livro livroEdit = (Livro) event.getObject();
+
+		FacesMessage message = null;
+
+		try {
+			if (livroDAO.update(livroEdit)) {
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Livro alterada com sucesso");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null, message);
+
+		limparCarregar();
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		Autor autorEdit = (Autor) event.getObject();
+
+		FacesMessage msg = new FacesMessage("Edição cancelada", String.valueOf(autorEdit.getAutorId()));
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
+					"Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+
+	private void limparCarregar() {
+		livro = new Livro();
+
+		try {
+
+			AutorDAO autorDAO = new AutorDAO();
+			livro.setListAutor(autorDAO.getAll());
+
+			CategoriaDAO categoriaDAO = new CategoriaDAO();
+			livro.setListCategoria(categoriaDAO.getAll());
+
+			EditoraDAO editoraDAO = new EditoraDAO();
+			livro.setListEditora(editoraDAO.getAll());
+
+			GeneroDAO generoDAO = new GeneroDAO();
+			livro.setListGenero(generoDAO.getAll());
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

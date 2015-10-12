@@ -7,50 +7,50 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Genero</title>
+	<title>Categoria</title>
 </h:head>
 <h:body>
 
 	<h:form id="form">
 		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
 
-		<p:panel id="panel" header="Genero">
+		<p:panel id="panel" header="Categoria">
 
 			<h:panelGrid columns="2">
 
 				<p:outputLabel value="Descrição:" />
-				<p:inputText id="descricao" value="#{generoBean.genero.descricao}" required="true" requiredMessage="Campo obrigatório">
+				<p:inputText id="descricao" value="#{categoriaBean.categoria.descricao}" required="true" requiredMessage="Campo obrigatório">
 					<f:validateLength minimum="2" />
                 	<p:ajax update="growl" event="keyup" />
             	</p:inputText>
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{generoBean.salvar}" update="@form" />
-				<p:commandButton value="Novo" actionListener="#{generoBean.novo}" update="@form" />
+				<p:commandButton value="Salvar" actionListener="#{categoriaBean.salvar}" update="@form" />
+				<p:commandButton value="Novo" actionListener="#{categoriaBean.novo}" update="@form" />
 			</h:panelGrid>
 			<br/>
 			
-			<p:dataTable id="generos" var="genero" value="#{generoBean.listGenero}"
+			<p:dataTable id="categorias" var="categoria" value="#{categoriaBean.listCategoria}"
 				editable="true">
 				
 				<f:facet name="header">
-           			Generos
+           			Row Editing
        			</f:facet>
        			
-       			<p:ajax event="rowEdit" listener="#{generoBean.onRowEdit}" process="@this" update=":form:growl" />
-       			<p:ajax event="rowEditCancel" listener="#{generoBean.onRowCancel}" process="@this" update=":form:growl" />
+       			<p:ajax event="rowEdit" listener="#{categoriaBean.onRowEdit}" process="@this" update=":form:growl" />
+       			<p:ajax event="rowEditCancel" listener="#{categoriaBean.onRowCancel}" process="@this" update=":form:growl" />
        			
        			<p:column headerText="Id" style="width:100%">
        			<!--<p:cellEditor>-->
-           				<h:outputText value="#{genero.id}" />
-           				<!--<f:facet name="input"><p:inputText id="modelInput" value="#{genero.id}" style="width:100%"/></f:facet>
+           				<h:outputText value="#{categoria.id}" />
+           				<!--<f:facet name="input"><p:inputText id="modelInput" value="#{categoria.id}" style="width:100%"/></f:facet>
            			</p:cellEditor>-->
        			</p:column>
        			<p:column headerText="Descrição" style="width:100%">
        				<p:cellEditor>
-           				<f:facet name="output"><h:outputText value="#{genero.descricao}" /></f:facet>
-           				<f:facet name="input"><p:inputText value="#{genero.descricao}" style="width:100%" label="Descrição"/></f:facet>
+           				<f:facet name="output"><h:outputText value="#{categoria.descricao}" /></f:facet>
+           				<f:facet name="input"><p:inputText value="#{categoria.descricao}" style="width:100%" label="Descrição"/></f:facet>
            			</p:cellEditor>
        			</p:column>
        			
@@ -59,8 +59,8 @@
        			</p:column>
        			
        			<p:column style="width:32px">
-       				<p:commandLink action="#{generoBean.excluir}" class="ui-icon ui-icon-trash" update="@form" process="@this">
-						<f:setPropertyActionListener target="#{generoBean.id}" value="#{genero.id}" />
+       				<p:commandLink action="#{categoriaBean.excluir}" class="ui-icon ui-icon-trash" update="@form" process="@this">
+						<f:setPropertyActionListener target="#{categoriaBean.id}" value="#{categoria.id}" />
 					</p:commandLink>        			
        			</p:column>
    			</p:dataTable>
