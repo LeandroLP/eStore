@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Usuario</title>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
+		<p:panel id="panel" header="Usuario">
+			<h:panelGrid columns="4">
+				<p:outputLabel value="Nome:" />
+				<p:inputText value="#{usuarioBean.usuario.nome}" required="true"
+					requiredMessage="Campo obrigatório">
+					<p:ajax update="growl" event="keyup" />
+				</p:inputText>
+				<p:outputLabel value="CPF:" />
+				<p:inputText value="#{usuarioBean.usuario.cpf}" />
+			</h:panelGrid>
+			<h:panelGrid columns="4">
+				<p:outputLabel value="E-mail:" />
+				<p:inputText value="#{usuarioBean.usuario.email}" />
+				<p:outputLabel for="sexo" value="Sexo:" />
+				<p:selectOneRadio id="sexo" value="#{usuarioBean.usuario.sexo}">
+					<f:selectItem itemLabel="Masculino" itemValue="M"></f:selectItem>
+					<f:selectItem itemLabel="Feminino" itemValue="F"></f:selectItem>
+				</p:selectOneRadio>
+			</h:panelGrid>
+
+			<h:panelGrid columns="6">
+				<p:outputLabel value="Telefone:" />
+				<p:inputText value="#{usuarioBean.usuario.telefone}" />
+				<p:outputLabel value="CEP:" />
+				<p:inputText value="#{usuarioBean.usuario.cep}" />
+				<p:outputLabel value="Logradouro:" />
+				<p:inputText value="#{usuarioBean.usuario.logradouro}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="6">
+				<p:outputLabel value="Numero:" />
+				<p:inputText value="#{usuarioBean.usuario.numero}" />
+				<p:outputLabel value="Bairro:" />
+				<p:inputText value="#{usuarioBean.usuario.bairro}" />
+				<p:outputLabel value="Cidade:" />
+				<p:inputText value="#{usuarioBean.usuario.cidade}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="8">
+				<p:outputLabel value="Estado:" />
+				<p:inputText value="#{usuarioBean.usuario.estado}" />
+				<p:outputLabel value="login:" />
+				<p:inputText value="#{usuarioBean.usuario.login}" />
+				<p:outputLabel value="Senha:" />
+				<p:inputText value="#{usuarioBean.usuario.senha}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<h:outputText value="Tipo de Acesso:" />
+				<p:selectOneMenu value="#{usuarioBean.usuario.tipoAcessoId}">
+					<f:selectItems value="#{usuarioBean.usuario.listTipoAcesso}"
+						var="tipoAcesso" itemValue="#{tipoAcesso.tipoAcessoId}"
+						itemLabel="#{tipoAcesso.descricao}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{usuarioBean.salvar}" update="@form" />
+				<p:commandButton value="Novo" actionListener="#{usuarioBean.novo}"
+					update="@form" />
+			</h:panelGrid>
+
+			<br />
+
+			<p:dataTable id="usuarioes" var="usuario"
+				value="#{usuarioBean.listUsuario}" editable="true">
+
+				<f:facet name="header">
+           			Usuarios
+       			</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{usuarioBean.onRowEdit}"
+					process="@this" update=":form:growl" />
+				<p:ajax event="rowEditCancel" listener="#{usuarioBean.onRowCancel}"
+					process="@this" update=":form:growl" />
+
+				<p:column headerText="Usuario Id" style="width:100%">
+					<h:outputText value="#{usuario.usuarioId}" />
+				</p:column>
+				<p:column headerText="Nome" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.nome}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.nome}" style="width:100%"
+								label="Nome" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="CPF" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.cpf}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.cpf}" style="width:100%"
+								label="CPF" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="E-mail" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.email}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.email}" style="width:100%"
+								label="E-mail" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Sexo" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.sexo}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.sexo}" style="width:100%"
+								label="Sexo" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Telefone" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.telefone}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.telefone}" style="width:100%"
+								label="Telefone" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="CEP" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.cep}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.cep}" style="width:100%"
+								label="CEP" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Logradouro" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.logradouro}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.logradouro}" style="width:100%"
+								label="Logradouro" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Bairro" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.bairro}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.bairro}" style="width:100%"
+								label="Bairro" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Número" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.numero}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.numero}" style="width:100%"
+								label="Número" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Cidade" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.cidade}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.cidade}" style="width:100%"
+								label="Cidade" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Estado" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.estado}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.estado}" style="width:100%"
+								label="Estado" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Login" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.login}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.login}" style="width:100%"
+								label="Login" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Senha" style="width:100%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{usuario.senha}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{usuario.senha}" style="width:100%"
+								label="Senha" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+
+				<p:column style="width:32px">
+					<p:commandLink action="#{usuarioBean.excluir}"
+						class="ui-icon ui-icon-trash" update="@form" process="@this">
+						<f:setPropertyActionListener target="#{usuarioBean.usuarioId}"
+							value="#{usuario.usuarioId}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
