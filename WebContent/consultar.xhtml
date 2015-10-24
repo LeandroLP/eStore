@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      template="template.xhtml">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <title>Loja do Governo - Produto</title>		 
+    </h:head>
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="mensagem" showDetail="true"/>
+            <p:dataTable id="lista" var="item" rows="5" paginator="true">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="ID" />
+                    </f:facet>
+                    <h:outputText></h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="APP" />
+                    </f:facet>
+                    <h:outputText></h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="ACAO" />
+                    </f:facet>
+                    <p:button outcome="alterar" icon="ui-icon-transferthick-e-w">  
+                        <f:param name="id" />  
+                    </p:button>
+                    
+                    <p:commandButton icon="ui-icon-circle-close">  
+                        <p:confirm header="Confirmação" message="Deseja excluir?" icon="ui-icon-alert" />
+                    </p:commandButton>  
+  
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">  
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="mensagem"/>  
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                    </p:confirmDialog>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -7,67 +7,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import br.com.fiap.nac.factory.ConnectionFactory;
 import br.com.fiap.nac.to.Livro;
 
 public class LivroDAO implements GenericDAO<Livro> {
 
-	public List<Livro> findLivroes(int first, int pageSize) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		List<Livro> listLivroes = new ArrayList<Livro>();
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String selectTableSQL = "SELECT * FROM AUTOR LIMIT ?, ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
-
-			preparedStatement.setInt(1, first);
-			preparedStatement.setInt(2, pageSize);
-
-			// execute select SQL stetement
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-
-				Livro livro = new Livro();
-				livro.setLivroId(rs.getInt("ID_LIVRO"));
-				livro.setTitulo(rs.getString("TITULO"));
-				livro.setDescricao(rs.getString("DESCRICAO"));
-				livro.setValor(rs.getDouble("VALOR"));
-				livro.setIsbn(rs.getInt("ISBN"));
-				livro.setNumeroPaginas(rs.getInt("NUMERO_PAGINA"));
-				livro.setCurtidas(rs.getInt("CURTIDA"));
-				livro.setAno(rs.getInt("ANO"));
-				livro.setIdioma(rs.getString("IDIOMA"));
-				livro.setImagem(rs.getBytes("IMAGEM"));
-				livro.setAutorId(rs.getInt("ID_AUTOR"));
-				livro.setCategoriaId(rs.getInt("ID_CATEGORIA"));
-				livro.setEditoraId(rs.getInt("ID_EDITORA"));
-				livro.setGeneroId(rs.getInt("ID_GENERO"));
-
-				listLivroes.add(livro);
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return listLivroes;
-	}
-
 	@Override
 	public List<Livro> getAll() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-
-		List<Livro> livroes = new ArrayList<Livro>();
+		List<Livro> listLivro = new ArrayList<Livro>();
 		Connection dbConnection = null;
 		Statement statement = null;
-		PreparedStatement preparedStatement = null;
 
 		String selectTableSQL = "SELECT * FROM LIVRO";
 
@@ -91,24 +44,25 @@ public class LivroDAO implements GenericDAO<Livro> {
 				livro.setCurtidas(rs.getInt("CURTIDA"));
 				livro.setAno(rs.getInt("ANO"));
 				livro.setIdioma(rs.getString("IDIOMA"));
-				livro.setImagem(rs.getBytes("IMAGEM"));
+				livro.setImagem(rs.getBinaryStream("IMAGEM"));
+				livro.setImagem2(Base64.encodeBase64String(rs.getBytes("IMAGEM")));
 				livro.setAutorId(rs.getInt("ID_AUTOR"));
 				livro.setCategoriaId(rs.getInt("ID_CATEGORIA"));
 				livro.setEditoraId(rs.getInt("ID_EDITORA"));
 				livro.setGeneroId(rs.getInt("ID_GENERO"));
 
-				livroes.add(livro);
+				listLivro.add(livro);
 			}
 		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
+			if (statement != null) {
+				statement.close();
 			}
 			if (dbConnection != null) {
 				dbConnection.close();
 			}
 		}
 
-		return livroes;
+		return listLivro;
 	}
 
 	@Override
@@ -118,10 +72,10 @@ public class LivroDAO implements GenericDAO<Livro> {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
-		String insertTableSQL = "INSERT INTO `mydb`.`livro`"
-				+ "(`TITULO`,`DESCRICAO`,`VALOR`,`ISBN`,`NUMERO_PAGINA`,`CURTIDA`,`ANO`,`IDIOMA`,"
-				+ "`IMAGEM`,`ID_AUTOR`,`ID_CATEGORIA`,`ID_EDITORA`,`ID_GENERO`)"
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String insertTableSQL = "INSERT INTO livro"
+				+ "(TITULO,DESCRICAO,VALOR,ISBN,NUMERO_PAGINA,CURTIDA,ANO,IDIOMA,"
+				+ "IMAGEM,ID_AUTOR,ID_CATEGORIA,ID_EDITORA,ID_GENERO)"
+				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -135,7 +89,7 @@ public class LivroDAO implements GenericDAO<Livro> {
 			preparedStatement.setInt(6, object.getCurtidas());
 			preparedStatement.setInt(7, object.getAno());
 			preparedStatement.setString(8, object.getIdioma());
-			preparedStatement.setBytes(9, object.getImagem());
+			preparedStatement.setBlob(9, object.getImagem());
 			preparedStatement.setInt(10, object.getAutorId());
 			preparedStatement.setInt(11, object.getCategoriaId());
 			preparedStatement.setInt(12, object.getEditoraId());
@@ -189,7 +143,7 @@ public class LivroDAO implements GenericDAO<Livro> {
 				livro.setCurtidas(rs.getInt("CURTIDA"));
 				livro.setAno(rs.getInt("ANO"));
 				livro.setIdioma(rs.getString("IDIOMA"));
-				livro.setImagem(rs.getBytes("IMAGEM"));
+				livro.setImagem(rs.getBinaryStream("IMAGEM"));
 				livro.setAutorId(rs.getInt("ID_AUTOR"));
 				livro.setCategoriaId(rs.getInt("ID_CATEGORIA"));
 				livro.setEditoraId(rs.getInt("ID_EDITORA"));
@@ -214,7 +168,7 @@ public class LivroDAO implements GenericDAO<Livro> {
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String updateTableSQL = "UPDATE `mydb`.`livro` SET"
+		String updateTableSQL = "UPDATE `livro` SET"
 				+ "`TITULO` = ?,`DESCRICAO` = ?,`VALOR` = ?,`ISBN` = ?,`NUMERO_PAGINA` = ?,`CURTIDA` = ?,"
 				+ "`ANO` = ?,`IDIOMA` = ?,`IMAGEM` = ?,`ID_AUTOR` = ?,`ID_CATEGORIA` = ?,`ID_EDITORA` = ?,"
 				+ "`ID_GENERO` = ? WHERE `ID_LIVRO` = ?;";
@@ -231,7 +185,7 @@ public class LivroDAO implements GenericDAO<Livro> {
 			preparedStatement.setInt(6, object.getCurtidas());
 			preparedStatement.setInt(7, object.getAno());
 			preparedStatement.setString(8, object.getIdioma());
-			preparedStatement.setBytes(9, object.getImagem());
+			preparedStatement.setBlob(9, object.getImagem());
 			preparedStatement.setInt(10, object.getAutorId());
 			preparedStatement.setInt(11, object.getCategoriaId());
 			preparedStatement.setInt(12, object.getEditoraId());
@@ -253,40 +207,13 @@ public class LivroDAO implements GenericDAO<Livro> {
 		return false;
 	}
 
-	public boolean delete(Integer id) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String deleteSQL = "DELETE FROM AUTOR WHERE ID_AUTOR = ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, id);
-
-			// execute delete SQL stetement
-			if (preparedStatement.executeUpdate() == 1) {
-				return true;
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return false;
-	}
-
 	@Override
 	public boolean deleteAll() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection dbConnection = null;
 		Statement statement = null;
 
-		String deleteSQL = "DELETE FROM AUTOR;";
+		String deleteSQL = "DELETE FROM livro;";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -310,6 +237,28 @@ public class LivroDAO implements GenericDAO<Livro> {
 	@Override
 	public boolean delete(Livro object) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String deleteSQL = "DELETE FROM livro WHERE ID_LIVRO = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, object.getLivroId());
+
+			// execute delete SQL stetement
+			if (preparedStatement.executeUpdate() == 1) {
+				return true;
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
 		return false;
 	}
 

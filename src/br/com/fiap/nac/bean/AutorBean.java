@@ -1,14 +1,16 @@
 package br.com.fiap.nac.bean;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
+
 import br.com.fiap.nac.dao.AutorDAO;
 import br.com.fiap.nac.to.Autor;
 
@@ -49,7 +51,20 @@ public class AutorBean {
 	public void init() {
 		autorDAO = new AutorDAO();
 
-		limparCarregar();
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		autor = new Autor();
+
+		setListAutor(new ArrayList<Autor>());
+		try {
+			listAutor = autorDAO.getAll();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String salvar() {
@@ -108,20 +123,12 @@ public class AutorBean {
 		limparCarregar();
 	}
 
-	public String novo() {
-		limparCarregar();
-
-		return "autor";
-	}
-
-	public void onRowEdit(RowEditEvent event) {
-		Autor autorEdit = (Autor) event.getObject();
+	public void excluir(Integer id) {
 
 		FacesMessage message = null;
-
 		try {
-			if (autorDAO.update(autorEdit)) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Autor alterada com sucesso");
+			if (autorDAO.delete(id)) {
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Autor excluída com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -136,22 +143,10 @@ public class AutorBean {
 		limparCarregar();
 	}
 
-	public void onRowCancel(RowEditEvent event) {
-		Autor autorEdit = (Autor) event.getObject();
+	public String novo() {
+		limparCarregar();
 
-		FacesMessage msg = new FacesMessage("Edição cancelada", String.valueOf(autorEdit.getAutorId()));
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onCellEdit(CellEditEvent event) {
-		Object oldValue = event.getOldValue();
-		Object newValue = event.getNewValue();
-
-		if (newValue != null && !newValue.equals(oldValue)) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
-					"Old: " + oldValue + ", New:" + newValue);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
+		return "autor";
 	}
 
 	private void limparCarregar() {

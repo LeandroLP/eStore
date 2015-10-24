@@ -9,9 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
-
 import br.com.fiap.nac.dao.EditoraDAO;
 import br.com.fiap.nac.to.Editora;
 
@@ -115,46 +112,6 @@ public class EditoraBean {
 		limparCarregar();
 
 		return "editora";
-	}
-
-	public void onRowEdit(RowEditEvent event) {
-		Editora editoraEdit = (Editora) event.getObject();
-
-		FacesMessage message = null;
-
-		try {
-			if (editoraDAO.update(editoraEdit)) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Editora alterada com sucesso");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
-		}
-
-		FacesContext.getCurrentInstance().addMessage(null, message);
-
-		limparCarregar();
-	}
-
-	public void onRowCancel(RowEditEvent event) {
-		Editora editoraEdit = (Editora) event.getObject();
-
-		FacesMessage msg = new FacesMessage("Edição cancelada", String.valueOf(editoraEdit.getEditoraId()));
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onCellEdit(CellEditEvent event) {
-		Object oldValue = event.getOldValue();
-		Object newValue = event.getNewValue();
-
-		if (newValue != null && !newValue.equals(oldValue)) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
-					"Old: " + oldValue + ", New:" + newValue);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
 	}
 
 	private void limparCarregar() {

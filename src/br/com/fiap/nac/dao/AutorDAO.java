@@ -87,7 +87,7 @@ public class AutorDAO implements GenericDAO<Autor> {
 				autor.setSexo(rs.getString("SEXO"));
 				autor.setEmail(rs.getString("EMAIL"));
 				autor.setIdade(rs.getInt("IDADE"));
-				autor.setNacionalidade(rs.getString("Nacionalidade"));
+				autor.setNacionalidade(rs.getString("NACIONALIDADE"));
 				autor.setDescricao(rs.getString("DESCRICAO"));
 
 				autores.add(autor);

@@ -1,5 +1,6 @@
 package br.com.fiap.nac.to;
 
+import java.io.InputStream;
 import java.util.List;
 
 import br.com.fiap.nac.bean.GeneroBean;
@@ -15,7 +16,7 @@ public class Livro {
 	private Integer curtidas;
 	private Integer ano;
 	private String idioma;
-	private byte[] imagem;
+	private InputStream imagem;
 	private Integer autorId;
 	private Integer editoraId;
 	private Integer categoriaId;
@@ -31,6 +32,16 @@ public class Livro {
 
 	private GeneroBean genero;
 	private List<Genero> listGenero;
+
+	private String imagem2;
+
+	public String getImagem2() {
+		return imagem2;
+	}
+
+	public void setImagem2(String imagem2) {
+		this.imagem2 = imagem2;
+	}
 
 	public List<Autor> getListAutor() {
 		return listAutor;
@@ -160,11 +171,11 @@ public class Livro {
 		this.idioma = idioma;
 	}
 
-	public byte[] getImagem() {
+	public InputStream getImagem() {
 		return imagem;
 	}
 
-	public void setImagem(byte[] imagem) {
+	public void setImagem(InputStream imagem) {
 		this.imagem = imagem;
 	}
 

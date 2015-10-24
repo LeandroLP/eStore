@@ -1,27 +1,21 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Autor</title>
-</h:head>
-<h:body>
-	<h:form id="form">
-		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
-		<p:panel id="panel" header="Autor">
+<ui:decorate template="padrao.xhtml">
+	<ui:define name="centro">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
 			<h:panelGrid columns="4">
 				<p:outputLabel value="Nome:" />
 				<p:inputText value="#{autorBean.autor.nome}" required="true"
-					requiredMessage="Campo obrigatório">
+					requiredMessage="Campo obrigatÃ³rio">
 					<p:ajax update="growl" event="keyup" />
 				</p:inputText>
 				<p:outputLabel value="Sobre Nome:" />
 				<p:inputText value="#{autorBean.autor.sobreNome}" required="true"
-					requiredMessage="Campo obrigatório" />
+					requiredMessage="Campo obrigatÃ³rio" />
 				<p:ajax update="growl" event="keyup" />
 			</h:panelGrid>
 			<h:panelGrid columns="4">
@@ -46,7 +40,7 @@
 				<p:inputText value="#{autorBean.autor.nacionalidade}" />
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-				<p:outputLabel value="Descrição:" />
+				<p:outputLabel value="DescriÃ§Ã£o:" />
 				<p:inputTextarea value="#{autorBean.autor.descricao}" />
 			</h:panelGrid>
 
@@ -60,7 +54,7 @@
 
 			<br />
 
-			<p:dataTable id="autores" var="autor" value="#{autorBean.listAutor}"
+			<p:dataTable id="autores" scrollable="true" scrollWidth="400" var="autor" rows="5" paginator="true" value="#{autorBean.listAutor}"
 				editable="true">
 
 				<f:facet name="header">
@@ -167,14 +161,14 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Descrição" style="width:100%">
+				<p:column headerText="DescriÃ§Ã£o" style="width:100%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{autor.descricao}" />
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{autor.descricao}" style="width:100%"
-								label="Descrição" />
+								label="DescriÃ§Ã£o" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -191,8 +185,7 @@
 					</p:commandLink>
 				</p:column>
 			</p:dataTable>
-
-		</p:panel>
-	</h:form>
-</h:body>
+		</h:form>
+	</ui:define>
+</ui:decorate>
 </html>

@@ -10,8 +10,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 import br.com.fiap.nac.dao.GeneroDAO;
 import br.com.fiap.nac.to.Genero;
 
@@ -116,45 +114,6 @@ public class GeneroBean {
 		
 		return "genero";
 	}
-
-	public void onRowEdit(RowEditEvent event) {
-		Genero generoEdit = (Genero) event.getObject();
-		
-		FacesMessage message = null;
-    	
-    	try {
-			if(generoDAO.update(generoEdit)){
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Genero alterada com sucesso");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso",  e.getMessage());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso",  e.getMessage());
-		}
-    	
-    	FacesContext.getCurrentInstance().addMessage(null, message);
-    	
-    	limparCarregar();
-    }
-     
-    public void onRowCancel(RowEditEvent event) {
-    	Genero genero = (Genero)event.getObject();
-    	
-        FacesMessage msg = new FacesMessage("Edição cancelada", String.valueOf(genero.getId()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-     
-    public void onCellEdit(CellEditEvent event) {
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-         
-        if(newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-    }
     
     private void limparCarregar(){
     	genero = new Genero();
