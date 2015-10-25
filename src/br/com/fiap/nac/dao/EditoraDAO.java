@@ -12,54 +12,6 @@ import br.com.fiap.nac.to.Editora;
 
 public class EditoraDAO implements GenericDAO<Editora> {
 
-	public List<Editora> findEditoras(int first, int pageSize) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		List<Editora> listEditoras = new ArrayList<Editora>();
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String selectTableSQL = "SELECT * FROM EDITORA LIMIT ?, ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
-
-			preparedStatement.setInt(1, first);
-			preparedStatement.setInt(2, pageSize);
-
-			// execute select SQL stetement
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-				Editora editora = new Editora();
-				editora.setEditoraId(rs.getInt("ID_EDITORA"));
-				editora.setNome(rs.getString("NOME"));
-				editora.setRazaoSocial(rs.getString("RAZAO_SOCIAL"));
-				editora.setEmail(rs.getString("EMAIL"));
-				editora.setTelefone(rs.getString("TELEFONE"));
-				editora.setCnpj(rs.getString("CNPJ"));
-				editora.setIe(rs.getString("IE"));
-				editora.setSite(rs.getString("SITE"));
-				editora.setCep(rs.getString("CEP"));
-				editora.setEndereco(rs.getString("ENDERECO"));
-				editora.setNumero(rs.getString("NUMERO"));
-				editora.setComplemento(rs.getString("COMPLEMENTO"));
-				editora.setCidade(rs.getString("CIDADE"));
-				editora.setBairro(rs.getString("BAIRRO"));
-				editora.setEstado(rs.getString("ESTADO"));
-
-				listEditoras.add(editora);
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return listEditoras;
-	}
-
 	@Override
 	public List<Editora> getAll() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
@@ -214,7 +166,7 @@ public class EditoraDAO implements GenericDAO<Editora> {
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String updateTableSQL = "UPDATE mydb.EDITORA SET NOME = ?,RAZAO_SOCIAL= ?,EMAIL = ?, TELEFONE = ?,CNPJ = ?,IE = ?,SITE = ?,CEP = ?,ENDERECO = ?,"
+		String updateTableSQL = "UPDATE EDITORA SET NOME = ?,RAZAO_SOCIAL= ?,EMAIL = ?, TELEFONE = ?,CNPJ = ?,IE = ?,SITE = ?,CEP = ?,ENDERECO = ?,"
 				+ "NUMERO = ?, COMPLEMENTO = ?, CIDADE= ? ,BAIRRO = ? , ESTADO = ? WHERE ID_EDITORA = ?;";
 
 		try {
@@ -238,33 +190,6 @@ public class EditoraDAO implements GenericDAO<Editora> {
 			preparedStatement.setInt(15, object.getEditoraId());
 
 			// execute update SQL stetement
-			if (preparedStatement.executeUpdate() == 1) {
-				return true;
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return false;
-	}
-
-	public boolean delete(Integer id) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String deleteSQL = "DELETE FROM EDITORA WHERE ID_EDITORA = ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, id);
-
-			// execute delete SQL stetement
 			if (preparedStatement.executeUpdate() == 1) {
 				return true;
 			}
@@ -309,6 +234,28 @@ public class EditoraDAO implements GenericDAO<Editora> {
 	@Override
 	public boolean delete(Editora object) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String deleteSQL = "DELETE FROM EDITORA WHERE ID_EDITORA = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, object.getEditoraId());
+
+			// execute delete SQL stetement
+			if (preparedStatement.executeUpdate() == 1) {
+				return true;
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
 		return false;
 	}
 

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Autores</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+</h:head>
+<h:body>
+	<h:form id="form" enctype="multipart/form-data">
+		<div class="container">
+			<div role="tabpanel">
+
+				<div class="table - responsive">
+					<div class="panel-heading">Cadastro de Autores</div>
+
+					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
+						styleClass="alert alert-success" />
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Nome:" />
+							<h:inputText value="#{autorBean.autor.nome}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Sobre Nome:" />
+							<h:inputText value="#{autorBean.autor.sobreNome}"
+								styleClass="form-control" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Telefone:" />
+							<h:inputText value="#{autorBean.autor.telefone}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="CPF:" />
+							<h:inputText value="#{autorBean.autor.cpf}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Sexo:" />
+							<h:selectOneRadio id="sexo" value="#{autorBean.autor.sexo}">
+								<f:selectItem itemLabel="Masculino" itemValue="M" styleClass="form-control"></f:selectItem>
+								<f:selectItem itemLabel="Feminino" itemValue="F" styleClass="form-control"></f:selectItem>
+							</h:selectOneRadio>
+						</div>
+
+					</div>
+					<div class="row">
+
+						<div class="col-md-3">
+							<h:outputText value="E-mail:" />
+							<h:inputText value="#{autorBean.autor.email}"
+								styleClass="form-control" />
+
+						</div>
+						<div class="col-md-3">
+							<h:outputLabel value="Idade:" />
+							<h:inputText value="#{autorBean.autor.idade}"
+								styleClass="form-control" />
+
+						</div>
+						<div class="col-md-3">
+
+							<h:outputText value="Nacionalidae:" />
+							<h:inputText value="#{autorBean.autor.nacionalidade}"
+								styleClass="form-control" />
+						</div>
+
+					</div>
+					
+					<div class="row">
+						<div class="col-md-9">
+							<h:outputText value="Descrição:" />
+							<h:inputTextarea value="#{autorBean.autor.descricao}"
+								styleClass="form-control">
+								<f:validateLength maximum="500" />
+							</h:inputTextarea>
+						</div>
+					</div>
+
+
+
+
+					<hr></hr>
+					<div class="row">
+						<div class="col-md-1">
+							<h:commandButton value="Salvar" action="#{autorBean.salvar}"
+								styleClass="btn btn-primary" />
+						</div>
+						<div class="col-md-1">
+
+							<h:commandButton value="Novo" action="#{autorBean.novo}"
+								styleClass="btn btn-primary">
+								<f:ajax render="@form" resetValues="true" />
+							</h:commandButton>
+						</div>
+					</div>
+					<br />
+
+					<hr></hr>
+					<h:dataTable id="autors" var="autor" value="#{autorBean.listAutor}"
+						styleClass="table table-hover">
+
+						<f:facet name="header">
+           			Autores
+       			</f:facet>
+
+						<h:column>
+							<f:facet name="header">Autor ID</f:facet>
+							<h:outputText value="#{autor.autorId}" />
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">Nome</f:facet>
+							<h:outputText value="#{autor.nome}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Sobre Nome</f:facet>
+							<h:outputText value="#{autor.sobreNome}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Telefone</f:facet>
+							<h:outputText value="#{autor.telefone}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">CPF</f:facet>
+							<h:outputText value="#{autor.cpf}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Sexo</f:facet>
+							<h:outputText value="#{autor.sexo}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">E-mail</f:facet>
+							<h:outputText value="#{autor.email}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Idade</f:facet>
+							<h:outputText value="#{autor.idade}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Nacionalidade</f:facet>
+							<h:outputText value="#{autor.nacionalidade}" />
+						</h:column>
+
+
+						<h:column>
+							<f:facet name="header">Alterar</f:facet>
+							<h:commandLink value="Alterar"
+								action="#{autorBean.alterar(autor)}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Excluir</f:facet>
+							<h:commandLink value="Excluir"
+								action="#{autorBean.excluir(autor)}" />
+						</h:column>
+					</h:dataTable>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

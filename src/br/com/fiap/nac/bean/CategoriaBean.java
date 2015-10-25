@@ -8,12 +8,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import br.com.fiap.nac.dao.CategoriaDAO;
 import br.com.fiap.nac.to.Categoria;
-
-
 
 @ManagedBean
 @SessionScoped
@@ -21,9 +18,9 @@ public class CategoriaBean {
 
 	private Categoria categoria;
 	private CategoriaDAO categoriaDAO;
-	//private LazyDataModel<Categoria> listCategoria;
+	// private LazyDataModel<Categoria> listCategoria;
 	private List<Categoria> listCategoria;
-	
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -49,77 +46,78 @@ public class CategoriaBean {
 	}
 
 	@PostConstruct
-    public void init() {
+	public void init() {
 		categoriaDAO = new CategoriaDAO();
-		
+
 		limparCarregar();
-    }
-	
-	public String salvar(ActionEvent actionEvent) {
+	}
+
+	public String salvar() {
 		FacesMessage message = null;
 		try {
-			if(categoriaDAO.save(categoria) != null){
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso",  "Categoria cadastrada com sucesso!");
+			if (categoria.getId() != null) {
+				if (categoriaDAO.update(categoria)) {
+					message = new FacesMessage("Categoria Alterado com sucesso!");
+				}
+
+			} else {
+
+				if (categoriaDAO.save(categoria) != null) {
+					message = new FacesMessage("Categoria cadastrada com sucesso!");
+				}
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso",  e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso",  e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
 
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        
-        limparCarregar();
-        
+		if (message != null) {
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		limparCarregar();
+
 		return "categoria";
 	}
 
-	public String alterar() {
+	public String alterar(Categoria categoria) {
+
+		this.categoria = categoria;
+
 		return "categoria";
 	}
 
-	private Integer id;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void excluir() {		
+	public void excluir(Categoria categoria) {
 		FacesMessage message = null;
 		try {
-			if(categoriaDAO.delete(id)){
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso",  "Categoria excluída com sucesso!");
+			if (categoriaDAO.delete(categoria)) {
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Categoria excluída com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso",  e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso",  e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
-		
+
 		FacesContext.getCurrentInstance().addMessage(null, message);
-        
+
 		limparCarregar();
-		//return "categoria";
 	}
 
 	public String novo() {
 		limparCarregar();
-		
+
 		return "categoria";
 	}
-    
-    private void limparCarregar(){
-    	categoria = new Categoria();
-    	
-    	try {
+
+	private void limparCarregar() {
+		categoria = new Categoria();
+
+		try {
 			listCategoria = categoriaDAO.getAll();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -128,5 +126,5 @@ public class CategoriaBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 }

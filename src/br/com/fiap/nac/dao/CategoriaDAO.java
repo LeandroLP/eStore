@@ -150,34 +150,6 @@ public class CategoriaDAO implements GenericDAO<Categoria> {
 		return false;
 	}
 
-	public boolean delete(Integer id) throws ClassNotFoundException,
-			SQLException {
-		// TODO Auto-generated method stub
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String deleteSQL = "DELETE FROM CATEGORIA WHERE ID_CATEGORIA = ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, id);
-
-			// execute delete SQL stetement
-			if (preparedStatement.executeUpdate() == 1) {
-				return true;
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return false;
-	}
-
 	@Override
 	public boolean deleteAll() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
@@ -209,6 +181,28 @@ public class CategoriaDAO implements GenericDAO<Categoria> {
 	public boolean delete(Categoria object) throws ClassNotFoundException,
 			SQLException {
 		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String deleteSQL = "DELETE FROM CATEGORIA WHERE ID_CATEGORIA = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, object.getId());
+
+			// execute delete SQL stetement
+			if (preparedStatement.executeUpdate() == 1) {
+				return true;
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
 		return false;
 	}
 

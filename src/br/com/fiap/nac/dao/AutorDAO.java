@@ -11,51 +11,9 @@ import java.util.List;
 import br.com.fiap.nac.factory.ConnectionFactory;
 import br.com.fiap.nac.to.Autor;
 
-
 public class AutorDAO implements GenericDAO<Autor> {
 
-	public List<Autor> findAutores(int first, int pageSize) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		List<Autor> listAutores = new ArrayList<Autor>();
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String selectTableSQL = "SELECT * FROM AUTOR LIMIT ?, ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
-
-			preparedStatement.setInt(1, first);
-			preparedStatement.setInt(2, pageSize);
-
-			// execute select SQL stetement
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-				Autor autor = new Autor();
-				autor.setAutorId(rs.getInt("ID_AUTOR"));
-				autor.setNome(rs.getString("NOME"));
-				autor.setSobreNome(rs.getString("SOBRENOME"));
-				autor.setTelefone(rs.getString("TELEFONE"));
-				autor.setCpf(rs.getString("CPF"));
-				autor.setSexo(rs.getString("SEXO"));
-				autor.setEmail(rs.getString("EMAIL"));
-				autor.setIdade(rs.getInt("IDADE"));
-				autor.setNacionalidade(rs.getString("Nacionalidade"));
-				autor.setDescricao(rs.getString("DESCRICAO"));
-
-				listAutores.add(autor);
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return listAutores;
-	}
+	
 
 	@Override
 	public List<Autor> getAll() throws ClassNotFoundException, SQLException {
@@ -112,7 +70,7 @@ public class AutorDAO implements GenericDAO<Autor> {
 		ResultSet resultSet = null;
 
 		String insertTableSQL = "INSERT INTO AUTOR (NOME, SOBRENOME, TELEFONE, CPF, SEXO, EMAIL, IDADE,"
-								+ "NACIONALIDADE, DESCRICAO)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "NACIONALIDADE, DESCRICAO)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -127,15 +85,13 @@ public class AutorDAO implements GenericDAO<Autor> {
 			preparedStatement.setInt(7, object.getIdade());
 			preparedStatement.setString(8, object.getNacionalidade());
 			preparedStatement.setString(9, object.getDescricao());
-			
 
 			if (preparedStatement.executeUpdate() == 1) {
 				// execute insert SQL stetement
 				resultSet = preparedStatement.getGeneratedKeys();
-                if(resultSet.next())
-                {
-                	object.setAutorId(resultSet.getInt(1));
-                }
+				if (resultSet.next()) {
+					object.setAutorId(resultSet.getInt(1));
+				}
 				return object;
 			}
 		} finally {
@@ -163,12 +119,12 @@ public class AutorDAO implements GenericDAO<Autor> {
 			dbConnection = ConnectionFactory.getConnection();
 			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
 
-			preparedStatement.setInt(1, id);		
+			preparedStatement.setInt(1, id);
 
 			// execute select SQL stetement
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				
+
 				autor.setAutorId(rs.getInt("ID_AUTOR"));
 				autor.setNome(rs.getString("NOME"));
 				autor.setSobreNome(rs.getString("SOBRENOME"));
@@ -179,7 +135,7 @@ public class AutorDAO implements GenericDAO<Autor> {
 				autor.setIdade(rs.getInt("IDADE"));
 				autor.setNacionalidade(rs.getString("Nacionalidade"));
 				autor.setDescricao(rs.getString("DESCRICAO"));
-				
+
 			}
 		} finally {
 			if (preparedStatement != null) {
@@ -190,7 +146,7 @@ public class AutorDAO implements GenericDAO<Autor> {
 			}
 		}
 		return autor;
-		
+
 	}
 
 	@Override
@@ -199,8 +155,8 @@ public class AutorDAO implements GenericDAO<Autor> {
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String updateTableSQL = "UPDATE mydb.autor SET NOME = ?,SOBRENOME= ?,TELEFONE = ?,CPF = ?,SEXO = ?,EMAIL = ?,IDADE = ?,NACIONALIDADE = ?,"
-								+ "DESCRICAO = ? WHERE ID_AUTOR = ?;";
+		String updateTableSQL = "UPDATE autor SET NOME = ?,SOBRENOME= ?,TELEFONE = ?,CPF = ?,SEXO = ?,EMAIL = ?,IDADE = ?,NACIONALIDADE = ?,"
+				+ "DESCRICAO = ? WHERE ID_AUTOR = ?;";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -216,36 +172,8 @@ public class AutorDAO implements GenericDAO<Autor> {
 			preparedStatement.setString(8, object.getNacionalidade());
 			preparedStatement.setString(9, object.getDescricao());
 			preparedStatement.setInt(10, object.getAutorId());
-			
+
 			// execute update SQL stetement
-			if (preparedStatement.executeUpdate() == 1) {
-				return true;
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return false;
-	}
-
-	
-	public boolean delete(Integer id) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String deleteSQL = "DELETE FROM AUTOR WHERE ID_AUTOR = ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, id);
-
-			// execute delete SQL stetement
 			if (preparedStatement.executeUpdate() == 1) {
 				return true;
 			}
@@ -290,6 +218,28 @@ public class AutorDAO implements GenericDAO<Autor> {
 	@Override
 	public boolean delete(Autor object) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String deleteSQL = "DELETE FROM AUTOR WHERE ID_AUTOR = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, object.getAutorId());
+
+			// execute delete SQL stetement
+			if (preparedStatement.executeUpdate() == 1) {
+				return true;
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
 		return false;
 	}
 

@@ -3,273 +3,231 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Editora</title>
+	<title>Editoras</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
 </h:head>
 <h:body>
-	<h:form id="form">
-		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
-		<p:panel id="panel" header="Editora">
+	<h:form id="form" enctype="multipart/form-data">
+		<div class="container">
+			<div role="tabpanel">
 
-			<h:panelGrid columns="6">
-				<p:outputLabel value="Nome:" />
-				<p:inputText value="#{editoraBean.editora.nome}" required="true"
-					requiredMessage="Campo obrigatório" />
-				<p:ajax update="growl" event="keyup" />
+				<div class="table - responsive">
+					<div class="panel-heading">Cadastro de Editoras</div>
 
-				<p:outputLabel value="Razão Social:" />
-				<p:inputText value="#{editoraBean.editora.razaoSocial}"
-					required="true" requiredMessage="Campo obrigatório" />
-				<p:ajax update="growl" event="keyup" />
+					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
+						styleClass="alert alert-success" />
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Nome:" />
+							<h:inputText value="#{editoraBean.editora.nome}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Razão Social::" />
+							<h:inputText value="#{editoraBean.editora.razaoSocial}"
+								styleClass="form-control" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Telefone:" />
+							<h:inputText value="#{editoraBean.editora.telefone}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="CNPJ:" />
+							<h:inputText value="#{editoraBean.editora.cnpj}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputLabel value="IE:" />
+							<h:inputText value="#{editoraBean.editora.ie}"
+								styleClass="form-control" />
 
-				<p:outputLabel value="E-mail:" />
-				<p:inputText value="#{editoraBean.editora.email}" />
-			</h:panelGrid>
+						</div>
 
-			<h:panelGrid columns="6">
-				<p:outputLabel value="Telefone:" />
-				<p:inputText value="#{editoraBean.editora.telefone}" />
-				<p:outputLabel value="CNPJ:" />
-				<p:inputText value="#{editoraBean.editora.cnpj}" />
-				<p:outputLabel value="IE:" />
-				<p:inputText value="#{editoraBean.editora.ie}" />
-			</h:panelGrid>
+					</div>
+					<div class="row">
 
-			<h:panelGrid columns="6">
-				<p:outputLabel value="Site:" />
-				<p:inputText value="#{editoraBean.editora.site}" />
-				<p:outputLabel value="CEP:" />
-				<p:inputText value="#{editoraBean.editora.cep}" />
-				<p:outputLabel value="Endereço:" />
-				<p:inputText value="#{editoraBean.editora.endereco}" />
-			</h:panelGrid>
+						<div class="col-md-3">
+							<h:outputText value="E-mail:" />
+							<h:inputText value="#{editoraBean.editora.email}"
+								styleClass="form-control" />
 
-			<h:panelGrid columns="6">
-				<p:outputLabel value="Numero:" />
-				<p:inputText value="#{editoraBean.editora.numero}" />
-				<p:outputLabel value="Complemento:" />
-				<p:inputText value="#{editoraBean.editora.complemento}" />
-				<p:outputLabel value="Bairro:" />
-				<p:inputText value="#{editoraBean.editora.bairro}" />
-			</h:panelGrid>
+						</div>
+						<div class="col-md-5">
+							<h:outputLabel value="Site:" />
+							<h:inputText value="#{editoraBean.editora.site}"
+								styleClass="form-control" />
 
-			<h:panelGrid columns="4">
-				<p:outputLabel value="Cidade:" />
-				<p:inputText value="#{editoraBean.editora.cidade}" />
-				<p:outputLabel value="Estado:" />
-				<p:inputText value="#{editoraBean.editora.estado}" />
-			</h:panelGrid>
+						</div>
 
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar"
-					actionListener="#{editoraBean.salvar}" update="@form" />
-				<p:commandButton value="Novo" actionListener="#{editoraBean.novo}"
-					update="@form" />
-			</h:panelGrid>
+					</div>
+
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="CEP:" />
+							<h:inputText value="#{editoraBean.editora.cep}"
+								styleClass="form-control" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Endereço:" />
+							<h:inputText value="#{editoraBean.editora.endereco}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Numero:" />
+							<h:inputText value="#{editoraBean.editora.numero}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputLabel value="Complemento:" />
+							<h:inputText value="#{editoraBean.editora.complemento}"
+								styleClass="form-control" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Bairro:" />
+							<h:inputText value="#{editoraBean.editora.bairro}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Cidade:" />
+							<h:inputText value="#{editoraBean.editora.cidade}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputLabel value="Estado:" />
+							<h:inputText value="#{editoraBean.editora.estado}"
+								styleClass="form-control" />
+						</div>
+					</div>
 
 
-			<br />
-			<p:dataTable id="editoras" var="editora"
-			scrollable="true"
-				value="#{editoraBean.listEditora}" editable="true">
 
-				<f:facet name="header">
+
+					<hr></hr>
+					<div class="row">
+						<div class="col-md-1">
+							<h:commandButton value="Salvar" action="#{editoraBean.salvar}"
+								styleClass="btn btn-primary" />
+						</div>
+						<div class="col-md-1">
+
+							<h:commandButton value="Novo" action="#{editoraBean.novo}"
+								styleClass="btn btn-primary">
+								<f:ajax render="@form" resetValues="true" />
+							</h:commandButton>
+						</div>
+					</div>
+					<br />
+
+					<hr></hr>
+					<h:dataTable id="editoras" var="editora"
+						value="#{editoraBean.listEditora}" styleClass="table table-hover">
+
+						<f:facet name="header">
            			Editoras
        			</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{editoraBean.onRowEdit}"
-					process="@this" update=":form:growl" />
-				<p:ajax event="rowEditCancel" listener="#{editoraBean.onRowCancel}"
-					process="@this" update=":form:growl" />
+						<h:column>
+							<f:facet name="header">Editora ID</f:facet>
+							<h:outputText value="#{editora.editoraId}" />
+						</h:column>
 
-				<p:column headerText="Editora Id" style="width:100%">
-					<!--<p:cellEditor>-->
-					<h:outputText value="#{editora.editoraId}" />
-					<!--<f:facet name="input"><p:inputText id="modelInput" value="#{categoria.id}" style="width:100%"/></f:facet>
-           			</p:cellEditor>-->
-				</p:column>
-				<p:column headerText="Nome" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						<h:column>
+
+							<f:facet name="header">Nome</f:facet>
 							<h:outputText value="#{editora.nome}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.nome}" style="width:100%"
-								label="Nome" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="Razão Social" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Razão Social</f:facet>
 							<h:outputText value="#{editora.razaoSocial}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.razaoSocial}" style="width:100%"
-								label="Razão Social" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="E-mail" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{editora.email}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.email}" style="width:100%"
-								label="E-mail" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="Telefone" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Telefone</f:facet>
 							<h:outputText value="#{editora.telefone}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.telefone}" style="width:100%"
-								label="Telefone" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="CNPJ" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">CNPJ</f:facet>
 							<h:outputText value="#{editora.cnpj}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.cnpj}" style="width:100%"
-								label="CNPJ" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
-				<p:column headerText="IE" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						<h:column>
+							<f:facet name="header">IE</f:facet>
 							<h:outputText value="#{editora.ie}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.ie}" style="width:100%" label="IE" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
+						<h:column>
+							<f:facet name="header">E-mail</f:facet>
+							<h:outputText value="#{editora.email}" />
+						</h:column>
 
-
-				<p:column headerText="Site" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						<h:column>
+							<f:facet name="header">Site</f:facet>
 							<h:outputText value="#{editora.site}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.site}" style="width:100%"
-								label="Site" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
-				<p:column headerText="CEP" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						<h:column>
+							<f:facet name="header">CEP</f:facet>
 							<h:outputText value="#{editora.cep}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.cep}" style="width:100%"
-								label="CEP" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
-				<p:column headerText="Endereço">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{editora.endereco}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.endereco}"
-								label="Endereço" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						<h:column>
+							<f:facet name="header">Endereço</f:facet>
+							<h:outputText value="#{editora.cep}" />
+						</h:column>
 
-				<p:column headerText="Número" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						<h:column>
+							<f:facet name="header">Número</f:facet>
 							<h:outputText value="#{editora.numero}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.numero}" style="width:100%"
-								label="Número" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
-				<p:column headerText="Complemento" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{editora.complemento}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.complemento}" style="width:100%"
-								label="Complemento" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column headerText="Bairro" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+						<h:column>
+							<f:facet name="header">Bairro</f:facet>
 							<h:outputText value="#{editora.bairro}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.bairro}" style="width:100%"
-								label="Bairro" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
-				<p:column headerText="Cidade" style="width:100%">
-					<p:cellEditor>
-						<f:facet name="output">
+
+						<h:column>
+							<f:facet name="header">Cidade</f:facet>
 							<h:outputText value="#{editora.cidade}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.cidade}" style="width:100%"
-								label="Cidade" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
-				<p:column headerText="Estado">
-					<p:cellEditor>
-						<f:facet name="output">
+
+						<h:column>
+							<f:facet name="header">Estado</f:facet>
 							<h:outputText value="#{editora.estado}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{editora.estado}" style="width:100%"
-								label="Estado" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+						</h:column>
 
-				<p:column style="width:32px">
-					<p:rowEditor />
-				</p:column>
 
-				<p:column style="width:32px">
-					<p:commandLink action="#{editoraBean.excluir}"
-						class="ui-icon ui-icon-trash" update="@form" process="@this">
-						<f:setPropertyActionListener target="#{editoraBean.editoraId}"
-							value="#{editora.editoraId}" />
-					</p:commandLink>
-				</p:column>
-			</p:dataTable>
+						<h:column>
+							<f:facet name="header">Alterar</f:facet>
+							<h:commandLink value="Alterar"
+								action="#{editoraBean.alterar(editora)}" />
+						</h:column>
 
-		</p:panel>
+						<h:column>
+							<f:facet name="header">Excluir</f:facet>
+							<h:commandLink value="Excluir"
+								action="#{editoraBean.excluir(editora)}" />
+						</h:column>
+					</h:dataTable>
+				</div>
+			</div>
+		</div>
 	</h:form>
 </h:body>
 </html>

@@ -7,148 +7,230 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Livro</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
 </h:head>
 <h:body>
 	<h:form id="form" enctype="multipart/form-data">
-		<h:messages id="growl" showDetail="true" life="3000" sticky="false" />
-		<h:panelGrid columns="4">
-			<h:outputText value="Título:" />
-			<h:inputText value="#{livroBean.livro.titulo}" required="true"
-				requiredMessage="Favor informar o nome" />
-			<h:outputText value="Descrição:" />
-			<h:inputText value="#{livroBean.livro.descricao}" />
-			<h:outputText value="Valor:" />
-			<h:inputText value="#{livroBean.livro.valor}" />
-			<h:outputText value="ISBN:" />
-			<h:inputText value="#{livroBean.livro.isbn}" />
-		</h:panelGrid>
+		<div class="container">
+			<div role="tabpanel">
 
-		<h:panelGrid columns="2">
-			<h:outputText value="Número de Páginas:" />
-			<h:inputText value="#{livroBean.livro.numeroPaginas}" />
-		</h:panelGrid>
+				<div class="table - responsive">
+					<div class="panel-heading">Cadastro de Livros</div>
 
-		<h:panelGrid columns="4">
-			<h:outputText value="Curtidas:" />
-			<h:inputText value="#{livroBean.livro.curtidas}" />
-			<h:outputText value="Ano:" />
-			<h:inputText value="#{livroBean.livro.ano}" />
-			<h:outputLabel value="Idioma:" />
-			<h:inputText value="#{livroBean.livro.idioma}" />
+					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
+						styleClass="alert alert-success" />
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Título:" />
+							<h:inputText value="#{livroBean.livro.titulo}"
+								styleClass="form-control" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-9">
+							<h:outputText value="Descrição:" />
+							<h:inputTextarea value="#{livroBean.livro.descricao}"
+								styleClass="form-control">
+								<f:validateLength maximum="500" />
+							</h:inputTextarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="ISBN:" />
+							<h:inputText value="#{livroBean.livro.isbn}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Número de Páginas:" />
+							<h:inputText value="#{livroBean.livro.numeroPaginas}"
+								styleClass="form-control" />
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Curtidas:" />
+							<h:inputText value="#{livroBean.livro.curtidas}"
+								styleClass="form-control" />
+						</div>
 
-		</h:panelGrid>
+					</div>
+					<div class="row">
 
-		<h:panelGrid columns="2">
-			<h:outputLabel value="Imagem:" />
-			<h:inputFile value="#{livroBean.file}" />
-		</h:panelGrid>
+						<div class="col-md-3">
+							<h:outputText value="Ano:" />
+							<h:inputText value="#{livroBean.livro.ano}"
+								styleClass="form-control" />
 
-		<h:panelGrid columns="4">
-			<h:outputText value="Autor:" />
-			<h:selectOneMenu value="#{livroBean.livro.autorId}">
-				<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
-					itemValue="#{livroBean.livro.autorId}" />
-				<f:selectItems value="#{livroBean.livro.listAutor}" var="autores"
-					itemValue="#{autores.autorId}" itemLabel="#{autores.nome}" />
-			</h:selectOneMenu>
-			<h:outputText value="Categoria:" />
-			<h:selectOneMenu value="#{livroBean.livro.categoriaId}">
-				<f:selectItems value="#{livroBean.livro.listCategoria}"
-					var="categorias" itemValue="#{categorias.id}"
-					itemLabel="#{categorias.descricao}" />
-			</h:selectOneMenu>
+						</div>
+						<div class="col-md-3">
+							<h:outputLabel value="Idioma:" />
+							<h:inputText value="#{livroBean.livro.idioma}"
+								styleClass="form-control" />
 
-			<h:outputText value="Editora:" />
-			<h:selectOneMenu value="#{livroBean.livro.editoraId}">
-				<f:selectItems value="#{livroBean.livro.listEditora}" var="editoras"
-					itemValue="#{editoras.editoraId}" itemLabel="#{editoras.nome}" />
-			</h:selectOneMenu>
+						</div>
+						<div class="col-md-3">
 
-			<h:outputText value="Genero:" />
-			<h:selectOneMenu value="#{livroBean.livro.generoId}">
-				<f:selectItems value="#{livroBean.livro.listGenero}" var="generos"
-					itemValue="#{generos.id}" itemLabel="#{generos.descricao}" />
-			</h:selectOneMenu>
-		</h:panelGrid>
+							<h:outputText value="Valor:" />
+							<h:inputText value="#{livroBean.livro.valor}"
+								styleClass="form-control" />
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<h:outputLabel value="Imagem:" />
+							<h:inputFile value="#{livroBean.file}" styleClass="form-control" />
+						</div>
+					</div>
 
 
-		<h:panelGrid columns="2">
-			<h:commandButton value="Salvar" action="#{livroBean.salvar}" />
-			<h:commandButton value="Novo" action="#{livroBean.novo}">
-				<f:ajax render="@form" resetValues="true" />
-			</h:commandButton>
-		</h:panelGrid>
-		<br />
+					<div class="row">
 
+						<div class="col-md-3">
+							<h:outputText value="Autor:" />
+							<h:selectOneMenu value="#{livroBean.livro.autorId}"
+								styleClass="form-control">
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+									itemValue="#{livroBean.livro.autorId}" />
+								<f:selectItems value="#{livroBean.livro.listAutor}"
+									var="autores" itemValue="#{autores.autorId}"
+									itemLabel="#{autores.nome}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Categoria:" />
+							<h:selectOneMenu value="#{livroBean.livro.categoriaId}"
+								styleClass="form-control">
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+									itemValue="#{livroBean.livro.categoriaId}" />
+								<f:selectItems value="#{livroBean.livro.listCategoria}"
+									var="categorias" itemValue="#{categorias.id}"
+									itemLabel="#{categorias.descricao}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<h:outputText value="Editora:" />
+							<h:selectOneMenu value="#{livroBean.livro.editoraId}"
+								styleClass="form-control">
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+									itemValue="#{livroBean.livro.editoraId}" />
+								<f:selectItems value="#{livroBean.livro.listEditora}"
+									var="editoras" itemValue="#{editoras.editoraId}"
+									itemLabel="#{editoras.nome}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-md-3">
+							<h:outputText value="Genero:" />
+							<h:selectOneMenu value="#{livroBean.livro.generoId}"
+								styleClass="form-control">
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+									itemValue="#{livroBean.livro.generoId}" />
+								<f:selectItems value="#{livroBean.livro.listGenero}"
+									var="generos" itemValue="#{generos.id}"
+									itemLabel="#{generos.descricao}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
 
-		<h:dataTable id="livros" var="livro" value="#{livroBean.listLivro}">
+					<hr></hr>
+					<div class="row">
+						<div class="col-md-1">
+							<h:commandButton value="Salvar" action="#{livroBean.salvar}"
+								styleClass="btn btn-primary" />
+						</div>
+						<div class="col-md-1">
 
-			<f:facet name="header">
+							<h:commandButton value="Novo" action="#{ 	livroBean.novo}"
+								styleClass="btn btn-primary">
+								<f:ajax render="@form" resetValues="true" />
+							</h:commandButton>
+						</div>
+					</div>
+					<br />
+
+					<hr></hr>
+					<h:dataTable id="livros" var="livro" value="#{livroBean.listLivro}"
+						styleClass="table table-hover">
+
+						<f:facet name="header">
            			Livros
        			</f:facet>
 
-			<h:column>
-				<f:facet name="header">Livro ID</f:facet>
-				<h:outputText value="#{livro.livroId}" />
-			</h:column>
+						<h:column>
+							<f:facet name="header">Livro ID</f:facet>
+							<h:outputText value="#{livro.livroId}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Título</f:facet>
-				<h:outputText value="#{livro.titulo}" />
-			</h:column>
+						<h:column>
 
-			<h:column>
-				<f:facet name="header">Valor</f:facet>
-				<h:outputText value="#{livro.valor}" />
-			</h:column>
+							<f:facet name="header">Título</f:facet>
+							<h:outputText value="#{livro.titulo}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">ISBN</f:facet>
-				<h:outputText value="#{livro.isbn}" />
-			</h:column>
+						<h:column>
+							<f:facet name="header">Valor</f:facet>
+							<h:outputText value="#{livro.valor}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Número de Páginas</f:facet>
-				<h:outputText value="#{livro.numeroPaginas}" />
-			</h:column>
+						<h:column>
+							<f:facet name="header">ISBN</f:facet>
+							<h:outputText value="#{livro.isbn}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Curtidas</f:facet>
-				<h:outputText value="#{livro.curtidas}" />
-			</h:column>
+						<h:column>
+							<f:facet name="header">NºPáginas</f:facet>
+							<h:outputText value="#{livro.numeroPaginas}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Ano</f:facet>
-				<h:outputText value="#{livro.ano}" />
-			</h:column>
+						<h:column>
+							<f:facet name="header">Curtidas</f:facet>
+							<h:outputText value="#{livro.curtidas}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Idioma</f:facet>
-				<h:outputText value="#{livro.idioma}" />
-			</h:column>
+						<h:column>
+							<f:facet name="header">Ano</f:facet>
+							<h:outputText value="#{livro.ano}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Descrição</f:facet>
-				<h:outputText value="#{livro.descricao}" />
-			</h:column>
+						<h:column>
+							<f:facet name="header">Idioma</f:facet>
+							<h:outputText value="#{livro.idioma}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Imagem</f:facet>
-				<h:graphicImage value="data:image/jpg;base64,#{livro.imagem2}" />
-			</h:column>
+						<!-- 
+						<h:column>
+							<f:facet name="header">Descrição</f:facet>
+							<h:outputText value="#{livro.descricao}">
+							</h:outputText>
+						</h:column>
+						 -->
 
-			<h:column>
-				<f:facet name="header">Alterar</f:facet>
+						<h:column>
+							<f:facet name="header">Imagem</f:facet>
+							<h:graphicImage value="data:image/jpg;base64,#{livro.imagem2}"
+								height="50px" width="50px" />
+						</h:column>
 
-			</h:column>
+						<h:column>
+							<f:facet name="header">Alterar</f:facet>
+							<h:commandLink value="Alterar"
+								action="#{livroBean.alterar(livro)}" />
+						</h:column>
 
-			<h:column>
-				<f:facet name="header">Ações</f:facet>
-				<h:commandLink value="Alterar" action="#{livroBean.alterar(livro)}" />
-				<h:commandLink value="Exluir" action="#{livroBean.excluir(livro)}" />
-			</h:column>
-		</h:dataTable>
+						<h:column>
+							<f:facet name="header">Excluir</f:facet>
+							<h:commandLink value="Excluir"
+								action="#{livroBean.excluir(livro)}" />
+						</h:column>
+					</h:dataTable>
+				</div>
+			</div>
+		</div>
 	</h:form>
-
 </h:body>
 </html>

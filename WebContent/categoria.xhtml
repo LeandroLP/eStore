@@ -1,71 +1,87 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      template="padrao.xhtml">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-        <title>eStore</title>		 
-    </h:head>
-    <ui:define name="centro">
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Categorias</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 
-	<h:form id="form">
-		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
+</h:head>
+<h:body>
+	<h:form id="form" enctype="multipart/form-data">
+		<div class="container">
+			<div role="tabpanel">
+				<div class="table - responsive">
+					<div class="panel-heading">Cadastro de Categorias</div>
 
-		<p:panel id="panel" header="Categoria">
+					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
+						styleClass="alert alert-success" />
+					<div class="row">
+						<div class="col-md-6">
+							<h:outputText value="Descrição:" />
+							<h:inputText value="#{categoriaBean.categoria.descricao}"
+								styleClass="form-control" />
+						</div>
+					</div>
 
-			<h:panelGrid columns="2">
+					<hr></hr>
+					<div class="row">
+						<div class="col-md-1">
+							<h:commandButton value="Salvar" action="#{categoriaBean.salvar}"
+								styleClass="btn btn-primary" />
+						</div>
+						<div class="col-md-1">
 
-				<p:outputLabel value="Descrição:" />
-				<p:inputText id="descricao" value="#{categoriaBean.categoria.descricao}" required="true" requiredMessage="Campo obrigatório">
-					<f:validateLength minimum="2" />
-                	<p:ajax update="growl" event="keyup" />
-            	</p:inputText>
-			</h:panelGrid>
+							<h:commandButton value="Novo" action="#{categoriaBean.novo}"
+								styleClass="btn btn-primary">
+								<f:ajax render="@form" resetValues="true" />
+							</h:commandButton>
+						</div>
+					</div>
+					<br />
 
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{categoriaBean.salvar}" update="@form" />
-				<p:commandButton value="Novo" actionListener="#{categoriaBean.novo}" update="@form" />
-			</h:panelGrid>
-			<br/>
-			
-			<p:dataTable id="categorias" var="categoria" value="#{categoriaBean.listCategoria}"
-				editable="true">
-				
-				<f:facet name="header">
-           			Row Editing
+					<hr></hr>
+					<h:dataTable id="categorias" var="categoria"
+						value="#{categoriaBean.listCategoria}"
+						styleClass="table table-hover">
+
+						<f:facet name="header">
+           			Categorias
        			</f:facet>
-       			
-       			<p:ajax event="rowEdit" listener="#{categoriaBean.onRowEdit}" process="@this" update=":form:growl" />
-       			<p:ajax event="rowEditCancel" listener="#{categoriaBean.onRowCancel}" process="@this" update=":form:growl" />
-       			
-       			<p:column headerText="Id" style="width:100%">
-       			<!--<p:cellEditor>-->
-           				<h:outputText value="#{categoria.id}" />
-           				<!--<f:facet name="input"><p:inputText id="modelInput" value="#{categoria.id}" style="width:100%"/></f:facet>
-           			</p:cellEditor>-->
-       			</p:column>
-       			<p:column headerText="Descrição" style="width:100%">
-       				<p:cellEditor>
-           				<f:facet name="output"><h:outputText value="#{categoria.descricao}" /></f:facet>
-           				<f:facet name="input"><p:inputText value="#{categoria.descricao}" style="width:100%" label="Descrição"/></f:facet>
-           			</p:cellEditor>
-       			</p:column>
-       			
-       			<p:column style="width:32px">
-           			<p:rowEditor />
-       			</p:column>
-       			
-       			<p:column style="width:32px">
-       				<p:commandLink action="#{categoriaBean.excluir}" class="ui-icon ui-icon-trash" update="@form" process="@this">
-						<f:setPropertyActionListener target="#{categoriaBean.id}" value="#{categoria.id}" />
-					</p:commandLink>        			
-       			</p:column>
-   			</p:dataTable>
-		</p:panel>
-	</h:form>
 
-</ui:define>
-</ui:composition>
+						<h:column>
+							<f:facet name="header">Categoria ID</f:facet>
+							<h:outputText value="#{categoria.id}" />
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">Descricao</f:facet>
+							<h:outputText value="#{categoria.descricao}" />
+						</h:column>
+
+
+
+						<h:column>
+							<f:facet name="header">Alterar</f:facet>
+							<h:commandLink value="Alterar"
+								action="#{categoriaBean.alterar(categoria)}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Excluir</f:facet>
+							<h:commandLink value="Excluir"
+								action="#{categoriaBean.excluir(categoria)}" />
+						</h:column>
+					</h:dataTable>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

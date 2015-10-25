@@ -3,69 +3,85 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Genero</title>
+	<title>Generos</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
 </h:head>
 <h:body>
+	<h:form id="form" enctype="multipart/form-data">
+		<div class="container">
+			<div role="tabpanel">
+				<div class="table - responsive">
+					<div class="panel-heading">Cadastro de Generos</div>
 
-	<h:form id="form">
-		<p:growl id="growl" showDetail="true" life="3000" sticky="false" />
+					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
+						styleClass="alert alert-success" />
+					<div class="row">
+						<div class="col-md-6">
+							<h:outputText value="Descrição:" />
+							<h:inputText value="#{generoBean.genero.descricao}"
+								styleClass="form-control" />
+						</div>
+					</div>
 
-		<p:panel id="panel" header="Genero">
+					<hr></hr>
+					<div class="row">
+						<div class="col-md-1">
+							<h:commandButton value="Salvar" action="#{generoBean.salvar}"
+								styleClass="btn btn-primary" />
+						</div>
+						<div class="col-md-1">
 
-			<h:panelGrid columns="2">
+							<h:commandButton value="Novo" action="#{generoBean.novo}"
+								styleClass="btn btn-primary">
+								<f:ajax render="@form" resetValues="true" />
+							</h:commandButton>
+						</div>
+					</div>
+					<br />
 
-				<p:outputLabel value="Descrição:" />
-				<p:inputText id="descricao" value="#{generoBean.genero.descricao}" required="true" requiredMessage="Campo obrigatório">
-					<f:validateLength minimum="2" />
-                	<p:ajax update="growl" event="keyup" />
-            	</p:inputText>
-			</h:panelGrid>
+					<hr></hr>
+					<h:dataTable id="generos" var="genero"
+						value="#{generoBean.listGenero}"
+						styleClass="table table-hover">
 
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{generoBean.salvar}" update="@form" />
-				<p:commandButton value="Novo" actionListener="#{generoBean.novo}" update="@form" />
-			</h:panelGrid>
-			<br/>
-			
-			<p:dataTable id="generos" var="genero" value="#{generoBean.listGenero}"
-				editable="true">
-				
-				<f:facet name="header">
+						<f:facet name="header">
            			Generos
        			</f:facet>
-       			
-       			<p:ajax event="rowEdit" listener="#{generoBean.onRowEdit}" process="@this" update=":form:growl" />
-       			<p:ajax event="rowEditCancel" listener="#{generoBean.onRowCancel}" process="@this" update=":form:growl" />
-       			
-       			<p:column headerText="Id" style="width:100%">
-       			<!--<p:cellEditor>-->
-           				<h:outputText value="#{genero.id}" />
-           				<!--<f:facet name="input"><p:inputText id="modelInput" value="#{genero.id}" style="width:100%"/></f:facet>
-           			</p:cellEditor>-->
-       			</p:column>
-       			<p:column headerText="Descrição" style="width:100%">
-       				<p:cellEditor>
-           				<f:facet name="output"><h:outputText value="#{genero.descricao}" /></f:facet>
-           				<f:facet name="input"><p:inputText value="#{genero.descricao}" style="width:100%" label="Descrição"/></f:facet>
-           			</p:cellEditor>
-       			</p:column>
-       			
-       			<p:column style="width:32px">
-           			<p:rowEditor />
-       			</p:column>
-       			
-       			<p:column style="width:32px">
-       				<p:commandLink action="#{generoBean.excluir}" class="ui-icon ui-icon-trash" update="@form" process="@this">
-						<f:setPropertyActionListener target="#{generoBean.id}" value="#{genero.id}" />
-					</p:commandLink>        			
-       			</p:column>
-   			</p:dataTable>
-		</p:panel>
-	</h:form>
 
+						<h:column>
+							<f:facet name="header">Categoria ID</f:facet>
+							<h:outputText value="#{genero.id}" />
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">Descricao</f:facet>
+							<h:outputText value="#{genero.descricao}" />
+						</h:column>
+
+
+
+						<h:column>
+							<f:facet name="header">Alterar</f:facet>
+							<h:commandLink value="Alterar"
+								action="#{generoBean.alterar(genero)}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Excluir</f:facet>
+							<h:commandLink value="Excluir"
+								action="#{generoBean.excluir(genero)}" />
+						</h:column>
+					</h:dataTable>
+				</div>
+			</div>
+		</div>
+	</h:form>
 </h:body>
 </html>

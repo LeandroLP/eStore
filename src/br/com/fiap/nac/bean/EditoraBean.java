@@ -56,51 +56,54 @@ public class EditoraBean {
 
 		FacesMessage message = null;
 		try {
-			if (editoraDAO.save(editora) != null) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Editora cadastrado com sucesso!");
+			if (editora.getEditoraId() != null) {
+
+				if (editoraDAO.update(editora)) {
+					message = new FacesMessage("Editora Alterada com sucesso!");
+				}
+
+			} else {
+
+				if (editoraDAO.save(editora) != null) {
+					message = new FacesMessage("Editora cadastrado com sucesso!");
+				}
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage("Aviso", e.getMessage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage("Aviso", e.getMessage());
 		}
 
-		FacesContext.getCurrentInstance().addMessage(null, message);
-
+		if (message != null) {
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
 		limparCarregar();
 
 		return "editora";
 	}
 
-	public String alterar() {
+	public String alterar(Editora editora) {
+
+		this.editora = editora;
 		return "editora";
 	}
 
-	private Integer editoraId;
-
-	public Integer getEditoraId() {
-		return editoraId;
-	}
-
-	public void setEditoraId(Integer editoraId) {
-		this.editoraId = editoraId;
-	}
-
-	public void excluir() {
+	
+	public void excluir(Editora editora) {
 
 		FacesMessage message = null;
 		try {
-			if (editoraDAO.delete(editoraId)) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Editora excluída com sucesso!");
+			if (editoraDAO.delete(editora)) {
+				message = new FacesMessage("Editora excluída com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage("Aviso", e.getMessage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage("Aviso", e.getMessage());
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, message);

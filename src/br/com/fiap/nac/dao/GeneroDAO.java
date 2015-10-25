@@ -14,8 +14,7 @@ import br.com.fiap.nac.to.Genero;
 public class GeneroDAO implements GenericDAO<Genero> {
 
 	@Override
-	public List<Genero> getAll() throws ClassNotFoundException,
-			SQLException {
+	public List<Genero> getAll() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		List<Genero> listGenero = new ArrayList<Genero>();
 		Connection dbConnection = null;
@@ -48,15 +47,13 @@ public class GeneroDAO implements GenericDAO<Genero> {
 	}
 
 	@Override
-	public Genero save(Genero object)
-			throws ClassNotFoundException, SQLException {
+	public Genero save(Genero object) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
-		String insertTableSQL = "INSERT INTO GENERO"
-				+ "(DESCRICAO) VALUES" + "(?);";
+		String insertTableSQL = "INSERT INTO GENERO" + "(DESCRICAO) VALUES" + "(?);";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -67,10 +64,9 @@ public class GeneroDAO implements GenericDAO<Genero> {
 			if (preparedStatement.executeUpdate() == 1) {
 				// execute insert SQL stetement
 				resultSet = preparedStatement.getGeneratedKeys();
-                if(resultSet.next())
-                {
-                	object.setId(resultSet.getInt(1));
-                }
+				if (resultSet.next()) {
+					object.setId(resultSet.getInt(1));
+				}
 				return object;
 			}
 		} finally {
@@ -85,8 +81,7 @@ public class GeneroDAO implements GenericDAO<Genero> {
 	}
 
 	@Override
-	public Genero get(Integer id) throws ClassNotFoundException,
-			SQLException {
+	public Genero get(Integer id) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
@@ -98,7 +93,7 @@ public class GeneroDAO implements GenericDAO<Genero> {
 			preparedStatement = dbConnection.prepareStatement(selectTableSQL, Statement.RETURN_GENERATED_KEYS);
 
 			preparedStatement.setInt(1, id);
-			
+
 			// execute select SQL stetement
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
@@ -109,7 +104,7 @@ public class GeneroDAO implements GenericDAO<Genero> {
 			}
 		} finally {
 			if (preparedStatement != null) {
-				preparedStatement.close(); 
+				preparedStatement.close();
 			}
 			if (dbConnection != null) {
 				dbConnection.close();
@@ -119,14 +114,12 @@ public class GeneroDAO implements GenericDAO<Genero> {
 	}
 
 	@Override
-	public boolean update(Genero object) throws ClassNotFoundException,
-			SQLException {
+	public boolean update(Genero object) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String updateTableSQL = "UPDATE GENERO SET DESCRICAO = ? "
-				+ " WHERE ID_GENERO = ?;";
+		String updateTableSQL = "UPDATE GENERO SET DESCRICAO = ? " + " WHERE ID_GENERO = ?;";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -136,34 +129,6 @@ public class GeneroDAO implements GenericDAO<Genero> {
 			preparedStatement.setInt(2, object.getId());
 
 			// execute update SQL stetement
-			if (preparedStatement.executeUpdate() == 1) {
-				return true;
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return false;
-	}
-
-	public boolean delete(Integer id) throws ClassNotFoundException,
-			SQLException {
-		// TODO Auto-generated method stub
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String deleteSQL = "DELETE FROM GENERO WHERE ID_GENERO = ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, id);
-
-			// execute delete SQL stetement
 			if (preparedStatement.executeUpdate() == 1) {
 				return true;
 			}
@@ -206,9 +171,30 @@ public class GeneroDAO implements GenericDAO<Genero> {
 	}
 
 	@Override
-	public boolean delete(Genero object) throws ClassNotFoundException,
-			SQLException {
+	public boolean delete(Genero object) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String deleteSQL = "DELETE FROM GENERO WHERE ID_GENERO = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, object.getId());
+
+			// execute delete SQL stetement
+			if (preparedStatement.executeUpdate() == 1) {
+				return true;
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
 		return false;
 	}
 

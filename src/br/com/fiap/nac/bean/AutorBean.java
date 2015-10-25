@@ -3,7 +3,6 @@ package br.com.fiap.nac.bean;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -50,9 +49,6 @@ public class AutorBean {
 	@PostConstruct
 	public void init() {
 		autorDAO = new AutorDAO();
-
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		autor = new Autor();
 
 		setListAutor(new ArrayList<Autor>());
@@ -71,76 +67,59 @@ public class AutorBean {
 
 		FacesMessage message = null;
 		try {
-			if (autorDAO.save(autor) != null) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Autor cadastrado com sucesso!");
+			if (autor.getAutorId() != null) {
+
+				if (autorDAO.update(autor)) {
+					message = new FacesMessage("Autor Alterado com sucesso!");
+				}
+
+			} else {
+
+				if (autorDAO.save(autor) != null) {
+					message = new FacesMessage("Autor cadastrado com sucesso!");
+				}
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
 
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		if (message != null) {
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
 
 		limparCarregar();
 
 		return "autor";
 	}
 
-	public String alterar() {
+	public String alterar(Autor autor) {
+		this.autor = autor;
 		return "autor";
 	}
 
-	private Integer autorId;
-
-	public Integer getAutorId() {
-		return autorId;
-	}
-
-	public void setAutorId(Integer autorId) {
-		this.autorId = autorId;
-	}
-
-	public void excluir() {
+	public String excluir(Autor autor) {
 
 		FacesMessage message = null;
 		try {
-			if (autorDAO.delete(autorId)) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Autor excluída com sucesso!");
+			if (autorDAO.delete(autor)) {
+				message = new FacesMessage("Autor excluído com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 		limparCarregar();
-	}
-
-	public void excluir(Integer id) {
-
-		FacesMessage message = null;
-		try {
-			if (autorDAO.delete(id)) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Autor excluída com sucesso!");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
-		}
-
-		FacesContext.getCurrentInstance().addMessage(null, message);
-
-		limparCarregar();
+		return "autor";
 	}
 
 	public String novo() {

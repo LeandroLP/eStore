@@ -149,7 +149,7 @@ public class LivroBean {
 		FacesMessage message = null;
 		try {
 			if (livroDAO.delete(livro)) {
-				message = new FacesMessage("Autor excluída com sucesso!");
+				message = new FacesMessage("Livro excluido com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
