@@ -14,55 +14,6 @@ import br.com.fiap.nac.to.Usuario;
 
 public class UsuarioDAO implements GenericDAO<Usuario> {
 
-	public List<Usuario> findUsuarioes(int first, int pageSize) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		List<Usuario> listUsuarioes = new ArrayList<Usuario>();
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String selectTableSQL = "SELECT * FROM USUARIO LIMIT ?, ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
-
-			preparedStatement.setInt(1, first);
-			preparedStatement.setInt(2, pageSize);
-
-			// execute select SQL stetement
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-				Usuario usuario = new Usuario();
-
-				usuario.setUsuarioId(rs.getInt("ID_USUARIO"));
-				usuario.setNome(rs.getString("NOME"));
-				usuario.setCpf(rs.getString("CPF_CNPJ"));
-				usuario.setEmail(rs.getString("EMAIL"));
-				usuario.setSexo(rs.getString("SEXO"));
-				usuario.setTelefone(rs.getString("TELEFONE"));
-				usuario.setCep(rs.getString("CEP"));
-				usuario.setLogradouro(rs.getString("LOGRADOURO"));
-				usuario.setBairro(rs.getString("BAIRRO"));
-				usuario.setNumero(rs.getString("NUMERO"));
-				usuario.setLogin(rs.getString("LOGIN"));
-				usuario.setSenha(rs.getString("SENHA"));
-				usuario.setCidade(rs.getString("CIDADE"));
-				usuario.setEstado(rs.getString("ESTADO"));
-				usuario.setTipoAcessoId(rs.getInt("ID_TIPO_ACESSO"));
-
-				listUsuarioes.add(usuario);
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return listUsuarioes;
-	}
-
 	@Override
 	public List<Usuario> getAll() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
@@ -122,9 +73,9 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
-		String insertTableSQL = "INSERT INTO `mydb`.`usuario` (`ID_USUARIO`,`NOME`,`CPF_CNPJ`,`EMAIL`,`SEXO`,`TELEFONE`,"
-				+ "`CEP`,`LOGRADOURO`,`BAIRRO`,`NUMERO`,`LOGIN`,`SENHA`,`CIDADE`,`ESTADO`,`ID_TIPO_ACESSO`)"
-				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String insertTableSQL = "INSERT INTO USUARIO (NOME, CPF_CNPJ, EMAIL, SEXO, TELEFONE,"
+				+ "CEP, LOGRADOURO, BAIRRO, NUMERO, LOGIN, SENHA, CIDADE, ESTADO, ID_TIPO_ACESSO)"
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -219,9 +170,9 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String updateTableSQL = "UPDATE `mydb`.`usuario` SET `ID_USUARIO` =?,`NOME` = ?,`CPF_CNPJ` = ?,`EMAIL` = ?,`SEXO` = ?,"
-				+ "`TELEFONE` = ?,`CEP` = ?,`LOGRADOURO` = ?,`BAIRRO` = ?,`NUMERO` = ?,`LOGIN` = ?,`SENHA` = ?,"
-				+ "`CIDADE` = ?,`ESTADO` = ?,`ID_TIPO_ACESSO` = ? WHERE `ID_USUARIO` = ?;";
+		String updateTableSQL = "UPDATE USUARIO SET NOME = ?, CPF_CNPJ = ?, EMAIL = ?, SEXO = ?,"
+				+ "TELEFONE = ?, CEP = ?, LOGRADOURO = ?, BAIRRO = ?, NUMERO = ?, LOGIN = ?, SENHA = ?,"
+				+ "CIDADE = ?, ESTADO = ?, ID_TIPO_ACESSO = ? WHERE ID_USUARIO = ?;";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -241,35 +192,9 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 			preparedStatement.setString(12, object.getCidade());
 			preparedStatement.setString(13, object.getEstado());
 			preparedStatement.setInt(14, object.getTipoAcessoId());
+			preparedStatement.setInt(15, object.getUsuarioId());
 
 			// execute update SQL stetement
-			if (preparedStatement.executeUpdate() == 1) {
-				return true;
-			}
-		} finally {
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-			if (dbConnection != null) {
-				dbConnection.close();
-			}
-		}
-		return false;
-	}
-
-	public boolean delete(Integer id) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-
-		String deleteSQL = "DELETE FROM USUARIO WHERE ID_USUARIO = ?;";
-
-		try {
-			dbConnection = ConnectionFactory.getConnection();
-			preparedStatement = dbConnection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, id);
-
-			// execute delete SQL stetement
 			if (preparedStatement.executeUpdate() == 1) {
 				return true;
 			}
@@ -318,7 +243,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String deleteSQL = "SELECT * FROM usuario WHERE LOGIN = ? AND SENHA = ?";
+		String deleteSQL = "SELECT * FROM USUARIO WHERE LOGIN = ? AND SENHA = ?";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -366,7 +291,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 		Statement statement = null;
 		PreparedStatement preparedStatement = null;
 
-		String selectTableSQL = "SELECT * FROM USUARIO";
+		String selectTableSQL = "SELECT * FROM TIPO_ACESSO";
 
 		try {
 
@@ -379,8 +304,8 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 
 				TipoAcesso tipoAcesso = new TipoAcesso();
 
-				tipoAcesso.setIdTipoAcesso(rs.getInt(""));
-				tipoAcesso.setDescricao(rs.getString(""));
+				tipoAcesso.setIdTipoAcesso(rs.getInt("ID_TIPO_ACESSO"));
+				tipoAcesso.setDescricao(rs.getString("DESCRICAO"));
 
 				listaTipoAcesso.add(tipoAcesso);
 			}
@@ -399,6 +324,29 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 	@Override
 	public boolean delete(Usuario object) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String deleteSQL = "DELETE FROM USUARIO WHERE ID_USUARIO = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, object.getUsuarioId());
+
+			// execute delete SQL stetement
+			if (preparedStatement.executeUpdate() == 1) {
+				return true;
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
 		return false;
 	}
 }

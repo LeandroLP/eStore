@@ -18,7 +18,6 @@ import br.com.fiap.nac.to.Autor;
 public class AutorBean {
 
 	private Autor autor;
-	// private LazyDataModel<Autor> listAutor;
 	private AutorDAO autorDAO;
 	private List<Autor> listAutor;
 

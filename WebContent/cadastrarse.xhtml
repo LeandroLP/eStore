@@ -134,59 +134,6 @@
 							</h:commandButton>
 						</div>
 					</div>
-					<br />
-
-					<hr></hr>
-					<h:dataTable id="usuarios" var="usuario"
-						value="#{usuarioBean.listUsuario}" styleClass="table table-hover">
-
-						<f:facet name="header">
-           			Usuarios
-       			</f:facet>
-
-						<h:column>
-							<f:facet name="header">Usuário ID</f:facet>
-							<h:outputText value="#{usuario.usuarioId}" />
-						</h:column>
-
-						<h:column>
-
-							<f:facet name="header">Nome</f:facet>
-							<h:outputText value="#{usuario.nome}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">CPF</f:facet>
-							<h:outputText value="#{usuario.cpf}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">E-mail</f:facet>
-							<h:outputText value="#{usuario.email}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Sexo</f:facet>
-							<h:outputText value="#{usuario.sexo}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Telefone</f:facet>
-							<h:outputText value="#{usuario.telefone}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Alterar</f:facet>
-							<h:commandLink value="Alterar"
-								action="#{usuarioBean.alterar(usuario)}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Excluir</f:facet>
-							<h:commandLink value="Excluir"
-								action="#{usuarioBean.excluir(usuario)}" />
-						</h:column>
-					</h:dataTable>
 				</div>
 			</div>
 		</div>

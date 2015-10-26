@@ -2,19 +2,20 @@ package br.com.fiap.nac.bean;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import br.com.fiap.nac.dao.UsuarioDAO;
 import br.com.fiap.nac.to.TipoAcesso;
 import br.com.fiap.nac.to.Usuario;
 
+@ManagedBean
+@SessionScoped
 public class UsuarioBean {
 
 	private Usuario usuario;
-	// private LazyDataModel<Usuario> listUsuario;
 	private UsuarioDAO usuarioDAO;
 	private List<Usuario> listUsuario;
 	private List<TipoAcesso> listTipoAcesso;
@@ -58,51 +59,51 @@ public class UsuarioBean {
 		limparCarregar();
 	}
 
-	public String salvar() {
+	public void salvar() {
 
 		FacesMessage message = null;
 		try {
-			if (usuarioDAO.save(usuario) != null) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Usuario cadastrado com sucesso!");
+
+			if (usuario.getUsuarioId() != null) {
+
+				if (usuarioDAO.update(usuario)) {
+					message = new FacesMessage("Usuario Alterado com sucesso!");
+				}
+
+			} else {
+				if (usuarioDAO.save(usuario) != null) {
+					message = new FacesMessage("Usuario cadastrado com sucesso!");
+				}
 			}
 		} catch (ClassNotFoundException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 		limparCarregar();
 
+	}
+
+	public String alterar(Usuario usuario) {
+
+		this.usuario = usuario;
 		return "usuario";
 	}
 
-	public String alterar() {
-		return "usuario";
-	}
-
-	private Integer usuarioId;
-
-	public Integer getUsuarioId() {
-		return usuarioId;
-	}
-
-	public void setUsuarioId(Integer usuarioId) {
-		this.usuarioId = usuarioId;
-	}
-
-	public void excluir() {
+	public void excluir(Usuario usuario) {
 
 		FacesMessage message = null;
 		try {
-			if (usuarioDAO.delete(usuarioId)) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Usuario excluída com sucesso!");
+			if (usuarioDAO.delete(usuario)) {
+				message = new FacesMessage("Usuario excluída com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -110,10 +111,9 @@ public class UsuarioBean {
 		limparCarregar();
 	}
 
-	public String novo() {
+	public void novo() {
 		limparCarregar();
 
-		return "usuario";
 	}
 
 	private void limparCarregar() {
@@ -125,10 +125,10 @@ public class UsuarioBean {
 			listTipoAcesso = usuarioDAO.listarTipoAceso();
 
 		} catch (ClassNotFoundException e) {
-			
+
 			e.printStackTrace();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
