@@ -72,34 +72,28 @@
 					</div></li>
 			</ul>
 
-			<!-- 
-				<c:choose>
-					<c:when test="${user.is_admin == 1}">
-			<ul class="nav navbar-nav" style="z-index: 5">
-				<li role="presentation" class="dropdown" style="z-index: 5"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#"
-					role="button" aria-expanded="false"> Cadastro <span
-						class="caret" style="z-index: 5"></span>
-				</a>
-					<ul class="dropdown-menu" role="menu" style="z-index: 5">
-						<li><a href="book?op=listar">Livros</a></li>
-						<li><a href="Crud.html">Autores</a></li>
-						<li><a href="Crud.html">Categoria</a></li>
-						<li class="divider"></li>
-						<li><a href="category?op=listar">Promo��o</a></li>
-					</ul></li>
-				<li><a href="shoppingcart?op=listar"><span
-						class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
-			</ul>
-			</c:when>
-			<c:otherwise>
+			<cc:if test="#{usuarioBean.usuarioLogado != null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
-					<li><a href="shoppingcart?op=listar"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
-				</ul>
-			</c:otherwise>
-			</c:choose>
-			-->
+						<li role="presentation" class="dropdown" style="z-index: 5"><a
+							class="dropdown-toggle" data-toggle="dropdown" href="#"
+							role="button" aria-expanded="false"> Cadastro <span
+								class="caret" style="z-index: 5"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu" style="z-index: 5">
+								<li><a href="livro.jsf">Livros</a></li>
+								<li class="divider"></li>
+								<li><a>Promoção</a></li>
+							</ul></li>
+						<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
+								Carinho</a></li>
+					</ul>
+			</cc:if>
+			<cc:if test="#{usuarioBean.usuarioLogado == null}">
+				<ul class="nav navbar-nav" style="z-index: 5">
+						<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
+								Carinho</a></li>
+					</ul>
+			</cc:if>
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>

@@ -23,6 +23,7 @@ public class UsuarioBean {
 	private UsuarioDAO usuarioDAO;
 	private List<Usuario> listUsuario;
 	private List<TipoAcesso> listTipoAcesso;
+	private Usuario usuarioLogado;
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -54,6 +55,14 @@ public class UsuarioBean {
 
 	public void setListUsuario(List<Usuario> listUsuario) {
 		this.listUsuario = listUsuario;
+	}
+
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
+	}
+
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 
 	@PostConstruct
@@ -127,7 +136,7 @@ public class UsuarioBean {
 		try {
 
 			listUsuario = usuarioDAO.getAll();
-			listTipoAcesso = usuarioDAO.listarTipoAceso();
+			//listTipoAcesso = usuarioDAO.listarTipoAceso();
 
 		} catch (ClassNotFoundException e) {
 
@@ -148,6 +157,7 @@ public class UsuarioBean {
 				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 				Map<String, Object> sessionMap = externalContext.getSessionMap();
 				sessionMap.put("usuario", usuario);
+				setUsuarioLogado(usuario);
 
 				return null;
 			} else {
@@ -167,6 +177,7 @@ public class UsuarioBean {
 
 	public String logout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		setUsuarioLogado(null);
 
 		return null;
 	}
