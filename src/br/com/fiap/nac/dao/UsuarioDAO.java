@@ -65,6 +65,39 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 
 		return usuarioes;
 	}
+	
+	public boolean logar(Usuario object) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String selectTableSQL = "SELECT COUNT(*) FROM usuario WHERE login = ? AND senha = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
+
+			preparedStatement.setString(1, object.getLogin());
+			preparedStatement.setString(2, object.getSenha());
+
+			// execute select SQL stetement
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				int numberOfRows = rs.getInt(1);
+				if(numberOfRows > 0){
+					return true;
+				}
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public Usuario save(Usuario object) throws ClassNotFoundException, SQLException {
