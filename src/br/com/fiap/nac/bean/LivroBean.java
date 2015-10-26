@@ -16,6 +16,7 @@ import br.com.fiap.nac.dao.CategoriaDAO;
 import br.com.fiap.nac.dao.EditoraDAO;
 import br.com.fiap.nac.dao.GeneroDAO;
 import br.com.fiap.nac.dao.LivroDAO;
+import br.com.fiap.nac.to.Categoria;
 import br.com.fiap.nac.to.Livro;
 
 @ManagedBean
@@ -137,7 +138,7 @@ public class LivroBean {
 		} catch (SQLException e) {
 			message = new FacesMessage(e.getMessage());
 		}
-
+		
 		if(message != null){
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
@@ -152,13 +153,11 @@ public class LivroBean {
 				message = new FacesMessage("Autor excluída com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			message = new FacesMessage(e.getMessage());
 		}
-
+		
 		if(message != null){
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
@@ -201,4 +200,38 @@ public class LivroBean {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
+	
+	public String filtrarPorCategoria(Categoria categoria){
+		FacesMessage message = null;
+		try {
+			listLivro = livroDAO.getByCategoria(categoria);
+		} catch (ClassNotFoundException e) {
+			message = new FacesMessage(e.getMessage());
+		} catch (SQLException e) {
+			message = new FacesMessage(e.getMessage());
+		}
+		
+		if(message != null){
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		
+    	return null;
+    }
+	
+	public String carregarTodos(){
+		FacesMessage message = null;
+		try {
+			listLivro = livroDAO.getAll();
+		} catch (ClassNotFoundException e) {
+			message = new FacesMessage(e.getMessage());
+		} catch (SQLException e) {
+			message = new FacesMessage(e.getMessage());
+		}
+		
+		if(message != null){
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		
+    	return null;
+    }
 }

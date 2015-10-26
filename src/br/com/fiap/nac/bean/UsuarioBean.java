@@ -2,19 +2,24 @@ package br.com.fiap.nac.bean;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import br.com.fiap.nac.dao.UsuarioDAO;
 import br.com.fiap.nac.to.TipoAcesso;
 import br.com.fiap.nac.to.Usuario;
 
+@ManagedBean
+@SessionScoped
 public class UsuarioBean {
 
 	private Usuario usuario;
-	// private LazyDataModel<Usuario> listUsuario;
 	private UsuarioDAO usuarioDAO;
 	private List<Usuario> listUsuario;
 	private List<TipoAcesso> listTipoAcesso;
@@ -63,12 +68,12 @@ public class UsuarioBean {
 		FacesMessage message = null;
 		try {
 			if (usuarioDAO.save(usuario) != null) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Usuario cadastrado com sucesso!");
+				message = new FacesMessage("Usuario cadastrado com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -97,12 +102,12 @@ public class UsuarioBean {
 		FacesMessage message = null;
 		try {
 			if (usuarioDAO.delete(usuarioId)) {
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Usuario excluída com sucesso!");
+				message = new FacesMessage("Usuario excluído com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
-			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", e.getMessage());
+			message = new FacesMessage(e.getMessage());
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -125,11 +130,44 @@ public class UsuarioBean {
 			listTipoAcesso = usuarioDAO.listarTipoAceso();
 
 		} catch (ClassNotFoundException e) {
-			
+
 			e.printStackTrace();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
+	}
+
+	public String login() {
+		FacesMessage message = null;
+
+		try {
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			if (usuarioDAO.logar(usuario)) {
+
+				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+				Map<String, Object> sessionMap = externalContext.getSessionMap();
+				sessionMap.put("usuario", usuario);
+
+				return null;
+			} else {
+				message = new FacesMessage("Usuário não encontrado!");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(e.getMessage());
+		}
+
+		FacesContext.getCurrentInstance().addMessage("messagesLogin", message);
+		return null;
+	}
+
+	public String logout() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+		return null;
 	}
 }

@@ -12,8 +12,7 @@ import javax.faces.event.ActionEvent;
 
 import br.com.fiap.nac.dao.CategoriaDAO;
 import br.com.fiap.nac.to.Categoria;
-
-
+import br.com.fiap.nac.to.Livro;
 
 @ManagedBean
 @SessionScoped
@@ -21,7 +20,6 @@ public class CategoriaBean {
 
 	private Categoria categoria;
 	private CategoriaDAO categoriaDAO;
-	//private LazyDataModel<Categoria> listCategoria;
 	private List<Categoria> listCategoria;
 	
 	public Categoria getCategoria() {
@@ -129,4 +127,10 @@ public class CategoriaBean {
 			e.printStackTrace();
 		}
     }
+    
+    public String selecionarLivro(Livro livro){
+		//carrinho.setLivro(livro);
+		
+		return "item";
+	}
 }
