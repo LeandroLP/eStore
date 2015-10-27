@@ -11,10 +11,7 @@ import javax.faces.context.FacesContext;
 
 import br.com.fiap.nac.dao.CategoriaDAO;
 import br.com.fiap.nac.to.Categoria;
-<<<<<<< HEAD
-=======
 import br.com.fiap.nac.to.Livro;
->>>>>>> origin/master
 
 @ManagedBean
 @SessionScoped
@@ -22,10 +19,6 @@ public class CategoriaBean {
 
 	private Categoria categoria;
 	private CategoriaDAO categoriaDAO;
-<<<<<<< HEAD
-	// private LazyDataModel<Categoria> listCategoria;
-=======
->>>>>>> origin/master
 	private List<Categoria> listCategoria;
 
 	public Categoria getCategoria() {
@@ -133,14 +126,11 @@ public class CategoriaBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-=======
     }
     
     public String selecionarLivro(Livro livro){
 		//carrinho.setLivro(livro);
 		
 		return "item";
->>>>>>> origin/master
 	}
 }

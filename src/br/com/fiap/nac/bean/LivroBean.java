@@ -215,7 +215,7 @@ public class LivroBean {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 		
-    	return null;
+		return "index";
     }
 	
 	public String carregarTodos(){
@@ -232,6 +232,6 @@ public class LivroBean {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 		
-    	return null;
+		return "index";
     }
 }

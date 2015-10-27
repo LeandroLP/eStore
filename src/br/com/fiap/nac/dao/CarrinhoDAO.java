@@ -6,17 +6,57 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import br.com.fiap.nac.factory.ConnectionFactory;
 import br.com.fiap.nac.to.Carrinho;
+import br.com.fiap.nac.to.Livro;
 
 public class CarrinhoDAO implements GenericDAO<Carrinho> {
 
 	@Override
 	public List<Carrinho> getAll() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		List<Carrinho> listCarrinho = new ArrayList<Carrinho>();
+		Connection dbConnection = null;
+		Statement statement = null;
+
+		String selectTableSQL = "SELECT * FROM CARRINHO";
+
+		try {
+
+			dbConnection = ConnectionFactory.getConnection();
+			statement = dbConnection.createStatement();
+
+			// execute select SQL stetement
+			ResultSet rs = statement.executeQuery(selectTableSQL);
+			while (rs.next()) {
+
+				Carrinho carrinho = new Carrinho();
+
+				carrinho.setId(rs.getInt("ID_CARRINHO"));
+				carrinho.setData(rs.getDate("DATA"));
+				carrinho.setQuantidade(rs.getInt("QUANTIDADE"));
+				carrinho.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
+				carrinho.setTotal(rs.getDouble("TOTAL"));
+				carrinho.getLivro().setLivroId(rs.getInt("ID_LIVRO"));
+				carrinho.getUsuario().setUsuarioId(rs.getInt("ID_USUARIO"));
+
+				listCarrinho.add(carrinho);
+			}
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+
+		return listCarrinho;
 	}
 
 	@Override

@@ -21,6 +21,7 @@ public class CarrinhoBean {
 	private CarrinhoDAO carrinhoDAO;
 	private Carrinho carrinho;
 	private List<Carrinho> listCarrinho;
+	private Double valorTotal;
 
 	public Carrinho getCarrinho() {
 		return carrinho;
@@ -38,19 +39,27 @@ public class CarrinhoBean {
 		this.listCarrinho = listCarrinho;
 	}
 
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
 	@PostConstruct
 	public void init() {
 		carrinhoDAO = new CarrinhoDAO();
-		
+
 		limparCarregar();
 	}
 
-	public String adicionar() {		
+	public String adicionar() {
 		FacesMessage message = null;
 		try {
 			carrinho.setData(new Date());
-			
-			if(carrinhoDAO.save(carrinho) != null) {
+
+			if (carrinhoDAO.save(carrinho) != null) {
 				message = new FacesMessage("Item adicionado com sucesso!");
 			}
 		} catch (ClassNotFoundException e) {
@@ -61,7 +70,7 @@ public class CarrinhoBean {
 			message = new FacesMessage(e.getMessage());
 		}
 
-		if(message != null){
+		if (message != null) {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 
@@ -69,7 +78,7 @@ public class CarrinhoBean {
 
 		return null;
 	}
-	
+
 	public String adicionarListaDesejo() {
 		FacesMessage message = null;
 		try {
@@ -95,6 +104,8 @@ public class CarrinhoBean {
 		FacesMessage message = null;
 		try {
 			listCarrinho = carrinhoDAO.getAll();
+			
+			calcularValorTotal();
 		} catch (ClassNotFoundException e) {
 			message = new FacesMessage(e.getMessage());
 		} catch (SQLException e) {
@@ -110,6 +121,15 @@ public class CarrinhoBean {
 		carrinho.setLivro(livro);
 
 		return "item";
+	}
+	
+	public void calcularValorTotal(){
+		Double valorTotal = 0.0;
+		for(int i = 0; i < listCarrinho.size(); i++){
+			valorTotal += listCarrinho.get(i).getTotal();
+		}
+		
+		setValorTotal(valorTotal);
 	}
 
 }

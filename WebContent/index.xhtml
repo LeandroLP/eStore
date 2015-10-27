@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/facelets"
-	xmlns:cc="http://java.sun.com/jsp/jstl/core">
+	xmlns:f="http://java.sun.com/jsf/facelets">
 <head>
 
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="" />
@@ -34,30 +34,39 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.jsp">eStore</a>
+			<a class="navbar-brand" href="index.jsf">eStore</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="search?op=carregar"><span
-						class="glyphicon glyphicon-book"></span> Buscar Livros</a></li>
-				<li><a href="#">Sobre</a></li>
-				<li><a href="#">Contato</a></li>
+				<li><a href=""><span class="glyphicon glyphicon-book"></span>
+						Buscar Livros</a></li>
 			</ul>
+
+			<h:panelGrid rendered="#{usuarioBean.usuarioLogado == null}">
+				<ul class="nav navbar-nav" style="z-index: 5">
+					<li><a href="carrinho.jsf"><span
+							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
+				</ul>
+			</h:panelGrid>
+
 			<ul class="nav navbar-nav" style="z-index: 5">
 				<li class="divider-vertical" style="z-index: 5"></li>
 				<li class="dropdown" style="z-index: 5"><a
-					class="dropdown-toggle" href="#" data-toggle="dropdown">Login<strong
+					class="dropdown-toggle" href="#" data-toggle="dropdown"><span
+						class="glyphicon glyphicon-user"></span> Login<strong
 						class="caret"></strong></a>
 					<div class="dropdown-menu"
 						style="padding: 20px; padding-bottom: 0px; z-index: 5">
 						<br />
 						<h:form role="search">
+							<h:outputText value="Login:" />
 							<h:inputText value="#{usuarioBean.usuario.login}"
 								style="margin-bottom: 15px;" type="text" plac="Usuário"
 								id="txtLogin" name="txtLogin" />
-							<h:inputText value="#{usuarioBean.usuario.senha}"
+							<h:outputText value="Senha:" />
+							<h:inputSecret value="#{usuarioBean.usuario.senha}"
 								style="margin-bottom: 15px;" type="password" placeholder="Senha"
 								id="txtPassword" name="txtPassword" />
 							<h:commandLink action="#{usuarioBean.login}"
@@ -65,44 +74,43 @@
 							<h:commandLink action="#{usuarioBean.logout}"
 								class="btn btn-primary" id="sign-out" value="Sair" />
 						</h:form>
-						<br /> <a>Cadastrar-me</a> <br /> <br />
+						<br /> <a href="cadastrarse.jsf">Cadastrar-me</a> <br /> <br />
 					</div></li>
 			</ul>
 
-			<cc:if test="#{usuarioBean.usuarioLogado != null}">
+			<h:panelGrid rendered="#{usuarioBean.usuarioLogado != null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
-						<li role="presentation" class="dropdown" style="z-index: 5"><a
-							class="dropdown-toggle" data-toggle="dropdown" href="#"
-							role="button" aria-expanded="false"> Cadastro <span
-								class="caret" style="z-index: 5"></span>
-						</a>
-							<ul class="dropdown-menu" role="menu" style="z-index: 5">
-								<li><a href="livro.jsf">Livros</a></li>
-								<li class="divider"></li>
-								<li><a>Promoção</a></li>
-							</ul></li>
-						<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
-								Carinho</a></li>
-					</ul>
-			</cc:if>
-			<cc:if test="#{usuarioBean.usuarioLogado == null}">
-				<ul class="nav navbar-nav" style="z-index: 5">
-						<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
-								Carinho</a></li>
-					</ul>
-			</cc:if>
+					<li role="presentation" class="dropdown" style="z-index: 5"><a
+						class="dropdown-toggle" data-toggle="dropdown" href="#"
+						role="button" aria-expanded="false"> <span
+							class="glyphicon glyphicon-wrench"></span>Manutenção <span
+							class="caret" style="z-index: 5"></span>
+					</a>
+						<ul class="dropdown-menu" role="menu" style="z-index: 5">
+							<li><a href="livro.jsf">Livros</a></li>
+							<li><a href="editora.jsf">Editora</a></li>
+							<li><a href="autor.jsf">Autor</a></li>
+							<li><a href="categoria.jsf">Categoria</a></li>
+							<li><a href="genero.jsf">Gênero</a></li>
+							<li><a href="usuario.jsf">Usuário</a></li>
+						</ul></li>
+					<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
+							Carinho</a></li>
+				</ul>
+			</h:panelGrid>
+
 
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
 	<!-- /.container --> </nav>
-	<p>
-		<br />
-	</p>
-	<p>
-		<br />
-	</p>
 
+	<p>
+		<br />
+	</p>
+	<p>
+		<br />
+	</p>
 	<!-- Page Content -->
 
 
@@ -114,15 +122,15 @@
 			<div class="row">
 
 				<div class="col-md-3">
-					<cc:if test="#{not empty usuarioBean.usuario.nome}">
+					<h:panelGrid rendered="#{not empty usuarioBean.usuario.nome}">
 						<p class="label">Bem vindo, #{usuarioBean.usuario.nome}</p>
-					</cc:if>
-					<cc:if test="#{empty usuarioBean.usuario.nome}">
+					</h:panelGrid>
+					<h:panelGrid rendered="#{empty usuarioBean.usuario.nome}">
 						<p class="label">Bem vindo, Visitante</p>
-					</cc:if>
+					</h:panelGrid>
 					<p class="lead">Categorias</p>
 					<div class="list-group">
-						<cc:if test="#{categoriaBean.listCategoria.size() != 0}">
+						<h:panelGrid rendered="#{categoriaBean.listCategoria.size() != 0}">
 							<h:commandLink value="Todos" action="#{livroBean.carregarTodos}"
 								class="list-group-item" />
 							<f:repeat var="categoria" value="#{categoriaBean.listCategoria}"
@@ -131,10 +139,10 @@
 									action="#{livroBean.filtrarPorCategoria(categoria)}"
 									class="list-group-item" />
 							</f:repeat>
-						</cc:if>
-						<cc:if test="#{categoriaBean.listCategoria.size() == 0}">
+						</h:panelGrid>
+						<h:panelGrid rendered="#{categoriaBean.listCategoria.size() == 0}">
 							<!-- nenhum categoria cadastrada  -->
-						</cc:if>
+						</h:panelGrid>
 					</div>
 				</div>
 
@@ -178,22 +186,22 @@
 					</div>
 
 					<div class="row">
-						<cc:if test="#{livroBean.listLivro.size() != 0}">
+						<h:panelGrid rendered="#{livroBean.listLivro.size() != 0}">
 							<f:repeat var="livro" value="#{livroBean.listLivro}"
 								varStatus="status">
 								<div class="col-sm-4 col-lg-4 col-md-4">
 									<div class="thumbnail">
 										<h:graphicImage value="data:image/jpg;base64,#{livro.imagem2}" />
 										<div class="caption">
-											<h4 class="pull-right">R$#{livro.valor}</h4>
-											<h4>
+											<h6>
 												<h:commandLink value="#{livro.titulo}"
 													action="#{carrinhoBean.selecionarLivro(livro)}" />
-											</h4>
+											</h6>
+											<h4 class="pull-right">R$#{livro.valor}</h4>
+
 											<p>#{livro.descricao}</p>
 										</div>
 										<div class="ratings">
-											<p class="pull-right">15 reviews</p>
 											<p>
 												<span class="glyphicon glyphicon-star"></span> <span
 													class="glyphicon glyphicon-star"></span> <span
@@ -205,13 +213,13 @@
 									</div>
 								</div>
 							</f:repeat>
-						</cc:if>
-						<cc:if test="#{livroBean.listLivro.size() == 0}">
+						</h:panelGrid>
+						<h:panelGrid rendered="#{livroBean.listLivro.size() == 0}">
 							<div class="jumbotron">
 								<h1>Livros não disponíveis.</h1>
 								<p>Desculpe-nos o transtorno.</p>
 							</div>
-						</cc:if>
+						</h:panelGrid>
 					</div>
 
 				</div>
