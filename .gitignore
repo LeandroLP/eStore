@@ -50,3 +50,4 @@ Temporary Items
 .settings/org.eclipse.wst.common.project.facet.core.prefs.xml
 .settings/org.eclipse.wst.common.component
 .project
+build/classes/br/com/fiap/nac/factory/ConnectionFactory.class

@@ -9,11 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tomcat.util.codec.binary.Base64;
-
 import br.com.fiap.nac.factory.ConnectionFactory;
 import br.com.fiap.nac.to.Carrinho;
 import br.com.fiap.nac.to.Livro;
+import br.com.fiap.nac.to.Usuario;
 
 public class CarrinhoDAO implements GenericDAO<Carrinho> {
 
@@ -34,16 +33,20 @@ public class CarrinhoDAO implements GenericDAO<Carrinho> {
 			// execute select SQL stetement
 			ResultSet rs = statement.executeQuery(selectTableSQL);
 			while (rs.next()) {
-
 				Carrinho carrinho = new Carrinho();
-
 				carrinho.setId(rs.getInt("ID_CARRINHO"));
 				carrinho.setData(rs.getDate("DATA"));
 				carrinho.setQuantidade(rs.getInt("QUANTIDADE"));
 				carrinho.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
 				carrinho.setTotal(rs.getDouble("TOTAL"));
-				carrinho.getLivro().setLivroId(rs.getInt("ID_LIVRO"));
-				carrinho.getUsuario().setUsuarioId(rs.getInt("ID_USUARIO"));
+				
+				Integer livroId = rs.getInt("ID_LIVRO");
+				Livro livro = new LivroDAO().get(livroId);
+				carrinho.setLivro(livro);
+				
+				Integer usuarioId = rs.getInt("ID_USUARIO");
+				Usuario usuario = new UsuarioDAO().get(usuarioId);
+				carrinho.setUsuario(usuario);
 
 				listCarrinho.add(carrinho);
 			}

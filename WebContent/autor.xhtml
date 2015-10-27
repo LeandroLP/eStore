@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:cc="http://java.sun.com/jsp/jstl/core">
+	xmlns:f="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Autores</title>
@@ -34,12 +33,7 @@
 				<li><a href=""><span class="glyphicon glyphicon-book"></span>
 						Buscar Livros</a></li>
 			</ul>
-			<cc:if test="#{usuarioBean.usuarioLogado == null}">
-				<ul class="nav navbar-nav" style="z-index: 5">
-					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
-				</ul>
-			</cc:if>
+			</h:panelGroup>
 			<ul class="nav navbar-nav" style="z-index: 5">
 				<li class="divider-vertical" style="z-index: 5"></li>
 				<li class="dropdown" style="z-index: 5"><a
@@ -67,7 +61,7 @@
 					</div></li>
 			</ul>
 
-			<cc:if test="#{usuarioBean.usuarioLogado != null}">
+			<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li role="presentation" class="dropdown" style="z-index: 5"><a
 						class="dropdown-toggle" data-toggle="dropdown" href="#"
@@ -83,12 +77,10 @@
 							<li><a href="genero.jsf">Gênero</a></li>
 							<li><a href="usuario.jsf">Usuário</a></li>
 						</ul></li>
-					<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
-							Carinho</a></li>
+					<li><a href="carrinho.jsf"><span
+							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
-			</cc:if>
-
-
+			</h:panelGroup>
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
@@ -135,7 +127,7 @@
 								styleClass="form-control" />
 						</div>
 						<div class="col-md-3">
-							<h:outputText value="CPF:" />
+							<h:outputText value="CPc:" />
 							<h:inputText value="#{autorBean.autor.cpf}"
 								styleClass="form-control" />
 						</div>
@@ -179,7 +171,6 @@
 								<f:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 						</div>
-
 					</div>
 
 					<div class="row">
@@ -206,7 +197,7 @@
 
 							<h:commandButton value="Novo" action="#{autorBean.novo}"
 								styleClass="btn btn-primary">
-								<f:ajax render="@form" resetValues="true" />
+								<c:ajax render="@form" resetValues="true" />
 							</h:commandButton>
 						</div>
 					</div>
@@ -216,59 +207,59 @@
 					<h:dataTable id="autors" var="autor" value="#{autorBean.listAutor}"
 						styleClass="table table-hover">
 
-						<f:facet name="header">
+						<c:facet name="header">
            			Autores
-       			</f:facet>
+       			</c:facet>
 
 						<h:column>
-							<f:facet name="header">Autor ID</f:facet>
+							<c:facet name="header">Autor ID</c:facet>
 							<h:outputText value="#{autor.autorId}" />
 						</h:column>
 
 						<h:column>
 
-							<f:facet name="header">Nome</f:facet>
+							<c:facet name="header">Nome</c:facet>
 							<h:outputText value="#{autor.nome}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Sobre Nome</f:facet>
+							<c:facet name="header">Sobre Nome</c:facet>
 							<h:outputText value="#{autor.sobreNome}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Telefone</f:facet>
+							<c:facet name="header">Telefone</c:facet>
 							<h:outputText value="#{autor.telefone}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">CPF</f:facet>
+							<c:facet name="header">CPF</c:facet>
 							<h:outputText value="#{autor.cpf}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Sexo</f:facet>
+							<c:facet name="header">Sexo</c:facet>
 							<h:outputText value="#{autor.sexo}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">E-mail</f:facet>
+							<c:facet name="header">E-mail</c:facet>
 							<h:outputText value="#{autor.email}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Idade</f:facet>
+							<c:facet name="header">Idade</c:facet>
 							<h:outputText value="#{autor.idade}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Nacionalidade</f:facet>
+							<c:facet name="header">Nacionalidade</c:facet>
 							<h:outputText value="#{autor.nacionalidade}" />
 						</h:column>
 
 
 						<h:column>
-							<f:facet name="header">Alterar</f:facet>
+							<c:facet name="header">Alterar</c:facet>
 							<h:commandLink value="Alterar"
 								action="#{autorBean.alterar(autor)}">
 								<f:ajax render="@form" />
@@ -276,7 +267,7 @@
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Excluir</f:facet>
+							<c:facet name="header">Excluir</c:facet>
 							<h:commandLink value="Excluir"
 								action="#{autorBean.excluir(autor)}">
 								<f:ajax render="@form" />

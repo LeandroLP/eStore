@@ -44,12 +44,12 @@
 						Buscar Livros</a></li>
 			</ul>
 
-			<h:panelGrid rendered="#{usuarioBean.usuarioLogado == null}">
+			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li><a href="carrinho.jsf"><span
 							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
-			</h:panelGrid>
+			</h:panelGroup>
 
 			<ul class="nav navbar-nav" style="z-index: 5">
 				<li class="divider-vertical" style="z-index: 5"></li>
@@ -78,7 +78,7 @@
 					</div></li>
 			</ul>
 
-			<h:panelGrid rendered="#{usuarioBean.usuarioLogado != null}">
+			<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li role="presentation" class="dropdown" style="z-index: 5"><a
 						class="dropdown-toggle" data-toggle="dropdown" href="#"
@@ -94,10 +94,10 @@
 							<li><a href="genero.jsf">Gênero</a></li>
 							<li><a href="usuario.jsf">Usuário</a></li>
 						</ul></li>
-					<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
-							Carinho</a></li>
+					<li><a href="carrinho.jsf"><span
+							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
-			</h:panelGrid>
+			</h:panelGroup>
 
 
 		</div>
@@ -122,15 +122,15 @@
 			<div class="row">
 
 				<div class="col-md-3">
-					<h:panelGrid rendered="#{not empty usuarioBean.usuario.nome}">
+					<h:panelGroup rendered="#{not empty usuarioBean.usuario.nome}">
 						<p class="label">Bem vindo, #{usuarioBean.usuario.nome}</p>
-					</h:panelGrid>
-					<h:panelGrid rendered="#{empty usuarioBean.usuario.nome}">
+					</h:panelGroup>
+					<h:panelGroup rendered="#{empty usuarioBean.usuario.nome}">
 						<p class="label">Bem vindo, Visitante</p>
-					</h:panelGrid>
+					</h:panelGroup>
 					<p class="lead">Categorias</p>
 					<div class="list-group">
-						<h:panelGrid rendered="#{categoriaBean.listCategoria.size() != 0}">
+						<h:panelGroup rendered="#{categoriaBean.listCategoria.size() != 0}">
 							<h:commandLink value="Todos" action="#{livroBean.carregarTodos}"
 								class="list-group-item" />
 							<f:repeat var="categoria" value="#{categoriaBean.listCategoria}"
@@ -139,10 +139,10 @@
 									action="#{livroBean.filtrarPorCategoria(categoria)}"
 									class="list-group-item" />
 							</f:repeat>
-						</h:panelGrid>
-						<h:panelGrid rendered="#{categoriaBean.listCategoria.size() == 0}">
+						</h:panelGroup>
+						<h:panelGroup rendered="#{categoriaBean.listCategoria.size() == 0}">
 							<!-- nenhum categoria cadastrada  -->
-						</h:panelGrid>
+						</h:panelGroup>
 					</div>
 				</div>
 
@@ -186,7 +186,7 @@
 					</div>
 
 					<div class="row">
-						<h:panelGrid rendered="#{livroBean.listLivro.size() != 0}">
+						<h:panelGroup rendered="#{livroBean.listLivro.size() != 0}">
 							<f:repeat var="livro" value="#{livroBean.listLivro}"
 								varStatus="status">
 								<div class="col-sm-4 col-lg-4 col-md-4">
@@ -213,13 +213,13 @@
 									</div>
 								</div>
 							</f:repeat>
-						</h:panelGrid>
-						<h:panelGrid rendered="#{livroBean.listLivro.size() == 0}">
+						</h:panelGroup>
+						<h:panelGroup rendered="#{livroBean.listLivro.size() == 0}">
 							<div class="jumbotron">
 								<h1>Livros não disponíveis.</h1>
 								<p>Desculpe-nos o transtorno.</p>
 							</div>
-						</h:panelGrid>
+						</h:panelGroup>
 					</div>
 
 				</div>

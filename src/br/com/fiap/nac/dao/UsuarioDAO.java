@@ -151,8 +151,6 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 	@Override
 	public Usuario get(Integer id) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-		Usuario usuario = new Usuario();
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -167,7 +165,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 			// execute select SQL stetement
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-
+				Usuario usuario = new Usuario();
 				usuario.setUsuarioId(rs.getInt("ID_USUARIO"));
 				usuario.setNome(rs.getString("NOME"));
 				usuario.setCpf(rs.getString("CPF_CNPJ"));
@@ -183,7 +181,8 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 				usuario.setCidade(rs.getString("CIDADE"));
 				usuario.setEstado(rs.getString("ESTADO"));
 				usuario.setTipoAcessoId(rs.getInt("ID_TIPO_ACESSO"));
-
+				
+				return usuario;
 			}
 		} finally {
 			if (preparedStatement != null) {
@@ -193,8 +192,8 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 				dbConnection.close();
 			}
 		}
-		return usuario;
-
+		
+		return null;
 	}
 
 	@Override

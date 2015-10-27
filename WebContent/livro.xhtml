@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:cc="http://java.sun.com/jsp/jstl/core">
+	xmlns:f="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Livro</title>
@@ -14,7 +13,7 @@
 
 </h:head>
 <h:body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
 		style="z-index:5">
 	<div class="container" style="z-index: 5">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -34,12 +33,14 @@
 				<li><a href=""><span class="glyphicon glyphicon-book"></span>
 						Buscar Livros</a></li>
 			</ul>
-			<cc:if test="#{usuarioBean.usuarioLogado == null}">
+
+			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span>Carinho</a></li>
+							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
-			</cc:if>
+			</h:panelGroup>
+
 			<ul class="nav navbar-nav" style="z-index: 5">
 				<li class="divider-vertical" style="z-index: 5"></li>
 				<li class="dropdown" style="z-index: 5"><a
@@ -67,7 +68,7 @@
 					</div></li>
 			</ul>
 
-			<cc:if test="#{usuarioBean.usuarioLogado != null}">
+			<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li role="presentation" class="dropdown" style="z-index: 5"><a
 						class="dropdown-toggle" data-toggle="dropdown" href="#"
@@ -83,10 +84,10 @@
 							<li><a href="genero.jsf">Gênero</a></li>
 							<li><a href="usuario.jsf">Usuário</a></li>
 						</ul></li>
-					<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
-							Carinho</a></li>
+					<li><a href="carrinho.jsf"><span
+							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
-			</cc:if>
+			</h:panelGroup>
 
 
 		</div>
@@ -102,6 +103,7 @@
 	</p>
 	<!-- Page Content -->
 
+
 	<h:form id="form" enctype="multipart/form-data">
 		<div class="container">
 			<div role="tabpanel">
@@ -109,7 +111,7 @@
 				<div class="table - responsive">
 					<div class="panel-heading">Cadastro de Livros</div>
 
-					<h:messages	styleClass="alert alert-success" />
+					<h:messages styleClass="alert alert-success" />
 					<div class="row">
 						<div class="col-md-3">
 							<h:outputText value="Título:" />
@@ -193,9 +195,9 @@
 							<h:outputText value="Autor:" />
 							<h:selectOneMenu value="#{livroBean.livro.autorId}"
 								styleClass="form-control">
-								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+								<c:selectItem itemLabel="Selecione..." noSelectionOption="true"
 									itemValue="#{livroBean.livro.autorId}" />
-								<f:selectItems value="#{livroBean.livro.listAutor}"
+								<c:selectItems value="#{livroBean.livro.listAutor}"
 									var="autores" itemValue="#{autores.autorId}"
 									itemLabel="#{autores.nome}" />
 							</h:selectOneMenu>
@@ -204,9 +206,9 @@
 							<h:outputText value="Categoria:" />
 							<h:selectOneMenu value="#{livroBean.livro.categoriaId}"
 								styleClass="form-control">
-								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+								<c:selectItem itemLabel="Selecione..." noSelectionOption="true"
 									itemValue="#{livroBean.livro.categoriaId}" />
-								<f:selectItems value="#{livroBean.livro.listCategoria}"
+								<c:selectItems value="#{livroBean.livro.listCategoria}"
 									var="categorias" itemValue="#{categorias.id}"
 									itemLabel="#{categorias.descricao}" />
 							</h:selectOneMenu>
@@ -217,9 +219,9 @@
 							<h:outputText value="Editora:" />
 							<h:selectOneMenu value="#{livroBean.livro.editoraId}"
 								styleClass="form-control">
-								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+								<c:selectItem itemLabel="Selecione..." noSelectionOption="true"
 									itemValue="#{livroBean.livro.editoraId}" />
-								<f:selectItems value="#{livroBean.livro.listEditora}"
+								<c:selectItems value="#{livroBean.livro.listEditora}"
 									var="editoras" itemValue="#{editoras.editoraId}"
 									itemLabel="#{editoras.nome}" />
 							</h:selectOneMenu>
@@ -228,9 +230,9 @@
 							<h:outputText value="Genero:" />
 							<h:selectOneMenu value="#{livroBean.livro.generoId}"
 								styleClass="form-control">
-								<f:selectItem itemLabel="Selecione..." noSelectionOption="true"
+								<c:selectItem itemLabel="Selecione..." noSelectionOption="true"
 									itemValue="#{livroBean.livro.generoId}" />
-								<f:selectItems value="#{livroBean.livro.listGenero}"
+								<c:selectItems value="#{livroBean.livro.listGenero}"
 									var="generos" itemValue="#{generos.id}"
 									itemLabel="#{generos.descricao}" />
 							</h:selectOneMenu>
@@ -245,9 +247,9 @@
 						</div>
 						<div class="col-md-1">
 
-							<h:commandButton value="Novo" action="#{ 	livroBean.novo}"
+							<h:commandButton value="Novo" action="#{livroBean.novo}"
 								styleClass="btn btn-primary">
-								<f:ajax render="@form" resetValues="true" />
+								<c:ajax render="@form" resetValues="true" />
 							</h:commandButton>
 						</div>
 					</div>
@@ -257,67 +259,67 @@
 					<h:dataTable id="livros" var="livro" value="#{livroBean.listLivro}"
 						styleClass="table table-hover">
 
-						<f:facet name="header">
+						<c:facet name="header">
            			Livros
-       			</f:facet>
+       			</c:facet>
 
 						<h:column>
-							<f:facet name="header">Livro ID</f:facet>
+							<c:facet name="header">Livro ID</c:facet>
 							<h:outputText value="#{livro.livroId}" />
 						</h:column>
 
 						<h:column>
 
-							<f:facet name="header">Título</f:facet>
+							<c:facet name="header">Título</c:facet>
 							<h:outputText value="#{livro.titulo}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Valor</f:facet>
+							<c:facet name="header">Valor</c:facet>
 							<h:outputText value="#{livro.valor}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">ISBN</f:facet>
+							<c:facet name="header">ISBN</c:facet>
 							<h:outputText value="#{livro.isbn}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">NºPáginas</f:facet>
+							<c:facet name="header">NºPáginas</c:facet>
 							<h:outputText value="#{livro.numeroPaginas}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Curtidas</f:facet>
+							<c:facet name="header">Curtidas</c:facet>
 							<h:outputText value="#{livro.curtidas}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Ano</f:facet>
+							<c:facet name="header">Ano</c:facet>
 							<h:outputText value="#{livro.ano}" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Idioma</f:facet>
+							<c:facet name="header">Idioma</c:facet>
 							<h:outputText value="#{livro.idioma}" />
 						</h:column>
 
 						<!-- 
 						<h:column>
-							<f:facet name="header">Descrição</f:facet>
+							<c:facet name="header">Descrição</c:facet>
 							<h:outputText value="#{livro.descricao}">
 							</h:outputText>
 						</h:column>
 						 -->
 
 						<h:column>
-							<f:facet name="header">Imagem</f:facet>
+							<c:facet name="header">Imagem</c:facet>
 							<h:graphicImage value="data:image/jpg;base64,#{livro.imagem2}"
 								height="50px" width="50px" />
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Alterar</f:facet>
+							<c:facet name="header">Alterar</c:facet>
 							<h:commandLink value="Alterar"
 								action="#{livroBean.alterar(livro)}">
 								<f:ajax render="@form" />
@@ -325,9 +327,9 @@
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Excluir</f:facet>
+							<c:facet name="header">Excluir</c:facet>
 							<h:commandLink value="Excluir"
-								action="#{livroBean.excluir(livro)}" >
+								action="#{livroBean.excluir(livro)}">
 								<f:ajax render="@form" />
 							</h:commandLink>
 						</h:column>

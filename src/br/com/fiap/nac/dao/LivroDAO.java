@@ -168,12 +168,10 @@ public class LivroDAO implements GenericDAO<Livro> {
 	@Override
 	public Livro get(Integer id) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-		Livro livro = new Livro();
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String selectTableSQL = "SELECT * FROM AUTOR WHERE ID_AUTOR = ?;";
+		String selectTableSQL = "SELECT * FROM LIVRO WHERE ID_LIVRO = ?;";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
@@ -184,7 +182,7 @@ public class LivroDAO implements GenericDAO<Livro> {
 			// execute select SQL stetement
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-
+				Livro livro = new Livro();
 				livro.setLivroId(rs.getInt("ID_LIVRO"));
 				livro.setTitulo(rs.getString("TITULO"));
 				livro.setDescricao(rs.getString("DESCRICAO"));
@@ -195,11 +193,12 @@ public class LivroDAO implements GenericDAO<Livro> {
 				livro.setAno(rs.getInt("ANO"));
 				livro.setIdioma(rs.getString("IDIOMA"));
 				livro.setImagem(rs.getBinaryStream("IMAGEM"));
+				livro.setImagem2(Base64.encodeBase64String(rs.getBytes("IMAGEM")));
 				livro.setAutorId(rs.getInt("ID_AUTOR"));
 				livro.setCategoriaId(rs.getInt("ID_CATEGORIA"));
 				livro.setEditoraId(rs.getInt("ID_EDITORA"));
 				livro.setGeneroId(rs.getInt("ID_GENERO"));
-
+				return livro;
 			}
 		} finally {
 			if (preparedStatement != null) {
@@ -209,7 +208,7 @@ public class LivroDAO implements GenericDAO<Livro> {
 				dbConnection.close();
 			}
 		}
-		return livro;
+		return null;
 
 	}
 
