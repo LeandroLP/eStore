@@ -51,3 +51,4 @@ Temporary Items
 .settings/org.eclipse.wst.common.component
 .project
 build/classes/br/com/fiap/nac/factory/ConnectionFactory.class
+sh.exe.stackdump
