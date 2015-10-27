@@ -43,12 +43,14 @@
 				<li><a href=""><span class="glyphicon glyphicon-book"></span>
 						Buscar Livros</a></li>
 			</ul>
+			
 			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li><a href="carrinho.jsf"><span
 							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
 			</h:panelGroup>
+			
 			<ul class="nav navbar-nav" style="z-index: 5">
 				<li class="divider-vertical" style="z-index: 5"></li>
 				<li class="dropdown" style="z-index: 5"><a
@@ -92,8 +94,8 @@
 							<li><a href="genero.jsf">Gênero</a></li>
 							<li><a href="usuario.jsf">Usuário</a></li>
 						</ul></li>
-					<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
-							Carinho</a></li>
+					<li><a href="carrinho.jsf"><span
+							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
 			</h:panelGroup>
 
