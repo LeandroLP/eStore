@@ -8,11 +8,15 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import br.com.fiap.nac.dao.CarrinhoDAO;
+import br.com.fiap.nac.dao.ListaDesejoDAO;
 import br.com.fiap.nac.to.Carrinho;
+import br.com.fiap.nac.to.ListaDesejo;
 import br.com.fiap.nac.to.Livro;
+import br.com.fiap.nac.to.Usuario;
 
 @ManagedBean
 @SessionScoped
@@ -22,6 +26,10 @@ public class CarrinhoBean {
 	private Carrinho carrinho;
 	private List<Carrinho> listCarrinho;
 	private Double valorTotal;
+
+	private ListaDesejo listaDesejo;
+	private List<ListaDesejo> listListaDesejo;
+	private ListaDesejoDAO listaDesejoDAO;
 
 	public Carrinho getCarrinho() {
 		return carrinho;
@@ -47,9 +55,26 @@ public class CarrinhoBean {
 		this.valorTotal = valorTotal;
 	}
 
+	public ListaDesejo getListaDesejo() {
+		return listaDesejo;
+	}
+
+	public void setListaDesejo(ListaDesejo listaDesejo) {
+		this.listaDesejo = listaDesejo;
+	}
+
+	public List<ListaDesejo> getListListaDesejo() {
+		return listListaDesejo;
+	}
+
+	public void setListListaDesejo(List<ListaDesejo> listListaDesejo) {
+		this.listListaDesejo = listListaDesejo;
+	}
+
 	@PostConstruct
 	public void init() {
 		carrinhoDAO = new CarrinhoDAO();
+		listaDesejoDAO = new ListaDesejoDAO();
 
 		limparCarregar();
 	}
@@ -58,6 +83,13 @@ public class CarrinhoBean {
 		FacesMessage message = null;
 		try {
 			carrinho.setData(new Date());
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			if(externalContext.getSessionMap() != null && externalContext.getSessionMap().get("usuario") != null){
+				Usuario usuario = (Usuario) externalContext.getSessionMap().get("usuario");
+				carrinho.setUsuario(new Usuario());
+				carrinho.getUsuario().setUsuarioId(usuario.getUsuarioId());
+			}
 
 			if (carrinhoDAO.save(carrinho) != null) {
 				message = new FacesMessage("Item adicionado com sucesso!");
@@ -76,13 +108,28 @@ public class CarrinhoBean {
 
 		limparCarregar();
 
-		return null;
+		return "index";
 	}
 
 	public String adicionarListaDesejo() {
 		FacesMessage message = null;
 		try {
-			carrinhoDAO.save(carrinho);
+			listaDesejo.setDataHora(new Date());
+			listaDesejo.setQuantidade(carrinho.getQuantidade());
+			listaDesejo.setTotal(carrinho.getTotal());
+			listaDesejo.setLivro(new Livro());
+			listaDesejo.getLivro().setLivroId(carrinho.getLivro().getLivroId());
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			if(externalContext.getSessionMap() != null && externalContext.getSessionMap().get("usuario") != null){
+				Usuario usuario = (Usuario) externalContext.getSessionMap().get("usuario");
+				listaDesejo.setUsuario(new Usuario());
+				listaDesejo.getUsuario().setUsuarioId(usuario.getUsuarioId());
+			}
+			
+			if (listaDesejoDAO.save(listaDesejo) != null) {
+				message = new FacesMessage("Lista desejo cadastrada com sucesso!");
+			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			message = new FacesMessage(e.getMessage());
@@ -95,16 +142,17 @@ public class CarrinhoBean {
 
 		limparCarregar();
 
-		return null;
+		return "index";
 	}
 
 	private void limparCarregar() {
 		carrinho = new Carrinho();
+		listaDesejo = new ListaDesejo();
 
 		FacesMessage message = null;
 		try {
 			listCarrinho = carrinhoDAO.getAll();
-			
+
 			calcularValorTotal();
 		} catch (ClassNotFoundException e) {
 			message = new FacesMessage(e.getMessage());
@@ -122,13 +170,13 @@ public class CarrinhoBean {
 
 		return "item";
 	}
-	
-	public void calcularValorTotal(){
+
+	public void calcularValorTotal() {
 		Double valorTotal = 0.0;
-		for(int i = 0; i < listCarrinho.size(); i++){
+		for (int i = 0; i < listCarrinho.size(); i++) {
 			valorTotal += listCarrinho.get(i).getTotal();
 		}
-		
+
 		setValorTotal(valorTotal);
 	}
 
