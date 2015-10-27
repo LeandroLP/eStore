@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Usuarios</title>
@@ -34,12 +34,12 @@
 					<li><a href=""><span class="glyphicon glyphicon-book"></span>
 							Buscar Livros</a></li>
 				</ul>
-				<h:panelGrid rendered="#{usuarioBean.usuarioLogado == null}">
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
 					<ul class="nav navbar-nav" style="z-index: 5">
 						<li><a href="carrinho.jsf"><span
 								class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 					</ul>
-				</h:panelGrid>
+				</h:panelGroup>
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li class="divider-vertical" style="z-index: 5"></li>
 					<li class="dropdown" style="z-index: 5"><a
@@ -67,7 +67,7 @@
 						</div></li>
 				</ul>
 
-				<h:panelGrid rendered="#{usuarioBean.usuarioLogado != null}">
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
 					<ul class="nav navbar-nav" style="z-index: 5">
 						<li role="presentation" class="dropdown" style="z-index: 5"><a
 							class="dropdown-toggle" data-toggle="dropdown" href="#"
@@ -86,7 +86,7 @@
 						<li><a><span class="glyphicon glyphicon-shopping-cart"></span>
 								Carinho</a></li>
 					</ul>
-				</h:panelGrid>
+				</h:panelGroup>
 
 
 			</div>
@@ -117,7 +117,7 @@
 								styleClass="form-control" />
 						</div>
 						<div class="col-md-3">
-							<h:outputText value="CPF:" />
+							<h:outputText value="CPc:" />
 							<h:inputText value="#{usuarioBean.usuario.cpf}"
 								styleClass="form-control" />
 						</div>
@@ -136,10 +136,10 @@
 						<div class="col-md-3">
 							<h:outputText value="Sexo:" />
 							<h:selectOneRadio id="sexo" value="#{usuarioBean.usuario.sexo}">
-								<f:selectItem itemLabel="Masculino" itemValue="M"
-									styleClass="form-control"></f:selectItem>
-								<f:selectItem itemLabel="Feminino" itemValue="F"
-									styleClass="form-control"></f:selectItem>
+								<c:selectItem itemLabel="Masculino" itemValue="M"
+									styleClass="form-control"></c:selectItem>
+								<c:selectItem itemLabel="Feminino" itemValue="F"
+									styleClass="form-control"></c:selectItem>
 							</h:selectOneRadio>
 						</div>
 
@@ -205,7 +205,7 @@
 
 							<h:commandButton value="Novo" action="#{usuarioBean.novo}"
 								styleClass="btn btn-primary">
-								<f:ajax render="@form" resetValues="true" />
+								<c:ajax render="@form" resetValues="true" />
 							</h:commandButton>
 						</div>
 					</div>
