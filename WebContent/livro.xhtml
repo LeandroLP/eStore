@@ -13,7 +13,7 @@
 
 </h:head>
 <h:body>
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
 		style="z-index:5">
 	<div class="container" style="z-index: 5">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -103,7 +103,6 @@
 	</p>
 	<!-- Page Content -->
 
-
 	<h:form id="form" enctype="multipart/form-data">
 		<div class="container">
 			<div role="tabpanel">
@@ -118,7 +117,7 @@
 							<h:inputText value="#{livroBean.livro.titulo}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Título">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 						</div>
 					</div>
@@ -128,7 +127,7 @@
 							<h:inputTextarea value="#{livroBean.livro.descricao}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Descrição">
-								<f:validateLength minimum="10" maximum="500" />
+								<c:validateLength minimum="10" maximum="500" />
 							</h:inputTextarea>
 						</div>
 					</div>
@@ -174,8 +173,8 @@
 							<h:inputText value="#{livroBean.livro.valor}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Valor do livro">
-								<f:validateLength minimum="10" maximum="45" />
-								<f:validateDoubleRange minimum="0.10" />
+								<c:validateLength minimum="10" maximum="45" />
+								<c:validateDoubleRange minimum="0.10" />
 							</h:inputText>
 
 						</div>
@@ -322,7 +321,7 @@
 							<c:facet name="header">Alterar</c:facet>
 							<h:commandLink value="Alterar"
 								action="#{livroBean.alterar(livro)}">
-								<f:ajax render="@form" />
+								<c:ajax render="@form" />
 							</h:commandLink>
 						</h:column>
 
@@ -330,7 +329,7 @@
 							<c:facet name="header">Excluir</c:facet>
 							<h:commandLink value="Excluir"
 								action="#{livroBean.excluir(livro)}">
-								<f:ajax render="@form" />
+								<c:ajax render="@form" />
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>

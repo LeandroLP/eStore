@@ -33,12 +33,14 @@
 				<li><a href=""><span class="glyphicon glyphicon-book"></span>
 						Buscar Livros</a></li>
 			</ul>
+
 			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li><a href="carrinho.jsf"><span
 							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
 			</h:panelGroup>
+
 			<ul class="nav navbar-nav" style="z-index: 5">
 				<li class="divider-vertical" style="z-index: 5"></li>
 				<li class="dropdown" style="z-index: 5"><a
@@ -86,6 +88,7 @@
 							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
 			</h:panelGroup>
+
 
 		</div>
 		<!-- /.navbar-collapse -->
@@ -167,7 +170,7 @@
 						<h:column>
 							<c:facet name="header">Excluir</c:facet>
 							<h:commandLink value="Excluir"
-								action="#{generoBean.excluir(genero)}" >
+								action="#{generoBean.excluir(genero)}">
 								<f:ajax render="@form" />
 							</h:commandLink>
 						</h:column>

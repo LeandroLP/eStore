@@ -116,7 +116,7 @@
 							<h:inputText value="#{usuarioBean.usuario.nome}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Nome">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -132,7 +132,7 @@
 							<h:inputText value="#{usuarioBean.usuario.email}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o E-mail">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -145,10 +145,10 @@
 							<h:outputText value="Sexo:" />
 							<h:selectOneRadio id="sexo" value="#{usuarioBean.usuario.sexo}"
 								required="true" requiredMessage="Favor informar o Sexo">
-								<f:selectItem itemLabel="Masculino" itemValue="M"
-									styleClass="form-control"></f:selectItem>
-								<f:selectItem itemLabel="Feminino" itemValue="F"
-									styleClass="form-control"></f:selectItem>
+								<c:selectItem itemLabel="Masculino" itemValue="M"
+									styleClass="form-control"></c:selectItem>
+								<c:selectItem itemLabel="Feminino" itemValue="F"
+									styleClass="form-control"></c:selectItem>
 							</h:selectOneRadio>
 						</div>
 
@@ -159,7 +159,7 @@
 							<h:inputText value="#{usuarioBean.usuario.cep}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o CEP valido">
-								<f:validateLength minimum="8" maximum="8" />
+								<c:validateLength minimum="8" maximum="8" />
 							</h:inputText>
 
 						</div>
@@ -172,7 +172,7 @@
 							<h:inputText value="#{usuarioBean.usuario.logradouro}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Endereço">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -181,7 +181,7 @@
 							<h:inputText value="#{usuarioBean.usuario.numero}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Número">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -192,7 +192,7 @@
 							<h:inputText value="#{usuarioBean.usuario.bairro}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Bairro">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -206,7 +206,7 @@
 							<h:inputText value="#{usuarioBean.usuario.estado}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Cidade">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -217,7 +217,7 @@
 							<h:inputText value="#{usuarioBean.usuario.login}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Login">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -226,7 +226,7 @@
 							<h:inputSecret value="#{usuarioBean.usuario.senha}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Senha no minino 6 digito maximo 10.">
-								<f:validateLength minimum="6" maximum="10" />
+								<c:validateLength minimum="6" maximum="10" />
 							</h:inputSecret>
 						</div>
 					</div>

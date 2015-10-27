@@ -102,9 +102,6 @@
 		<br />
 	</p>
 	<!-- Page Content -->
-
-
-
 	<h:form id="form" enctype="multipart/form-data">
 		<div class="container">
 			<div role="tabpanel">
@@ -119,7 +116,7 @@
 							<h:inputText value="#{usuarioBean.usuario.nome}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Nome">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 						</div>
 						<div class="col-md-3">
@@ -134,7 +131,7 @@
 							<h:inputText value="#{usuarioBean.usuario.email}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o E-mail">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 						</div>
 						<div class="col-md-3">
@@ -146,10 +143,10 @@
 							<h:outputText value="Sexo:" />
 							<h:selectOneRadio id="sexo" value="#{usuarioBean.usuario.sexo}"
 								required="true" requiredMessage="Favor informar o Sexo">
-								<f:selectItem itemLabel="Masculino" itemValue="M"
-									styleClass="form-control"></f:selectItem>
-								<f:selectItem itemLabel="Feminino" itemValue="F"
-									styleClass="form-control"></f:selectItem>
+								<c:selectItem itemLabel="Masculino" itemValue="M"
+									styleClass="form-control"></c:selectItem>
+								<c:selectItem itemLabel="Feminino" itemValue="F"
+									styleClass="form-control"></c:selectItem>
 							</h:selectOneRadio>
 						</div>
 
@@ -198,7 +195,7 @@
 							<h:inputText value="#{usuarioBean.usuario.login}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Login">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 						</div>
 						<div class="col-md-3">
@@ -206,7 +203,7 @@
 							<h:inputSecret value="#{usuarioBean.usuario.senha}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Senha no minino 6 digito maximo 10.">
-								<f:validateLength minimum="6" maximum="10" />
+								<c:validateLength minimum="6" maximum="10" />
 							</h:inputSecret>
 						</div>
 						<div class="col-md-3">
@@ -283,15 +280,15 @@
 							<c:facet name="header">Alterar</c:facet>
 							<h:commandLink value="Alterar"
 								action="#{usuarioBean.alterar(usuario)}">
-								<f:ajax render="@form" />
+								<c:ajax render="@form" />
 							</h:commandLink>
 						</h:column>
 
 						<h:column>
 							<c:facet name="header">Excluir</c:facet>
 							<h:commandLink value="Excluir"
-								action="#{usuarioBean.excluir(usuario)}" >
-								<f:ajax render="@form" />
+								action="#{usuarioBean.excluir(usuario)}">
+								<c:ajax render="@form" />
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>

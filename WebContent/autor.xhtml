@@ -33,7 +33,14 @@
 				<li><a href=""><span class="glyphicon glyphicon-book"></span>
 						Buscar Livros</a></li>
 			</ul>
+
+			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
+				<ul class="nav navbar-nav" style="z-index: 5">
+					<li><a href="carrinho.jsf"><span
+							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
+				</ul>
 			</h:panelGroup>
+
 			<ul class="nav navbar-nav" style="z-index: 5">
 				<li class="divider-vertical" style="z-index: 5"></li>
 				<li class="dropdown" style="z-index: 5"><a
@@ -81,6 +88,8 @@
 							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
 				</ul>
 			</h:panelGroup>
+
+
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
@@ -107,7 +116,7 @@
 							<h:inputText value="#{autorBean.autor.nome}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Nome">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -116,7 +125,7 @@
 							<h:inputText value="#{autorBean.autor.sobreNome}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o Sobre Nome">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 						</div>
 					</div>
@@ -135,10 +144,10 @@
 							<h:outputText value="Sexo:" />
 							<h:selectOneRadio id="sexo" value="#{autorBean.autor.sexo}"
 								required="true" requiredMessage="Favor informar o Sexo">
-								<f:selectItem itemLabel="Masculino" itemValue="M"
-									styleClass="form-control"></f:selectItem>
-								<f:selectItem itemLabel="Feminino" itemValue="F"
-									styleClass="form-control"></f:selectItem>
+								<c:selectItem itemLabel="Masculino" itemValue="M"
+									styleClass="form-control"></c:selectItem>
+								<c:selectItem itemLabel="Feminino" itemValue="F"
+									styleClass="form-control"></c:selectItem>
 							</h:selectOneRadio>
 						</div>
 
@@ -150,7 +159,7 @@
 							<h:inputText value="#{autorBean.autor.email}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar o E-mail">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 
 						</div>
@@ -168,7 +177,7 @@
 							<h:inputText value="#{autorBean.autor.nacionalidade}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar a Nacionalidae">
-								<f:validateLength minimum="10" maximum="45" />
+								<c:validateLength minimum="10" maximum="45" />
 							</h:inputText>
 						</div>
 					</div>
@@ -179,7 +188,7 @@
 							<h:inputTextarea value="#{autorBean.autor.descricao}"
 								styleClass="form-control" required="true"
 								requiredMessage="Favor informar a Descrição">
-								<f:validateLength minimum="10" maximum="500" />
+								<c:validateLength minimum="10" maximum="500" />
 							</h:inputTextarea>
 						</div>
 					</div>
@@ -262,7 +271,7 @@
 							<c:facet name="header">Alterar</c:facet>
 							<h:commandLink value="Alterar"
 								action="#{autorBean.alterar(autor)}">
-								<f:ajax render="@form" />
+								<c:ajax render="@form" />
 							</h:commandLink>
 						</h:column>
 
@@ -270,7 +279,7 @@
 							<c:facet name="header">Excluir</c:facet>
 							<h:commandLink value="Excluir"
 								action="#{autorBean.excluir(autor)}">
-								<f:ajax render="@form" />
+								<c:ajax render="@form" />
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>
