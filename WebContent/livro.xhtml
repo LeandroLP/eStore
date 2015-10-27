@@ -37,7 +37,7 @@
 			<cc:if test="#{usuarioBean.usuarioLogado == null}">
 				<ul class="nav navbar-nav" style="z-index: 5">
 					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
+							class="glyphicon glyphicon-shopping-cart"></span>Carinho</a></li>
 				</ul>
 			</cc:if>
 			<ul class="nav navbar-nav" style="z-index: 5">
@@ -109,21 +109,24 @@
 				<div class="table - responsive">
 					<div class="panel-heading">Cadastro de Livros</div>
 
-					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
-						styleClass="alert alert-success" />
+					<h:messages	styleClass="alert alert-success" />
 					<div class="row">
 						<div class="col-md-3">
 							<h:outputText value="Título:" />
 							<h:inputText value="#{livroBean.livro.titulo}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Título">
+								<f:validateLength minimum="10" maximum="45" />
+							</h:inputText>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-9">
 							<h:outputText value="Descrição:" />
 							<h:inputTextarea value="#{livroBean.livro.descricao}"
-								styleClass="form-control">
-								<f:validateLength maximum="500" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Descrição">
+								<f:validateLength minimum="10" maximum="500" />
 							</h:inputTextarea>
 						</div>
 					</div>
@@ -131,12 +134,16 @@
 						<div class="col-md-3">
 							<h:outputText value="ISBN:" />
 							<h:inputText value="#{livroBean.livro.isbn}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o ISBN">
+							</h:inputText>
 						</div>
 						<div class="col-md-3">
 							<h:outputText value="Número de Páginas:" />
 							<h:inputText value="#{livroBean.livro.numeroPaginas}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Número Pagina">
+							</h:inputText>
 						</div>
 						<div class="col-md-3">
 							<h:outputText value="Curtidas:" />
@@ -163,9 +170,13 @@
 
 							<h:outputText value="Valor:" />
 							<h:inputText value="#{livroBean.livro.valor}"
-								styleClass="form-control" />
-						</div>
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Valor do livro">
+								<f:validateLength minimum="10" maximum="45" />
+								<f:validateDoubleRange minimum="0.10" />
+							</h:inputText>
 
+						</div>
 					</div>
 
 					<div class="row">
@@ -308,15 +319,20 @@
 						<h:column>
 							<f:facet name="header">Alterar</f:facet>
 							<h:commandLink value="Alterar"
-								action="#{livroBean.alterar(livro)}" />
+								action="#{livroBean.alterar(livro)}">
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Excluir</f:facet>
 							<h:commandLink value="Excluir"
-								action="#{livroBean.excluir(livro)}" />
+								action="#{livroBean.excluir(livro)}" >
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 					</h:dataTable>
+
 				</div>
 			</div>
 		</div>

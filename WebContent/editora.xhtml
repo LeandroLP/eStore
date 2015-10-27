@@ -110,18 +110,23 @@
 				<div class="table - responsive">
 					<div class="panel-heading">Cadastro de Editoras</div>
 
-					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
-						styleClass="alert alert-success" />
+					<h:messages styleClass="alert alert-success" />
 					<div class="row">
 						<div class="col-md-3">
 							<h:outputText value="Nome:" />
 							<h:inputText value="#{editoraBean.editora.nome}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Nome">
+								<f:validateLength minimum="10" maximum="45" />
+							</h:inputText>
 						</div>
 						<div class="col-md-3">
 							<h:outputText value="Razão Social::" />
 							<h:inputText value="#{editoraBean.editora.razaoSocial}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Razão Social">
+								<f:validateLength minimum="10" maximum="45" />
+							</h:inputText>
 						</div>
 					</div>
 					<div class="row">
@@ -154,7 +159,10 @@
 						<div class="col-md-5">
 							<h:outputLabel value="Site:" />
 							<h:inputText value="#{editoraBean.editora.site}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Site">
+								<f:validateLength minimum="10" maximum="45" />
+							</h:inputText>
 
 						</div>
 
@@ -306,13 +314,17 @@
 						<h:column>
 							<f:facet name="header">Alterar</f:facet>
 							<h:commandLink value="Alterar"
-								action="#{editoraBean.alterar(editora)}" />
+								action="#{editoraBean.alterar(editora)}">
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Excluir</f:facet>
 							<h:commandLink value="Excluir"
-								action="#{editoraBean.excluir(editora)}" />
+								action="#{editoraBean.excluir(editora)}" >
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 				</div>

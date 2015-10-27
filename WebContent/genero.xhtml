@@ -109,13 +109,15 @@
 				<div class="table - responsive">
 					<div class="panel-heading">Cadastro de Generos</div>
 
-					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
-						styleClass="alert alert-success" />
+					<h:messages styleClass="alert alert-success" />
 					<div class="row">
 						<div class="col-md-6">
 							<h:outputText value="Descrição:" />
 							<h:inputText value="#{generoBean.genero.descricao}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Descricao">
+								<f:validateLength maximum="45" />
+							</h:inputText>
 						</div>
 					</div>
 
@@ -159,13 +161,17 @@
 						<h:column>
 							<f:facet name="header">Alterar</f:facet>
 							<h:commandLink value="Alterar"
-								action="#{generoBean.alterar(genero)}" />
+								action="#{generoBean.alterar(genero)}">
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Excluir</f:facet>
 							<h:commandLink value="Excluir"
-								action="#{generoBean.excluir(genero)}" />
+								action="#{generoBean.excluir(genero)}" >
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 				</div>

@@ -14,7 +14,6 @@
 
 </h:head>
 <h:body>
-	<h:form id="form" enctype="multipart/form-data">
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
 			style="z-index:5">
 		<div class="container" style="z-index: 5">
@@ -102,19 +101,21 @@
 			<br />
 		</p>
 		<!-- Page Content -->
-
+<h:form id="form" enctype="multipart/form-data">
 		<div class="container">
 			<div role="tabpanel">
 				<div class="table - responsive">
 					<div class="panel-heading">Cadastro de Categorias</div>
 
-					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
-						styleClass="alert alert-success" />
+					<h:messages	styleClass="alert alert-success" />
 					<div class="row">
 						<div class="col-md-6">
 							<h:outputText value="Descrição:" />
 							<h:inputText value="#{categoriaBean.categoria.descricao}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Descricao">
+								<f:validateLength maximum="45" />
+							</h:inputText>
 						</div>
 					</div>
 
@@ -159,13 +160,17 @@
 						<h:column>
 							<f:facet name="header">Alterar</f:facet>
 							<h:commandLink value="Alterar"
-								action="#{categoriaBean.alterar(categoria)}" />
+								action="#{categoriaBean.alterar(categoria)}">
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Excluir</f:facet>
 							<h:commandLink value="Excluir"
-								action="#{categoriaBean.excluir(categoria)}" />
+								action="#{categoriaBean.excluir(categoria)}" >
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 				</div>

@@ -110,13 +110,15 @@
 				<div class="table - responsive">
 					<div class="panel-heading">Cadastro de Usuarios</div>
 
-					<h:messages id="growl" showDetail="true" life="3000" sticky="false"
-						styleClass="alert alert-success" />
+					<h:messages styleClass="alert alert-success" />
 					<div class="row">
 						<div class="col-md-3">
 							<h:outputText value="Nome:" />
 							<h:inputText value="#{usuarioBean.usuario.nome}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Nome">
+								<f:validateLength minimum="10" maximum="45" />
+							</h:inputText>
 						</div>
 						<div class="col-md-3">
 							<h:outputText value="CPF:" />
@@ -128,7 +130,10 @@
 						<div class="col-md-3">
 							<h:outputText value="E-mail:" />
 							<h:inputText value="#{usuarioBean.usuario.email}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o E-mail">
+								<f:validateLength minimum="10" maximum="45" />
+							</h:inputText>
 						</div>
 						<div class="col-md-3">
 							<h:outputText value="Telefone:" />
@@ -137,7 +142,8 @@
 						</div>
 						<div class="col-md-3">
 							<h:outputText value="Sexo:" />
-							<h:selectOneRadio id="sexo" value="#{usuarioBean.usuario.sexo}">
+							<h:selectOneRadio id="sexo" value="#{usuarioBean.usuario.sexo}"
+								required="true" requiredMessage="Favor informar o Sexo">
 								<f:selectItem itemLabel="Masculino" itemValue="M"
 									styleClass="form-control"></f:selectItem>
 								<f:selectItem itemLabel="Feminino" itemValue="F"
@@ -188,12 +194,18 @@
 						<div class="col-md-3">
 							<h:outputText value="Login:" />
 							<h:inputText value="#{usuarioBean.usuario.login}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Login">
+								<f:validateLength minimum="10" maximum="45" />
+							</h:inputText>
 						</div>
 						<div class="col-md-3">
 							<h:outputText value="Senha:" />
 							<h:inputSecret value="#{usuarioBean.usuario.senha}"
-								styleClass="form-control" />
+								styleClass="form-control" required="true"
+								requiredMessage="Favor informar o Senha no minino 6 digito maximo 10.">
+								<f:validateLength minimum="6" maximum="10" />
+							</h:inputSecret>
 						</div>
 						<div class="col-md-3">
 
@@ -268,13 +280,17 @@
 						<h:column>
 							<f:facet name="header">Alterar</f:facet>
 							<h:commandLink value="Alterar"
-								action="#{usuarioBean.alterar(usuario)}" />
+								action="#{usuarioBean.alterar(usuario)}">
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Excluir</f:facet>
 							<h:commandLink value="Excluir"
-								action="#{usuarioBean.excluir(usuario)}" />
+								action="#{usuarioBean.excluir(usuario)}" >
+								<f:ajax render="@form" />
+							</h:commandLink>
 						</h:column>
 					</h:dataTable>
 				</div>
