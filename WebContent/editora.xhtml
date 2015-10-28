@@ -4,332 +4,342 @@
 	xmlns:c="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Editoras</title>
-	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+<c:view locale="#{localeBean.currentLocale}">
+	<h:head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1" />
+		<title>#{msgs.editora}</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 
-</h:head>
-<h:body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
-		style="z-index:5">
-	<div class="container" style="z-index: 5">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="index.jsf">eStore</a>
-		</div>
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href=""><span class="glyphicon glyphicon-book"></span>
-						Buscar Livros</a></li>
-			</ul>
-
-			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
-				<ul class="nav navbar-nav" style="z-index: 5">
-					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
+	</h:head>
+	<h:body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+			style="z-index:5">
+		<div class="container" style="z-index: 5">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.jsf">eStore</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href=""><span class="glyphicon glyphicon-book"></span>
+							#{msgs.buscarLivros}</a></li>
 				</ul>
-			</h:panelGroup>
 
-			<ul class="nav navbar-nav" style="z-index: 5">
-				<li class="divider-vertical" style="z-index: 5"></li>
-				<li class="dropdown" style="z-index: 5"><a
-					class="dropdown-toggle" href="#" data-toggle="dropdown"><span
-						class="glyphicon glyphicon-user"></span> Login<strong
-						class="caret"></strong></a>
-					<div class="dropdown-menu"
-						style="padding: 20px; padding-bottom: 0px; z-index: 5">
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
+					<ul class="nav navbar-nav" style="z-index: 5">
+						<li><a href="carrinho.jsf"><span
+								class="glyphicon glyphicon-shopping-cart"></span>
+								#{msgs.carrinho}</a></li>
+					</ul>
+				</h:panelGroup>
+
+				<ul class="nav navbar-nav" style="z-index: 5">
+					<li class="divider-vertical" style="z-index: 5"></li>
+					<li class="dropdown" style="z-index: 5"><a
+						class="dropdown-toggle" href="#" data-toggle="dropdown"><span
+							class="glyphicon glyphicon-user"></span> #{msgs.entrar}<strong
+							class="caret"></strong></a>
+						<div class="dropdown-menu"
+							style="padding: 20px; padding-bottom: 0px; z-index: 5">
+							<br />
+							<h:form role="search">
+								<h:outputText value="#{msgs.usuario}" />
+								<h:inputText value="#{usuarioBean.usuario.login}"
+									style="margin-bottom: 15px;" type="text" plac="Usuário"
+									id="txtLogin" name="txtLogin" />
+								<h:outputText value="#{msgs.senha}" />
+								<h:inputSecret value="#{usuarioBean.usuario.senha}"
+									style="margin-bottom: 15px;" type="password"
+									placeholder="Senha" id="txtPassword" name="txtPassword" />
+								<h:commandLink action="#{usuarioBean.login}"
+									class="btn btn-primary" id="sign-in" value="#{msgs.entrar}" />
+								<h:commandLink action="#{usuarioBean.logout}"
+									class="btn btn-primary" id="sign-out" value="#{msgs.sair}" />
+							</h:form>
+							<br /> <a href="cadastrarse.jsf">#{msgs.cadastrarse}</a> <br />
+							<br />
+						</div></li>
+				</ul>
+
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
+					<ul class="nav navbar-nav" style="z-index: 5">
+						<li role="presentation" class="dropdown" style="z-index: 5"><a
+							class="dropdown-toggle" data-toggle="dropdown" href="#"
+							role="button" aria-expanded="false"> <span
+								class="glyphicon glyphicon-wrench"></span>#{msgs.manutencao} <span
+								class="caret" style="z-index: 5"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu" style="z-index: 5">
+								<li><a href="livro.jsf">#{msgs.livro}</a></li>
+								<li><a href="editora.jsf">#{msgs.editora}</a></li>
+								<li><a href="autor.jsf">#{msgs.autor}</a></li>
+								<li><a href="categoria.jsf">#{msgs.categoria}</a></li>
+								<li><a href="genero.jsf">#{msgs.genero}</a></li>
+								<li><a href="usuario.jsf">#{msgs.usuario}</a></li>
+							</ul></li>
+						<li><a href="carrinho.jsf"><span
+								class="glyphicon glyphicon-shopping-cart"></span>#{msgs.carrinho}</a></li>
+					</ul>
+				</h:panelGroup>
+				<ul class="nav navbar-nav pull-right"
+					style="z-index: 5; padding-right: 10px">
+					<h:form role="search">
+						<h:commandLink action="#{localeBean.portugueseLocale}">
+							<img alt="Brasil" src="img/Brasil.png" />
+						</h:commandLink>
+						<h:commandLink action="#{localeBean.englishLocale}">
+							<img alt="EUA" src="img/EUA.png" />
+						</h:commandLink>
+					</h:form>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container --> </nav>
+
+		<p>
+			<br />
+		</p>
+		<p>
+			<br />
+		</p>
+		<!-- Page Content -->
+
+		<h:form id="form" enctype="multipart/form-data">
+			<div class="container">
+				<div role="tabpanel">
+
+					<div class="table - responsive">
+						<div class="panel-heading">#{msgs.cadastroEditoras}</div>
+
+						<h:messages styleClass="alert alert-success" />
+						<div class="row">
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.nome}:" />
+								<h:inputText value="#{editoraBean.editora.nome}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarNome}">
+									<c:validateLength minimum="10" maximum="45" />
+								</h:inputText>
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.razaoSocial}:" />
+								<h:inputText value="#{editoraBean.editora.razaoSocial}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarRazaoSocial}">
+									<c:validateLength minimum="10" maximum="45" />
+								</h:inputText>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.telefone}" />
+								<h:inputText value="#{editoraBean.editora.telefone}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="CNPJ:" />
+								<h:inputText value="#{editoraBean.editora.cnpj}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="IE:" />
+								<h:inputText value="#{editoraBean.editora.ie}"
+									styleClass="form-control" />
+
+							</div>
+
+						</div>
+						<div class="row">
+
+							<div class="col-md-3">
+								<h:outputText value="E-mail:" />
+								<h:inputText value="#{editoraBean.editora.email}"
+									styleClass="form-control" />
+
+							</div>
+							<div class="col-md-5">
+								<h:outputText value="Site:" />
+								<h:inputText value="#{editoraBean.editora.site}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarSite}">
+									<c:validateLength minimum="10" maximum="45" />
+								</h:inputText>
+
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="col-md-3">
+								<h:outputText value="CEP:" />
+								<h:inputText value="#{editoraBean.editora.cep}"
+									styleClass="form-control" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.endereco}:" />
+								<h:inputText value="#{editoraBean.editora.endereco}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.numero}:" />
+								<h:inputText value="#{editoraBean.editora.numero}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="Complemento:" />
+								<h:inputText value="#{editoraBean.editora.complemento}"
+									styleClass="form-control" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.bairro}:" />
+								<h:inputText value="#{editoraBean.editora.bairro}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.cidade}:" />
+								<h:inputText value="#{editoraBean.editora.cidade}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.estado}:" />
+								<h:inputText value="#{editoraBean.editora.estado}"
+									styleClass="form-control" />
+							</div>
+						</div>
+						<hr></hr>
+						<div class="row">
+							<div class="col-md-1">
+								<h:commandButton value="#{msgs.salvar}"
+									action="#{editoraBean.salvar}" styleClass="btn btn-primary" />
+							</div>
+							<div class="col-md-1">
+
+								<h:commandButton value="#{msgs.novo}"
+									action="#{editoraBean.novo}" styleClass="btn btn-primary">
+									<c:ajax render="@form" resetValues="true" />
+								</h:commandButton>
+							</div>
+						</div>
 						<br />
-						<h:form role="search">
-							<h:outputText value="Login:" />
-							<h:inputText value="#{usuarioBean.usuario.login}"
-								style="margin-bottom: 15px;" type="text" plac="Usuário"
-								id="txtLogin" name="txtLogin" />
-							<h:outputText value="Senha:" />
-							<h:inputSecret value="#{usuarioBean.usuario.senha}"
-								style="margin-bottom: 15px;" type="password" placeholder="Senha"
-								id="txtPassword" name="txtPassword" />
-							<h:commandLink action="#{usuarioBean.login}"
-								class="btn btn-primary" id="sign-in" value="Entra" />
-							<h:commandLink action="#{usuarioBean.logout}"
-								class="btn btn-primary" id="sign-out" value="Sair" />
-						</h:form>
-						<br /> <a href="cadastrarse.jsf">Cadastrar-me</a> <br /> <br />
-					</div></li>
-			</ul>
 
-			<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
-				<ul class="nav navbar-nav" style="z-index: 5">
-					<li role="presentation" class="dropdown" style="z-index: 5"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#"
-						role="button" aria-expanded="false"> <span
-							class="glyphicon glyphicon-wrench"></span>Manutenção <span
-							class="caret" style="z-index: 5"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu" style="z-index: 5">
-							<li><a href="livro.jsf">Livros</a></li>
-							<li><a href="editora.jsf">Editora</a></li>
-							<li><a href="autor.jsf">Autor</a></li>
-							<li><a href="categoria.jsf">Categoria</a></li>
-							<li><a href="genero.jsf">Gênero</a></li>
-							<li><a href="usuario.jsf">Usuário</a></li>
-						</ul></li>
-					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
-				</ul>
-			</h:panelGroup>
+						<hr></hr>
+						<h:dataTable id="editoras" var="editora"
+							value="#{editoraBean.listEditora}" styleClass="table table-hover">
 
-
-		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container --> </nav>
-
-	<p>
-		<br />
-	</p>
-	<p>
-		<br />
-	</p>
-	<!-- Page Content -->
-
-	<h:form id="form" enctype="multipart/form-data">
-		<div class="container">
-			<div role="tabpanel">
-
-				<div class="table - responsive">
-					<div class="panel-heading">Cadastro de Editoras</div>
-
-					<h:messages styleClass="alert alert-success" />
-					<div class="row">
-						<div class="col-md-3">
-							<h:outputText value="Nome:" />
-							<h:inputText value="#{editoraBean.editora.nome}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar o Nome">
-								<c:validateLength minimum="10" maximum="45" />
-							</h:inputText>
-						</div>
-						<div class="col-md-3">
-							<h:outputText value="Razão Social::" />
-							<h:inputText value="#{editoraBean.editora.razaoSocial}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar o Razão Social">
-								<c:validateLength minimum="10" maximum="45" />
-							</h:inputText>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<h:outputText value="Telefone:" />
-							<h:inputText value="#{editoraBean.editora.telefone}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputText value="CNPJ:" />
-							<h:inputText value="#{editoraBean.editora.cnpj}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputLabel value="IE:" />
-							<h:inputText value="#{editoraBean.editora.ie}"
-								styleClass="form-control" />
-
-						</div>
-
-					</div>
-					<div class="row">
-
-						<div class="col-md-3">
-							<h:outputText value="E-mail:" />
-							<h:inputText value="#{editoraBean.editora.email}"
-								styleClass="form-control" />
-
-						</div>
-						<div class="col-md-5">
-							<h:outputLabel value="Site:" />
-							<h:inputText value="#{editoraBean.editora.site}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar o Site">
-								<c:validateLength minimum="10" maximum="45" />
-							</h:inputText>
-
-						</div>
-
-					</div>
-
-					<div class="row">
-						<div class="col-md-3">
-							<h:outputText value="CEP:" />
-							<h:inputText value="#{editoraBean.editora.cep}"
-								styleClass="form-control" />
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<h:outputText value="Endereço:" />
-							<h:inputText value="#{editoraBean.editora.endereco}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputText value="Numero:" />
-							<h:inputText value="#{editoraBean.editora.numero}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputLabel value="Complemento:" />
-							<h:inputText value="#{editoraBean.editora.complemento}"
-								styleClass="form-control" />
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<h:outputText value="Bairro:" />
-							<h:inputText value="#{editoraBean.editora.bairro}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputText value="Cidade:" />
-							<h:inputText value="#{editoraBean.editora.cidade}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputLabel value="Estado:" />
-							<h:inputText value="#{editoraBean.editora.estado}"
-								styleClass="form-control" />
-						</div>
-					</div>
-
-
-
-
-					<hr></hr>
-					<div class="row">
-						<div class="col-md-1">
-							<h:commandButton value="Salvar" action="#{editoraBean.salvar}"
-								styleClass="btn btn-primary" />
-						</div>
-						<div class="col-md-1">
-
-							<h:commandButton value="Novo" action="#{editoraBean.novo}"
-								styleClass="btn btn-primary">
-								<c:ajax render="@form" resetValues="true" />
-							</h:commandButton>
-						</div>
-					</div>
-					<br />
-
-					<hr></hr>
-					<h:dataTable id="editoras" var="editora"
-						value="#{editoraBean.listEditora}" styleClass="table table-hover">
-
-						<c:facet name="header">
-           			Editoras
+							<c:facet name="header">
+           			#{msgs.editora}
        			</c:facet>
 
-						<h:column>
-							<c:facet name="header">Editora ID</c:facet>
-							<h:outputText value="#{editora.editoraId}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.editora} ID</c:facet>
+								<h:outputText value="#{editora.editoraId}" />
+							</h:column>
 
-						<h:column>
+							<h:column>
 
-							<c:facet name="header">Nome</c:facet>
-							<h:outputText value="#{editora.nome}" />
-						</h:column>
+								<c:facet name="header">#{msgs.nome}</c:facet>
+								<h:outputText value="#{editora.nome}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Razão Social</c:facet>
-							<h:outputText value="#{editora.razaoSocial}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.razaoSocial}</c:facet>
+								<h:outputText value="#{editora.razaoSocial}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Telefone</c:facet>
-							<h:outputText value="#{editora.telefone}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.telefone}</c:facet>
+								<h:outputText value="#{editora.telefone}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">CNPJ</c:facet>
-							<h:outputText value="#{editora.cnpj}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">CNPJ</c:facet>
+								<h:outputText value="#{editora.cnpj}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">IE</c:facet>
-							<h:outputText value="#{editora.ie}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">IE</c:facet>
+								<h:outputText value="#{editora.ie}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">E-mail</c:facet>
-							<h:outputText value="#{editora.email}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">E-mail</c:facet>
+								<h:outputText value="#{editora.email}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Site</c:facet>
-							<h:outputText value="#{editora.site}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">Site</c:facet>
+								<h:outputText value="#{editora.site}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">CEP</c:facet>
-							<h:outputText value="#{editora.cep}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">CEP</c:facet>
+								<h:outputText value="#{editora.cep}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Endereço</c:facet>
-							<h:outputText value="#{editora.cep}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.endereco}</c:facet>
+								<h:outputText value="#{editora.cep}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Número</c:facet>
-							<h:outputText value="#{editora.numero}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.numero}</c:facet>
+								<h:outputText value="#{editora.numero}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Bairro</c:facet>
-							<h:outputText value="#{editora.bairro}" />
-						</h:column>
-
-
-						<h:column>
-							<c:facet name="header">Cidade</c:facet>
-							<h:outputText value="#{editora.cidade}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.bairro}</c:facet>
+								<h:outputText value="#{editora.bairro}" />
+							</h:column>
 
 
-						<h:column>
-							<c:facet name="header">Estado</c:facet>
-							<h:outputText value="#{editora.estado}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.cidade}</c:facet>
+								<h:outputText value="#{editora.cidade}" />
+							</h:column>
 
 
-						<h:column>
-							<c:facet name="header">Alterar</c:facet>
-							<h:commandLink value="Alterar"
-								action="#{editoraBean.alterar(editora)}">
-								<c:ajax render="@form" />
-							</h:commandLink>
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.estado}</c:facet>
+								<h:outputText value="#{editora.estado}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Excluir</c:facet>
-							<h:commandLink value="Excluir"
-								action="#{editoraBean.excluir(editora)}" >
-								<c:ajax render="@form" />
-							</h:commandLink>
-						</h:column>
-					</h:dataTable>
+
+							<h:column>
+								<c:facet name="header">#{msgs.alterar}</c:facet>
+								<h:commandLink value="#{msgs.alterar}"
+									action="#{editoraBean.alterar(editora)}">
+									<c:ajax render="@form" />
+								</h:commandLink>
+							</h:column>
+
+							<h:column>
+								<c:facet name="header">#{msgs.excluir}</c:facet>
+								<h:commandLink value="#{msgs.excluir}"
+									action="#{editoraBean.excluir(editora)}">
+									<c:ajax render="@form" />
+								</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</div>
 				</div>
 			</div>
-		</div>
-	</h:form>
-</h:body>
+		</h:form>
+	</h:body>
+</c:view>
 </html>

@@ -4,288 +4,303 @@
 	xmlns:c="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Autores</title>
-	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+<c:view locale="#{localeBean.currentLocale}">
+	<h:head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1" />
+		<title>#{msgs.autores}</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 
-</h:head>
-<h:body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
-		style="z-index:5">
-	<div class="container" style="z-index: 5">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="index.jsf">eStore</a>
-		</div>
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href=""><span class="glyphicon glyphicon-book"></span>
-						Buscar Livros</a></li>
-			</ul>
-
-			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
-				<ul class="nav navbar-nav" style="z-index: 5">
-					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
+	</h:head>
+	<h:body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+			style="z-index:5">
+		<div class="container" style="z-index: 5">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.jsf">eStore</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href=""><span class="glyphicon glyphicon-book"></span>
+							#{msgs.buscarLivros}</a></li>
 				</ul>
-			</h:panelGroup>
 
-			<ul class="nav navbar-nav" style="z-index: 5">
-				<li class="divider-vertical" style="z-index: 5"></li>
-				<li class="dropdown" style="z-index: 5"><a
-					class="dropdown-toggle" href="#" data-toggle="dropdown"><span
-						class="glyphicon glyphicon-user"></span> Login<strong
-						class="caret"></strong></a>
-					<div class="dropdown-menu"
-						style="padding: 20px; padding-bottom: 0px; z-index: 5">
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
+					<ul class="nav navbar-nav" style="z-index: 5">
+						<li><a href="carrinho.jsf"><span
+								class="glyphicon glyphicon-shopping-cart"></span>
+								#{msgs.carrinho}</a></li>
+					</ul>
+				</h:panelGroup>
+
+				<ul class="nav navbar-nav" style="z-index: 5">
+					<li class="divider-vertical" style="z-index: 5"></li>
+					<li class="dropdown" style="z-index: 5"><a
+						class="dropdown-toggle" href="#" data-toggle="dropdown"><span
+							class="glyphicon glyphicon-user"></span> #{msgs.entrar}<strong
+							class="caret"></strong></a>
+						<div class="dropdown-menu"
+							style="padding: 20px; padding-bottom: 0px; z-index: 5">
+							<br />
+							<h:form role="search">
+								<h:outputText value="#{msgs.usuario}" />
+								<h:inputText value="#{usuarioBean.usuario.login}"
+									style="margin-bottom: 15px;" type="text" plac="Usuário"
+									id="txtLogin" name="txtLogin" />
+								<h:outputText value="#{msgs.senha}" />
+								<h:inputSecret value="#{usuarioBean.usuario.senha}"
+									style="margin-bottom: 15px;" type="password"
+									placeholder="Senha" id="txtPassword" name="txtPassword" />
+								<h:commandLink action="#{usuarioBean.login}"
+									class="btn btn-primary" id="sign-in" value="#{msgs.entrar}" />
+								<h:commandLink action="#{usuarioBean.logout}"
+									class="btn btn-primary" id="sign-out" value="#{msgs.sair}" />
+							</h:form>
+							<br /> <a href="cadastrarse.jsf">#{msgs.cadastrarse}</a> <br />
+							<br />
+						</div></li>
+				</ul>
+
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
+					<ul class="nav navbar-nav" style="z-index: 5">
+						<li role="presentation" class="dropdown" style="z-index: 5"><a
+							class="dropdown-toggle" data-toggle="dropdown" href="#"
+							role="button" aria-expanded="false"> <span
+								class="glyphicon glyphicon-wrench"></span>#{msgs.manutencao} <span
+								class="caret" style="z-index: 5"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu" style="z-index: 5">
+								<li><a href="livro.jsf">#{msgs.livro}</a></li>
+								<li><a href="editora.jsf">#{msgs.editora}</a></li>
+								<li><a href="autor.jsf">#{msgs.autor}</a></li>
+								<li><a href="categoria.jsf">#{msgs.categoria}</a></li>
+								<li><a href="genero.jsf">#{msgs.genero}</a></li>
+								<li><a href="usuario.jsf">#{msgs.usuario}</a></li>
+							</ul></li>
+						<li><a href="carrinho.jsf"><span
+								class="glyphicon glyphicon-shopping-cart"></span>#{msgs.carrinho}</a></li>
+					</ul>
+				</h:panelGroup>
+				<ul class="nav navbar-nav pull-right"
+					style="z-index: 5; padding-right: 10px">
+					<h:form role="search">
+						<h:commandLink action="#{localeBean.portugueseLocale}">
+							<img alt="Brasil" src="img/Brasil.png" />
+						</h:commandLink>
+						<h:commandLink action="#{localeBean.englishLocale}">
+							<img alt="EUA" src="img/EUA.png" />
+						</h:commandLink>
+					</h:form>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container --> </nav>
+
+		<p>
+			<br />
+		</p>
+		<p>
+			<br />
+		</p>
+		<!-- Page Content -->
+
+		<h:form id="form" enctype="multipart/form-data">
+			<div class="container">
+				<div role="tabpanel">
+
+					<div class="table - responsive">
+						<div class="panel-heading">#{msgs.cadastroAutores}</div>
+
+						<h:messages styleClass="alert alert-success" />
+						<div class="row">
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.nome}:" />
+								<h:inputText value="#{autorBean.autor.nome}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarNome}">
+									<c:validateLength minimum="10" maximum="45" />
+								</h:inputText>
+
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.sobreNome}:" />
+								<h:inputText value="#{autorBean.autor.sobreNome}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarSobreNome}">
+									<c:validateLength minimum="10" maximum="45" />
+								</h:inputText>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.telefone}:" />
+								<h:inputText value="#{autorBean.autor.telefone}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="CPF:" />
+								<h:inputText value="#{autorBean.autor.cpf}"
+									styleClass="form-control" />
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="#{msgs.sexo}:" />
+								<h:selectOneRadio id="sexo" value="#{autorBean.autor.sexo}"
+									required="true" requiredMessage="#{msgs.favorInformarSexo}">
+									<c:selectItem itemLabel="#{msgs.masculino}" itemValue="M"
+										styleClass="form-control"></c:selectItem>
+									<c:selectItem itemLabel="#{msgs.feminino}" itemValue="F"
+										styleClass="form-control"></c:selectItem>
+								</h:selectOneRadio>
+							</div>
+
+						</div>
+						<div class="row">
+
+							<div class="col-md-3">
+								<h:outputText value="E-mail:" />
+								<h:inputText value="#{autorBean.autor.email}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarEmail}">
+									<c:validateLength minimum="10" maximum="45" />
+								</h:inputText>
+
+							</div>
+							<div class="col-md-3">
+								<h:outputLabel value="#{msgs.idade}" />
+								<h:inputText value="#{autorBean.autor.idade}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarIdade}">
+								</h:inputText>
+
+							</div>
+							<div class="col-md-3">
+
+								<h:outputText value="#{msgs.nacionalidade}:" />
+								<h:inputText value="#{autorBean.autor.nacionalidade}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarNacionalidae}">
+									<c:validateLength minimum="10" maximum="45" />
+								</h:inputText>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-9">
+								<h:outputText value="#{msgs.descricao}:" />
+								<h:inputTextarea value="#{autorBean.autor.descricao}"
+									styleClass="form-control" required="true"
+									requiredMessage="#{msgs.favorInformarDescricao}">
+									<c:validateLength minimum="10" maximum="500" />
+								</h:inputTextarea>
+							</div>
+						</div>
+
+
+
+
+						<hr></hr>
+						<div class="row">
+							<div class="col-md-1">
+								<h:commandButton value="#{msgs.salvar}"
+									action="#{autorBean.salvar}" styleClass="btn btn-primary" />
+							</div>
+							<div class="col-md-1">
+
+								<h:commandButton value="#{msgs.novo}" action="#{autorBean.novo}"
+									styleClass="btn btn-primary">
+									<c:ajax render="@form" resetValues="true" />
+								</h:commandButton>
+							</div>
+						</div>
 						<br />
-						<h:form role="search">
-							<h:outputText value="Login:" />
-							<h:inputText value="#{usuarioBean.usuario.login}"
-								style="margin-bottom: 15px;" type="text" plac="Usuário"
-								id="txtLogin" name="txtLogin" />
-							<h:outputText value="Senha:" />
-							<h:inputSecret value="#{usuarioBean.usuario.senha}"
-								style="margin-bottom: 15px;" type="password" placeholder="Senha"
-								id="txtPassword" name="txtPassword" />
-							<h:commandLink action="#{usuarioBean.login}"
-								class="btn btn-primary" id="sign-in" value="Entra" />
-							<h:commandLink action="#{usuarioBean.logout}"
-								class="btn btn-primary" id="sign-out" value="Sair" />
-						</h:form>
-						<br /> <a href="cadastrarse.jsf">Cadastrar-me</a> <br /> <br />
-					</div></li>
-			</ul>
 
-			<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
-				<ul class="nav navbar-nav" style="z-index: 5">
-					<li role="presentation" class="dropdown" style="z-index: 5"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#"
-						role="button" aria-expanded="false"> <span
-							class="glyphicon glyphicon-wrench"></span>Manutenção <span
-							class="caret" style="z-index: 5"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu" style="z-index: 5">
-							<li><a href="livro.jsf">Livros</a></li>
-							<li><a href="editora.jsf">Editora</a></li>
-							<li><a href="autor.jsf">Autor</a></li>
-							<li><a href="categoria.jsf">Categoria</a></li>
-							<li><a href="genero.jsf">Gênero</a></li>
-							<li><a href="usuario.jsf">Usuário</a></li>
-						</ul></li>
-					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
-				</ul>
-			</h:panelGroup>
+						<hr></hr>
+						<h:dataTable id="autors" var="autor"
+							value="#{autorBean.listAutor}" styleClass="table table-hover">
 
-
-		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container --> </nav>
-
-	<p>
-		<br />
-	</p>
-	<p>
-		<br />
-	</p>
-	<!-- Page Content -->
-	<h:form id="form" enctype="multipart/form-data">
-		<div class="container">
-			<div role="tabpanel">
-
-				<div class="table - responsive">
-					<div class="panel-heading">Cadastro de Autores</div>
-
-					<h:messages styleClass="alert alert-success" />
-					<div class="row">
-						<div class="col-md-3">
-							<h:outputText value="Nome:" />
-							<h:inputText value="#{autorBean.autor.nome}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar o Nome">
-								<c:validateLength minimum="10" maximum="45" />
-							</h:inputText>
-
-						</div>
-						<div class="col-md-3">
-							<h:outputText value="Sobre Nome:" />
-							<h:inputText value="#{autorBean.autor.sobreNome}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar o Sobre Nome">
-								<c:validateLength minimum="10" maximum="45" />
-							</h:inputText>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<h:outputText value="Telefone:" />
-							<h:inputText value="#{autorBean.autor.telefone}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputText value="CPc:" />
-							<h:inputText value="#{autorBean.autor.cpf}"
-								styleClass="form-control" />
-						</div>
-						<div class="col-md-3">
-							<h:outputText value="Sexo:" />
-							<h:selectOneRadio id="sexo" value="#{autorBean.autor.sexo}"
-								required="true" requiredMessage="Favor informar o Sexo">
-								<c:selectItem itemLabel="Masculino" itemValue="M"
-									styleClass="form-control"></c:selectItem>
-								<c:selectItem itemLabel="Feminino" itemValue="F"
-									styleClass="form-control"></c:selectItem>
-							</h:selectOneRadio>
-						</div>
-
-					</div>
-					<div class="row">
-
-						<div class="col-md-3">
-							<h:outputText value="E-mail:" />
-							<h:inputText value="#{autorBean.autor.email}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar o E-mail">
-								<c:validateLength minimum="10" maximum="45" />
-							</h:inputText>
-
-						</div>
-						<div class="col-md-3">
-							<h:outputLabel value="Idade:" />
-							<h:inputText value="#{autorBean.autor.idade}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar a Idade">
-							</h:inputText>
-
-						</div>
-						<div class="col-md-3">
-
-							<h:outputText value="Nacionalidae:" />
-							<h:inputText value="#{autorBean.autor.nacionalidade}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar a Nacionalidae">
-								<c:validateLength minimum="10" maximum="45" />
-							</h:inputText>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-9">
-							<h:outputText value="Descrição:" />
-							<h:inputTextarea value="#{autorBean.autor.descricao}"
-								styleClass="form-control" required="true"
-								requiredMessage="Favor informar a Descrição">
-								<c:validateLength minimum="10" maximum="500" />
-							</h:inputTextarea>
-						</div>
-					</div>
-
-
-
-
-					<hr></hr>
-					<div class="row">
-						<div class="col-md-1">
-							<h:commandButton value="Salvar" action="#{autorBean.salvar}"
-								styleClass="btn btn-primary" />
-						</div>
-						<div class="col-md-1">
-
-							<h:commandButton value="Novo" action="#{autorBean.novo}"
-								styleClass="btn btn-primary">
-								<c:ajax render="@form" resetValues="true" />
-							</h:commandButton>
-						</div>
-					</div>
-					<br />
-
-					<hr></hr>
-					<h:dataTable id="autors" var="autor" value="#{autorBean.listAutor}"
-						styleClass="table table-hover">
-
-						<c:facet name="header">
-           			Autores
+							<c:facet name="header">
+           			#{msgs.autores}
        			</c:facet>
 
-						<h:column>
-							<c:facet name="header">Autor ID</c:facet>
-							<h:outputText value="#{autor.autorId}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.autores} ID</c:facet>
+								<h:outputText value="#{autor.autorId}" />
+							</h:column>
 
-						<h:column>
+							<h:column>
 
-							<c:facet name="header">Nome</c:facet>
-							<h:outputText value="#{autor.nome}" />
-						</h:column>
+								<c:facet name="header">#{msgs.nome}</c:facet>
+								<h:outputText value="#{autor.nome}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Sobre Nome</c:facet>
-							<h:outputText value="#{autor.sobreNome}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.sobreNome}</c:facet>
+								<h:outputText value="#{autor.sobreNome}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Telefone</c:facet>
-							<h:outputText value="#{autor.telefone}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.telefone}</c:facet>
+								<h:outputText value="#{autor.telefone}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">CPF</c:facet>
-							<h:outputText value="#{autor.cpf}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">CPF</c:facet>
+								<h:outputText value="#{autor.cpf}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Sexo</c:facet>
-							<h:outputText value="#{autor.sexo}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.sexo}</c:facet>
+								<h:outputText value="#{autor.sexo}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">E-mail</c:facet>
-							<h:outputText value="#{autor.email}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">E-mail</c:facet>
+								<h:outputText value="#{autor.email}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Idade</c:facet>
-							<h:outputText value="#{autor.idade}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.idade}</c:facet>
+								<h:outputText value="#{autor.idade}" />
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Nacionalidade</c:facet>
-							<h:outputText value="#{autor.nacionalidade}" />
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.nacionalidade}</c:facet>
+								<h:outputText value="#{autor.nacionalidade}" />
+							</h:column>
 
 
-						<h:column>
-							<c:facet name="header">Alterar</c:facet>
-							<h:commandLink value="Alterar"
-								action="#{autorBean.alterar(autor)}">
-								<c:ajax render="@form" />
-							</h:commandLink>
-						</h:column>
+							<h:column>
+								<c:facet name="header">#{msgs.alterar}</c:facet>
+								<h:commandLink value="#{msgs.alterar}"
+									action="#{autorBean.alterar(autor)}">
+									<c:ajax render="@form" />
+								</h:commandLink>
+							</h:column>
 
-						<h:column>
-							<c:facet name="header">Excluir</c:facet>
-							<h:commandLink value="Excluir"
-								action="#{autorBean.excluir(autor)}">
-								<c:ajax render="@form" />
-							</h:commandLink>
-						</h:column>
-					</h:dataTable>
+							<h:column>
+								<c:facet name="header">#{msgs.excluir}</c:facet>
+								<h:commandLink value="#{msgs.excluir}"
+									action="#{autorBean.excluir(autor)}">
+									<c:ajax render="@form" />
+								</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</div>
 				</div>
 			</div>
-		</div>
-	</h:form>
-</h:body>
+		</h:form>
+	</h:body>
+</c:view>
 </html>
