@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import br.com.fiap.nac.factory.ConnectionFactory;
+import br.com.fiap.nac.to.BuscarLivro;
 import br.com.fiap.nac.to.Categoria;
 import br.com.fiap.nac.to.Livro;
 
@@ -79,6 +80,58 @@ public class LivroDAO implements GenericDAO<Livro> {
 			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
 
 			preparedStatement.setInt(1, object.getId());
+
+			// execute select SQL stetement
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+
+				Livro livro = new Livro();
+
+				livro.setLivroId(rs.getInt("ID_LIVRO"));
+				livro.setTitulo(rs.getString("TITULO"));
+				livro.setDescricao(rs.getString("DESCRICAO"));
+				livro.setValor(rs.getDouble("VALOR"));
+				livro.setIsbn(rs.getInt("ISBN"));
+				livro.setNumeroPaginas(rs.getInt("NUMERO_PAGINA"));
+				livro.setCurtidas(rs.getInt("CURTIDA"));
+				livro.setAno(rs.getInt("ANO"));
+				livro.setIdioma(rs.getString("IDIOMA"));
+				livro.setImagem(rs.getBinaryStream("IMAGEM"));
+				livro.setImagem2(Base64.encodeBase64String(rs.getBytes("IMAGEM")));
+				livro.setAutorId(rs.getInt("ID_AUTOR"));
+				livro.setCategoriaId(rs.getInt("ID_CATEGORIA"));
+				livro.setEditoraId(rs.getInt("ID_EDITORA"));
+				livro.setGeneroId(rs.getInt("ID_GENERO"));
+
+				listLivro.add(livro);
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+
+		return listLivro;
+	}
+	
+	public List<Livro> getByCategoria(BuscarLivro buscarLivro) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		List<Livro> listLivro = new ArrayList<Livro>();
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String selectTableSQL = "SELECT * FROM LIVRO LEFT JOIN WHERE NOME = ? OR ";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
+
+			preparedStatement.setString(1, buscarLivro.getNome());
+			preparedStatement.setString(2, buscarLivro.getNomeAutor());
+			preparedStatement.setString(3, buscarLivro.getNomeEditora());
 
 			// execute select SQL stetement
 			ResultSet rs = preparedStatement.executeQuery();

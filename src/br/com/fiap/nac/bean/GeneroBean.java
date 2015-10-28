@@ -46,7 +46,7 @@ public class GeneroBean {
 	}
 
 	@PostConstruct
-	public void init() {
+	public void init() {		
 		generoDAO = new GeneroDAO();
 
 		limparCarregar();

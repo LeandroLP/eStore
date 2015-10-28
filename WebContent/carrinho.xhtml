@@ -1,180 +1,270 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
+	xmlns:f="http://java.sun.com/jsf/facelets">
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<c:view locale="#{localeBean.currentLocale}">
+	<h:head>
 
-<title>Carrinho de Compras</title>
-<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-</head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
-		style="z-index:5">
-	<div class="container" style="z-index: 5">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="index.jsf">eStore</a>
-		</div>
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href=""><span class="glyphicon glyphicon-book"></span>
-						Buscar Livros</a></li>
-			</ul>
-			<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
+		<title>Carrinho de Compras</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+
+	</h:head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+			style="z-index:5">
+		<div class="container" style="z-index: 5">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.jsf">eStore</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="buscar.jsf"><span class="glyphicon glyphicon-book"></span>
+							#{msgs.buscarLivros}</a></li>
+				</ul>
+
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado == null}">
+					<ul class="nav navbar-nav" style="z-index: 5">
+						<li><a href="carrinho.jsf"><span
+								class="glyphicon glyphicon-shopping-cart"></span>
+								#{msgs.carrinho}</a></li>
+					</ul>
+				</h:panelGroup>
+
 				<ul class="nav navbar-nav" style="z-index: 5">
-					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
+					<li class="divider-vertical" style="z-index: 5"></li>
+					<li class="dropdown" style="z-index: 5"><a
+						class="dropdown-toggle" href="#" data-toggle="dropdown"><span
+							class="glyphicon glyphicon-user"></span> #{msgs.entrar}<strong
+							class="caret"></strong></a>
+						<div class="dropdown-menu"
+							style="padding: 20px; padding-bottom: 0px; z-index: 5">
+							<br />
+							<h:form role="search">
+								<h:outputText value="#{msgs.usuario}" />
+								<h:inputText value="#{usuarioBean.usuario.login}"
+									style="margin-bottom: 15px;" type="text" plac="Usuário"
+									id="txtLogin" name="txtLogin" />
+								<h:outputText value="#{msgs.senha}" />
+								<h:inputSecret value="#{usuarioBean.usuario.senha}"
+									style="margin-bottom: 15px;" type="password"
+									placeholder="Senha" id="txtPassword" name="txtPassword" />
+								<h:commandLink action="#{usuarioBean.login}"
+									class="btn btn-primary" id="sign-in" value="#{msgs.entrar}" />
+								<h:commandLink action="#{usuarioBean.logout}"
+									class="btn btn-primary" id="sign-out" value="#{msgs.sair}" />
+							</h:form>
+							<br /> <a href="cadastrarse.jsf">#{msgs.cadastrarse}</a> <br />
+							<br />
+						</div></li>
 				</ul>
-			</h:panelGroup>
-			<ul class="nav navbar-nav" style="z-index: 5">
-				<li class="divider-vertical" style="z-index: 5"></li>
-				<li class="dropdown" style="z-index: 5"><a
-					class="dropdown-toggle" href="#" data-toggle="dropdown"><span
-						class="glyphicon glyphicon-user"></span> Login<strong
-						class="caret"></strong></a>
-					<div class="dropdown-menu"
-						style="padding: 20px; padding-bottom: 0px; z-index: 5">
-						<br />
-						<h:form role="search">
-							<h:outputText value="Login:" />
-							<h:inputText value="#{usuarioBean.usuario.login}"
-								style="margin-bottom: 15px;" type="text" plac="UsuÃ¡rio"
-								id="txtLogin" name="txtLogin" />
-							<h:outputText value="Senha:" />
-							<h:inputSecret value="#{usuarioBean.usuario.senha}"
-								style="margin-bottom: 15px;" type="password" placeholder="Senha"
-								id="txtPassword" name="txtPassword" />
-							<h:commandLink action="#{usuarioBean.login}"
-								class="btn btn-primary" id="sign-in" value="Entra" />
-							<h:commandLink action="#{usuarioBean.logout}"
-								class="btn btn-primary" id="sign-out" value="Sair" />
-						</h:form>
-						<br /> <a href="cadastrarse.jsf">Cadastrar-me</a> <br /> <br />
-					</div></li>
-			</ul>
 
-			<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
-				<ul class="nav navbar-nav" style="z-index: 5">
-					<li role="presentation" class="dropdown" style="z-index: 5"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#"
-						role="button" aria-expanded="false"> <span
-							class="glyphicon glyphicon-wrench"></span>Manutenção <span
-							class="caret" style="z-index: 5"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu" style="z-index: 5">
-							<li><a href="livro.jsf">Livros</a></li>
-							<li><a href="editora.jsf">Editora</a></li>
-							<li><a href="autor.jsf">Autor</a></li>
-							<li><a href="categoria.jsf">Categoria</a></li>
-							<li><a href="genero.jsf">Gênero</a></li>
-							<li><a href="usuario.jsf">Usuário</a></li>
-						</ul></li>
-					<li><a href="carrinho.jsf"><span
-							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
+				<h:panelGroup rendered="#{usuarioBean.usuarioLogado != null}">
+					<ul class="nav navbar-nav" style="z-index: 5">
+						<li role="presentation" class="dropdown" style="z-index: 5"><a
+							class="dropdown-toggle" data-toggle="dropdown" href="#"
+							role="button" aria-expanded="false"> <span
+								class="glyphicon glyphicon-wrench"></span>#{msgs.manutencao} <span
+								class="caret" style="z-index: 5"></span>
+						</a>
+							<ul class="dropdown-menu" role="menu" style="z-index: 5">
+								<li><a href="livro.jsf">#{msgs.livro}</a></li>
+								<li><a href="editora.jsf">#{msgs.editora}</a></li>
+								<li><a href="autor.jsf">#{msgs.autor}</a></li>
+								<li><a href="categoria.jsf">#{msgs.categoria}</a></li>
+								<li><a href="genero.jsf">#{msgs.genero}</a></li>
+								<li><a href="usuario.jsf">#{msgs.usuario}</a></li>
+							</ul></li>
+						<li><a href="carrinho.jsf"><span
+								class="glyphicon glyphicon-shopping-cart"></span>#{msgs.carrinho}</a></li>
+					</ul>
+				</h:panelGroup>
+				<ul class="nav navbar-nav pull-right"
+					style="z-index: 5; padding-right: 10px">
+					<h:form role="search">
+						<h:commandLink action="#{localeBean.portugueseLocale}">
+							<img alt="Brasil" src="img/Brasil.png" />
+						</h:commandLink>
+						<h:commandLink action="#{localeBean.englishLocale}">
+							<img alt="EUA" src="img/EUA.png" />
+						</h:commandLink>
+					</h:form>
 				</ul>
-			</h:panelGroup>
-
+			</div>
+			<!-- /.navbar-collapse -->
 		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container --> </nav>
+		<!-- /.container --> </nav>
 
-	<p>
-		<br />
-	</p>
-	<p>
-		<br />
-	</p>
-	<!-- Page Content -->
+		<p>
+			<br />
+		</p>
+		<p>
+			<br />
+		</p>
+		<!-- Page Content -->
 
 
-	<div class="container">
+		<div class="container">
 
-		<div>
-			<h1>Meu Carrinho de Compras</h1>
-		</div>
-		<br /> <br />
+			<div>
+				<h1>#{msgs.meuCarrinhoCompras}</h1>
+			</div>
+			<br /> <br />
 
-		<h:form>
-			<h:messages />
+			<h:form>
+				<h:messages />
 
 
-			<div role="tabpanel">
+				<div role="tabpanel">
 
-				<!-- Nav tabs -->
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#carinho"
-						aria-controls="home" role="tab" data-toggle="tab">Carinho</a></li>
-					<li role="presentation"><a href="#ListaDesejo"
-						aria-controls="profile" role="tab" data-toggle="tab">Lista de
-							Desejo</a></li>
-				</ul>
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#carinho"
+							aria-controls="home" role="tab" data-toggle="tab">#{msgs.carrinho}</a></li>
+						<li role="presentation"><a href="#ListaDesejo"
+							aria-controls="profile" role="tab" data-toggle="tab">#{msgs.listaDesejo}</a></li>
+					</ul>
 
-				<!-- Tab panes -->
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="carinho">
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="carinho">
 
-						<div class="table - responsive">
+							<div class="table - responsive">
+
+								<!-- Table -->
+								<table class="table table-hover">
+
+									<h:panelGroup
+										rendered="#{carrinhoBean.listCarrinho.size() != 0}">
+										<h:dataTable id="carrinhos" var="carrinho"
+											value="#{carrinhoBean.listCarrinho}"
+											styleClass="table table-hover">
+
+											<c:facet name="header">
+           								Itens
+       								</c:facet>
+
+											<h:column>
+												<c:facet name="header">#{msgs.imagem}</c:facet>
+												<h:graphicImage
+													value="data:image/jpg;base64,#{carrinho.livro.imagem2}"
+													height="50px" width="50px" />
+											</h:column>
+
+											<h:column>
+												<c:facet name="header">#{msgs.descricao}</c:facet>
+												<h:outputText value="#{carrinho.livro.descricao}" />
+											</h:column>
+
+											<h:column>
+
+												<c:facet name="header">#{msgs.quantidade}</c:facet>
+												<h:outputText value="#{carrinho.quantidade}" />
+											</h:column>
+
+											<h:column>
+												<c:facet name="header">#{msgs.valorUnitario}</c:facet>
+												<h:outputText value="#{carrinho.precoUnitario}" />
+											</h:column>
+
+											<h:column>
+												<c:facet name="header">#{msgs.valorTotal}</c:facet>
+												<h:outputText value="#{carrinho.total}" />
+											</h:column>
+										</h:dataTable>
+									</h:panelGroup>
+
+									<h:panelGroup
+										rendered="#{carrinhoBean.listCarrinho.size() == 0}">
+										<tr>
+											<td colspan="11">
+												<div class="alert alert-info" role="alert">
+													<b>Nenhum</b> livro cadastrado.
+												</div>
+											</td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{carrinhoBean.valorTotal != 0}">
+										<tr>
+											<td class="text-right" colspan="4">#{msgs.total}</td>
+											<td>R$#{carrinhoBean.valorTotal}</td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{carrinhoBean.valorTotal == 0}">
+										<tr>
+											<td class="text-right" colspan="4">#{msgs.total}</td>
+											<td>R$0.0</td>
+										</tr>
+									</h:panelGroup>
+								</table>
+							</div>
+						</div>
+
+
+						<div role="tabpanel" class="tab-pane" id="ListaDesejo">
 
 							<!-- Table -->
 							<table class="table table-hover">
 
 								<h:panelGroup
-									rendered="#{carrinhoBean.listCarrinho.size() != 0}">
-									<h:dataTable id="carrinhos" var="carrinho"
-										value="#{carrinhoBean.listCarrinho}"
+									rendered="#{carrinhoBean.listListaDesejo.size() != 0}">
+									<h:dataTable id="listaDesejos" var="listaDesejo"
+										value="#{carrinhoBean.listListaDesejo}"
 										styleClass="table table-hover">
 
-										<f:facet name="header">
+										<c:facet name="header">
            								Itens
-       								</f:facet>
+       								</c:facet>
 
 										<h:column>
-											<f:facet name="header">Imagem</f:facet>
+											<c:facet name="header">#{msgs.imagem}</c:facet>
 											<h:graphicImage
-												value="data:image/jpg;base64,#{carrinho.livro.imagem2}"
+												value="data:image/jpg;base64,#{listaDesejo.livro.imagem2}"
 												height="50px" width="50px" />
 										</h:column>
 
 										<h:column>
-											<f:facet name="header">Descrição</f:facet>
-											<h:outputText value="#{carrinho.livro.descricao}" />
+											<c:facet name="header">#{msgs.descricao}</c:facet>
+											<h:outputText value="#{listaDesejo.livro.descricao}" />
 										</h:column>
 
 										<h:column>
 
-											<f:facet name="header">Quantidade</f:facet>
-											<h:outputText value="#{carrinho.quantidade}" />
+											<c:facet name="header">#{msgs.quantidade}</c:facet>
+											<h:outputText value="#{listaDesejo.quantidade}" />
 										</h:column>
 
 										<h:column>
-											<f:facet name="header">Valor Unitário</f:facet>
-											<h:outputText value="#{carrinho.precoUnitario}" />
+											<c:facet name="header">#{msgs.valorUnitario}</c:facet>
+											<h:outputText value="#{listaDesejo.livro.valor}" />
 										</h:column>
 
 										<h:column>
-											<f:facet name="header">Valor Total</f:facet>
-											<h:outputText value="#{carrinho.total}" />
+											<c:facet name="header"></c:facet>
+											<span class="glyphicon glyphicon-shopping-cart"></span>
+											<h:commandLink
+												action="#{carrinhoBean.adicionarListaDesejoCarrinho(listaDesejo)}"
+												value="#{msgs.adicionarAoCarrinho}" class="btnbtn-primary" />
 										</h:column>
 									</h:dataTable>
 								</h:panelGroup>
 
 								<h:panelGroup
-									rendered="#{carrinhoBean.listCarrinho.size() == 0}">
+									rendered="#{carrinhoBean.listListaDesejo.size() == 0}">
 									<tr>
 										<td colspan="11">
 											<div class="alert alert-info" role="alert">
@@ -183,95 +273,21 @@
 										</td>
 									</tr>
 								</h:panelGroup>
-								<h:panelGroup rendered="#{carrinhoBean.valorTotal != 0}">
-									<tr>
-										<td class="text-right" colspan="4">Total</td>
-										<td>R$#{carrinhoBean.valorTotal}</td>
-									</tr>
-								</h:panelGroup>
-								<h:panelGroup rendered="#{carrinhoBean.valorTotal == 0}">
-									<tr>
-										<td class="text-right" colspan="4">Total</td>
-										<td>R$0.0</td>
-									</tr>
-								</h:panelGroup>
 							</table>
+
 						</div>
 					</div>
-
-
-					<div role="tabpanel" class="tab-pane" id="ListaDesejo">
-
-						<!-- Table -->
-						<table class="table table-hover">
-
-							<h:panelGroup
-								rendered="#{carrinhoBean.listListaDesejo.size() != 0}">
-								<h:dataTable id="listaDesejos" var="listaDesejo"
-									value="#{carrinhoBean.listListaDesejo}"
-									styleClass="table table-hover">
-
-									<f:facet name="header">
-           								Itens
-       								</f:facet>
-
-									<h:column>
-										<f:facet name="header">Imagem</f:facet>
-										<h:graphicImage
-											value="data:image/jpg;base64,#{listaDesejo.livro.imagem2}"
-											height="50px" width="50px" />
-									</h:column>
-
-									<h:column>
-										<f:facet name="header">Descrição</f:facet>
-										<h:outputText value="#{listaDesejo.livro.descricao}" />
-									</h:column>
-
-									<h:column>
-
-										<f:facet name="header">Quantidade</f:facet>
-										<h:outputText value="#{listaDesejo.quantidade}" />
-									</h:column>
-
-									<h:column>
-										<f:facet name="header">Valor Unitário</f:facet>
-										<h:outputText value="#{listaDesejo.livro.valor}" />
-									</h:column>
-
-									<h:column>
-										<f:facet name="header"></f:facet>
-										<span class="glyphicon glyphicon-shopping-cart"></span>
-										<h:commandLink
-											action="#{carrinhoBean.adicionarListaDesejoCarrinho(listaDesejo)}"
-											value="Adicionar ao Carinho" class="btnbtn-primary" />
-									</h:column>
-								</h:dataTable>
-							</h:panelGroup>
-
-							<h:panelGroup
-								rendered="#{carrinhoBean.listListaDesejo.size() == 0}">
-								<tr>
-									<td colspan="11">
-										<div class="alert alert-info" role="alert">
-											<b>Nenhum</b> livro cadastrado.
-										</div>
-									</td>
-								</tr>
-							</h:panelGroup>
-						</table>
-
-					</div>
 				</div>
-			</div>
-			<div class="text-right">
-				<p>
-					<a href="index.jsf" type="button" class="btn btn-primary">
-						<span class="glyphicon glyphicon-plus"></span> Continuar Comprando
-					</a>
+				<div class="text-right">
+					<p>
+						<a href="index.jsf" type="button" class="btn btn-primary"> <span
+							class="glyphicon glyphicon-plus"></span> #{msgs.continuarComprando}
+						</a>
 
-					<h:commandButton actionListener="#{carrinhoBean.finalizarCompra}" value="Finalizar Compra" class="btn btn-success" />
+						<h:commandButton actionListener="#{carrinhoBean.finalizarCompra}"
+							value="#{msgs.finalizarCompra}" class="btn btn-success" />
 
-					<!-- 
+						<!-- 
 				<c:if test="${isLogged == 0}">
 					<div class="alert alert-warning" role="alert">
 						Favor logar para executar esta aï¿½ï¿½o.
@@ -282,36 +298,37 @@
 					</div>
 				</c:if>
  				-->
-				</p>
-			</div>
+					</p>
+				</div>
 
-		</h:form>
+			</h:form>
 
-	</div>
-
-
-
-
-	<div class="container">
-
-		<hr />
-
-		<!-- Footer -->
-		<footer>
-		<div class="row">
-			<div class="col-lg-12">
-				<p>Copyright &copy; Your Website 2014</p>
-			</div>
 		</div>
-		</footer>
-	</div>
-	<!-- /.container -->
 
-	<!-- jQuery -->
-	<script src="js/jquery.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
 
-</body>
+
+		<div class="container">
+
+			<hr />
+
+			<!-- Footer -->
+			<footer>
+			<div class="row">
+				<div class="col-lg-12">
+					<p>Copyright &copy; Your Website 2014</p>
+				</div>
+			</div>
+			</footer>
+		</div>
+		<!-- /.container -->
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+
+	</body>
+</c:view>
 </html>

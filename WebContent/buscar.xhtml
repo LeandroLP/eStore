@@ -32,7 +32,7 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="buscar.jsf"><span class="glyphicon glyphicon-book"></span>
+					<li><a href=""><span class="glyphicon glyphicon-book"></span>
 							#{msgs.buscarLivros}</a></li>
 				</ul>
 
@@ -120,15 +120,28 @@
 			<div class="container">
 				<div role="tabpanel">
 					<div class="table - responsive">
-						<div class="panel-heading">#{msgs.cadastroGeneros}</div>
+						<div class="panel-heading">Busca de Livros</div>
 
 						<h:messages styleClass="alert alert-success" />
 						<div class="row">
-							<div class="col-md-6">
-								<h:outputText value="#{msgs.descricao}:" />
-								<h:inputText value="#{generoBean.genero.descricao}"
-									styleClass="form-control" required="true"
-									requiredMessage="#{msgs.favorInformarDescricao}">
+							<div class="col-md-3">
+								<h:outputText value="Nome do Livro:" />
+								<h:inputText value="#{buscarLivroBean.buscarLivro.nome}"
+									styleClass="form-control">
+									<c:validateLength maximum="45" />
+								</h:inputText>
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="Nome do Autor:" />
+								<h:inputText value="#{buscarLivroBean.buscarLivro.nomeAutor}"
+									styleClass="form-control">
+									<c:validateLength maximum="45" />
+								</h:inputText>
+							</div>
+							<div class="col-md-3">
+								<h:outputText value="Nome da Editora:" />
+								<h:inputText value="#{buscarLivroBean.buscarLivro.nomeEditora}"
+									styleClass="form-control">
 									<c:validateLength maximum="45" />
 								</h:inputText>
 							</div>
@@ -137,8 +150,8 @@
 						<hr></hr>
 						<div class="row">
 							<div class="col-md-1">
-								<h:commandButton value="#{msgs.salvar}"
-									action="#{generoBean.salvar}" styleClass="btn btn-primary" />
+								<h:commandButton value="#{msgs.buscar}"
+									action="#{buscarLivroBean.buscar}" styleClass="btn btn-primary" />
 							</div>
 							<div class="col-md-1">
 
@@ -151,42 +164,26 @@
 						<br />
 
 						<hr></hr>
-						<h:dataTable id="generos" var="genero"
-							value="#{generoBean.listGenero}" styleClass="table table-hover">
-
-							<c:facet name="header">
-           			#{msgs.genero}s
-       			</c:facet>
-
-							<h:column>
-								<c:facet name="header">#{msgs.genero} ID</c:facet>
-								<h:outputText value="#{genero.id}" />
-							</h:column>
-
-							<h:column>
-
-								<c:facet name="header">#{msgs.descricao}</c:facet>
-								<h:outputText value="#{genero.descricao}" />
-							</h:column>
-
-
-
-							<h:column>
-								<c:facet name="header">#{msgs.alterar}</c:facet>
-								<h:commandLink value="#{msgs.alterar}"
-									action="#{generoBean.alterar(genero)}">
-									<c:ajax render="@form" />
-								</h:commandLink>
-							</h:column>
-
-							<h:column>
-								<c:facet name="header">#{msgs.excluir}</c:facet>
-								<h:commandLink value="#{msgs.excluir}"
-									action="#{generoBean.excluir(genero)}">
-									<c:ajax render="@form" />
-								</h:commandLink>
-							</h:column>
-						</h:dataTable>
+						<h:panelGroup rendered="#{buscarLivroBean.listLivro.size() != 0}">
+							<f:repeat var="livro" value="#{livroBean.listLivro}"
+								varStatus="status">
+								<div class="col-sm-4 col-lg-4 col-md-4">
+									<div class="thumbnail">
+										<h:graphicImage value="data:image/jpg;base64,#{livro.imagem2}" />
+										<div class="caption">
+											<h6>#{livro.titulo}</h6>
+											<p>#{livro.descricao}</p>
+										</div>
+									</div>
+								</div>
+							</f:repeat>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{buscarLivroBean.listLivro.size() == 0}">
+							<div class="jumbotron">
+								<h4>#{msgs.livrosNaoDisponives}</h4>
+								<p>#{msgs.DesculpeNos}</p>
+							</div>
+						</h:panelGroup>
 					</div>
 				</div>
 			</div>
