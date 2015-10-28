@@ -145,6 +145,7 @@ public class CarrinhoBean {
 
 	private void limparCarregar() {
 		carrinho = new Carrinho();
+		carrinho.setLivro(new Livro());
 		carrinho.setUsuario(new Usuario());
 		
 		listaDesejo = new ListaDesejo();
@@ -214,6 +215,26 @@ public class CarrinhoBean {
 
 		limparCarregar();
 
+		return null;
+	}
+	
+	public String excluir(Carrinho carrinho) {
+		FacesMessage message = null;
+		try {
+			if (carrinhoDAO.delete(carrinho)) {
+				message = new FacesMessage("Item excluido com sucesso!");
+			}
+		} catch (ClassNotFoundException e) {
+			message = new FacesMessage(e.getMessage());
+		} catch (SQLException e) {
+			message = new FacesMessage(e.getMessage());
+		}
+		
+		if(message != null){
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+
+		limparCarregar();
 		return null;
 	}
 	

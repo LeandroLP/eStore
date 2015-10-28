@@ -185,6 +185,17 @@
 												<c:facet name="header">#{msgs.valorTotal}</c:facet>
 												<h:outputText value="#{carrinho.total}" />
 											</h:column>
+											
+											<h:column>
+												<c:facet name="header">#{msgs.excluir}</c:facet>
+												<h:commandLink value="#{msgs.excluir}"
+													action="#{carrinhoBean.excluir(carrinho)}">
+													<c:ajax render="@form" />
+												</h:commandLink>
+											</h:column>
+											
+											
+											
 										</h:dataTable>
 									</h:panelGroup>
 

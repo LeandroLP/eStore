@@ -146,7 +146,7 @@
 						<div class="list-group">
 							<h:panelGroup
 								rendered="#{categoriaBean.listCategoria.size() != 0}">
-								<h:commandLink value="Todos" action="#{livroBean.carregarTodos}"
+								<h:commandLink value="todos" action="#{livroBean.carregarTodos}"
 									class="list-group-item" />
 								<f:repeat var="categoria" value="#{categoriaBean.listCategoria}"
 									varStatus="status">
@@ -234,7 +234,7 @@
 							<h:panelGroup rendered="#{livroBean.listLivro.size() == 0}">
 								<div class="jumbotron">								
 									<h1>#{msgs.livrosNaoDisponives}</h1>
-									<p> #{msgs.DesculpeNos}</p>
+									<p> #{msgs.desculpeNos}</p>
 								</div>
 							</h:panelGroup>
 						</div>
