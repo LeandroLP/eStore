@@ -135,7 +135,7 @@
 						<div class="list-group">
 							<h:panelGroup
 								rendered="#{categoriaBean.listCategoria.size() != 0}">
-								<h:commandLink value="Todos" action="#{livroBean.carregarTodos}"
+								<h:commandLink value="#{msgs.todos}" action="#{livroBean.carregarTodos}"
 									class="list-group-item" />
 								<f:repeat var="categoria" value="#{categoriaBean.listCategoria}"
 									varStatus="status">
@@ -152,17 +152,15 @@
 					</div>
 
 					<div class="col-md-9">
-
-						<div class="container">
 							<div role="tabpanel">
 								<div class="table - responsive">
-									<div class="panel-heading">Busca de Livros</div>
+									<p class="lead">#{msgs.buscarLivro}</p>
 
 									<h:messages styleClass="alert alert-success" />
 									<div class="row">
 										<div class="col-md-7">
 											<h:outputText
-												value="Digite o nome do Livro ou nome do Autor ou nome da Editora:" />
+												value="#{msgs.pesquisaLivro}" />
 											<h:inputText value="#{buscarLivroBean.busca}"
 												styleClass="form-control">
 												<c:validateLength maximum="45" />
@@ -187,46 +185,46 @@
 									<br />
 
 									<hr></hr>
-									<h:panelGroup
-										rendered="#{buscarLivroBean.listLivro.size() != 0}">
-										<f:repeat var="livro" value="#{livroBean.listLivro}"
-											varStatus="status">
-											<div class="col-sm-4 col-lg-4 col-md-4">
-												<div class="thumbnail">
-													<h:graphicImage
-														value="data:image/jpg;base64,#{livro.imagem2}" />
-													<div class="caption">
-														<h6>
-															<h:commandLink value="#{livro.titulo}"
-																action="#{carrinhoBean.selecionarLivro(livro)}" />
-														</h6>
-														<h4 class="pull-right">R$#{livro.valor}</h4>
+									<div class="row">
+										<h:panelGroup rendered="#{buscarLivroBean.listLivro.size() != 0}">
+											<f:repeat var="livro" value="#{buscarLivroBean.listLivro}"
+												varStatus="status">
+												<div class="col-sm-4 col-lg-4 col-md-4">
+													<div class="thumbnail">
+														<h:graphicImage
+															value="data:image/jpg;base64,#{livro.imagem2}" />
+														<div class="caption">
+															<h6>
+																<h:commandLink value="#{livro.titulo}"
+																	action="#{carrinhoBean.selecionarLivro(livro)}" />
+															</h6>
+															<h4 class="pull-right">R$#{livro.valor}</h4>
 
-														<p>#{livro.descricao}</p>
-													</div>
-													<div class="ratings">
-														<p>
-															<span class="glyphicon glyphicon-star"></span> <span
-																class="glyphicon glyphicon-star"></span> <span
-																class="glyphicon glyphicon-star"></span> <span
-																class="glyphicon glyphicon-star"></span> <span
-																class="glyphicon glyphicon-star"></span>
-														</p>
+															<p>#{livro.descricao}</p>
+														</div>
+														<div class="ratings">
+															<p>
+																<span class="glyphicon glyphicon-star"></span> <span
+																	class="glyphicon glyphicon-star"></span> <span
+																	class="glyphicon glyphicon-star"></span> <span
+																	class="glyphicon glyphicon-star"></span> <span
+																	class="glyphicon glyphicon-star"></span>
+															</p>
+														</div>
 													</div>
 												</div>
+											</f:repeat>
+										</h:panelGroup>
+										<h:panelGroup
+											rendered="#{buscarLivroBean.listLivro.size() == 0}">
+											<div class="jumbotron">
+												<h4>#{msgs.livrosNaoDisponives}</h4>
+												<p>#{msgs.desculpeNos}</p>
 											</div>
-										</f:repeat>
-									</h:panelGroup>
-									<h:panelGroup
-										rendered="#{buscarLivroBean.listLivro.size() == 0}">
-										<div class="jumbotron">
-											<h4>#{msgs.livrosNaoDisponives}</h4>
-											<p>#{msgs.desculpeNos}</p>
-										</div>
-									</h:panelGroup>
+										</h:panelGroup>
+									</div>
 								</div>
 							</div>
-						</div>
 					</div>
 				</div>
 			</h:form>

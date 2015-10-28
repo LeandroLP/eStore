@@ -81,12 +81,13 @@ public class UsuarioBean {
 					message = new FacesMessage("Usuario Alterado com sucesso!");
 				}
 			} else {
+
 				if (usuario.getTipoAcessoId() == null) {
-					message = new FacesMessage("Favor informar o tipo de acesso!");
-				} else {
-					if (usuarioDAO.save(usuario) != null) {
-						message = new FacesMessage("Usuario cadastrado com sucesso!");
-					}
+					usuario.setTipoAcessoId(2);
+				}
+
+				if (usuarioDAO.save(usuario) != null) {
+					message = new FacesMessage("Usuario cadastrado com sucesso!");
 				}
 			}
 		} catch (ClassNotFoundException e) {
