@@ -1,6 +1,7 @@
 package br.com.fiap.nac.bean;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -80,67 +81,67 @@ public class CarrinhoBean {
 	}
 
 	public String adicionar() {
-		FacesMessage message = null;
-		try {
-			carrinho.setData(new Date());
-			
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			if(externalContext.getSessionMap() != null && externalContext.getSessionMap().get("usuario") != null){
-				Usuario usuario = (Usuario) externalContext.getSessionMap().get("usuario");
-				carrinho.setUsuario(new Usuario());
-				carrinho.getUsuario().setUsuarioId(usuario.getUsuarioId());
-			}
-
-			if (carrinhoDAO.save(carrinho) != null) {
-				message = new FacesMessage("Item adicionado com sucesso!");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		if(externalContext.getSessionMap() != null && externalContext.getSessionMap().get("usuario") != null){
+			Usuario usuario = (Usuario) externalContext.getSessionMap().get("usuario");
+			carrinho.setUsuario(new Usuario());
+			carrinho.getUsuario().setUsuarioId(usuario.getUsuarioId());
 		}
-
-		if (message != null) {
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		}
-
-		limparCarregar();
+		carrinho.setData(new Date());
+		carrinho.setTotal(carrinho.getLivro().getValor() * carrinho.getQuantidade());
+		
+		listCarrinho.add(carrinho);
+		
+		carrinho = new Carrinho();
+		
+		calcularValorTotal();
 
 		return "index";
 	}
 
 	public String adicionarListaDesejo() {
-		FacesMessage message = null;
-		try {
-			listaDesejo.setDataHora(new Date());
-			listaDesejo.setQuantidade(carrinho.getQuantidade());
-			listaDesejo.setTotal(carrinho.getQuantidade() * carrinho.getLivro().getValor());
-			listaDesejo.getLivro().setLivroId(carrinho.getLivro().getLivroId());
-			
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			Usuario usuarioSession = (Usuario) externalContext.getSessionMap().get("usuario");
-			if(usuarioSession != null){				
-				listaDesejo.getUsuario().setUsuarioId(usuarioSession.getUsuarioId());
-			}
-			
-			if (listaDesejoDAO.save(listaDesejo) != null) {
-				message = new FacesMessage("Lista desejo cadastrada com sucesso!");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
+		listaDesejo.setDataHora(new Date());
+		listaDesejo.setQuantidade(carrinho.getQuantidade());
+		listaDesejo.setTotal(carrinho.getQuantidade() * carrinho.getLivro().getValor());
+		listaDesejo.setLivro(carrinho.getLivro());
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Usuario usuarioSession = (Usuario) externalContext.getSessionMap().get("usuario");
+		if(usuarioSession != null){				
+			listaDesejo.getUsuario().setUsuarioId(usuarioSession.getUsuarioId());
 		}
-
-		FacesContext.getCurrentInstance().addMessage(null, message);
-
-		limparCarregar();
+		
+		listListaDesejo.add(listaDesejo);
+		
+		carrinho = new Carrinho();
+		listaDesejo = new ListaDesejo();
 
 		return "index";
+	}
+	
+	public String adicionarListaDesejoCarrinho(ListaDesejo listaDesejo){
+		Carrinho carrinho = new Carrinho();
+		carrinho.setData(new Date());
+		carrinho.setQuantidade(listaDesejo.getQuantidade());
+		carrinho.setLivro(listaDesejo.getLivro());
+		carrinho.setTotal(listaDesejo.getLivro().getValor() * listaDesejo.getQuantidade());
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();			
+		Usuario usuarioSession = (Usuario) externalContext.getSessionMap().get("usuario");
+		if(usuarioSession != null){				
+			carrinho.setUsuario(usuarioSession);
+		}
+		
+		listListaDesejo.remove(listaDesejo);
+		
+		listCarrinho.add(carrinho);
+		
+		listaDesejo = new ListaDesejo();
+		carrinho = new Carrinho();
+		
+		calcularValorTotal();
+
+		return null;
 	}
 
 	private void limparCarregar() {
@@ -151,22 +152,11 @@ public class CarrinhoBean {
 		listaDesejo = new ListaDesejo();
 		listaDesejo.setLivro(new Livro());
 		listaDesejo.setUsuario(new Usuario());
-
-		FacesMessage message = null;
-		try {
-			listCarrinho = carrinhoDAO.getAll();
-			listListaDesejo = listaDesejoDAO.getAll();
-
-			calcularValorTotal();
-		} catch (ClassNotFoundException e) {
-			message = new FacesMessage(e.getMessage());
-		} catch (SQLException e) {
-			message = new FacesMessage(e.getMessage());
-		}
-
-		if (message != null) {
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		}
+		
+		listCarrinho = new ArrayList<>();
+		listListaDesejo = new ArrayList<>();
+		
+		calcularValorTotal();
 	}
 
 	public String selecionarLivro(Livro livro) {
@@ -184,81 +174,66 @@ public class CarrinhoBean {
 		setValorTotal(valorTotal);
 	}
 	
-	public String adicionarListaDesejoCarrinho(ListaDesejo listaDesejo){
-		FacesMessage message = null;
-		try {
-			Carrinho carrinho = new Carrinho();
-			carrinho.setData(new Date());
-			carrinho.setQuantidade(listaDesejo.getQuantidade());
-			carrinho.setLivro(listaDesejo.getLivro());
-			
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();			
-			Usuario usuarioSession = (Usuario) externalContext.getSessionMap().get("usuario");
-			if(usuarioSession != null){				
-				carrinho.setUsuario(usuarioSession);
-			}
-
-			if (carrinhoDAO.save(carrinho) != null) {
-				message = new FacesMessage("Item adicionado ao carrinho com sucesso!");
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
-		}
-
-		if (message != null) {
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		}
-
-		limparCarregar();
-
-		return null;
-	}
-	
 	public String excluir(Carrinho carrinho) {
-		FacesMessage message = null;
-		try {
-			if (carrinhoDAO.delete(carrinho)) {
-				message = new FacesMessage("Item excluido com sucesso!");
-			}
-		} catch (ClassNotFoundException e) {
-			message = new FacesMessage(e.getMessage());
-		} catch (SQLException e) {
-			message = new FacesMessage(e.getMessage());
-		}
+		listCarrinho.remove(carrinho);
 		
-		if(message != null){
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		}
-
-		limparCarregar();
+		calcularValorTotal();
+		
 		return null;
 	}
 	
 	public String finalizarCompra(){
 		FacesMessage message = null;
-		try {
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();			
+		Usuario usuarioSession = (Usuario) externalContext.getSessionMap().get("usuario");
+		if(usuarioSession != null){
 			for(int i = 0; i < listCarrinho.size(); i++){
-				carrinhoDAO.save(listCarrinho.get(i));
+				listCarrinho.get(i).setUsuario(usuarioSession);
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
-		}
+			
+			for(int i = 0; i < listListaDesejo.size(); i++){
+				listListaDesejo.get(i).setUsuario(usuarioSession);
+			}
+			
+			try {
+				salvarCarrinho();
+				salvarListaDesejo();
+				
+				message = new FacesMessage("Sua compra foi finalizada com sucesso!");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				message = new FacesMessage(e.getMessage());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				message = new FacesMessage(e.getMessage());
+			}
 
-		if (message != null) {
+			if(message != null){
+				FacesContext.getCurrentInstance().addMessage(null, message);
+			}
+			
+			limparCarregar();
+			
+			return "index";
+		} else {
+			message = new FacesMessage("Favor logar para finalizar sua compra!");
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			
+			return null;
 		}
-
-		limparCarregar();
-
-		return null;
+	}
+	
+	public void salvarCarrinho() throws ClassNotFoundException, SQLException {		
+		for(int i = 0; i < listCarrinho.size(); i++){
+			carrinhoDAO.save(listCarrinho.get(i));
+		}
+	}
+	
+	public void salvarListaDesejo() throws ClassNotFoundException, SQLException {
+		for(int i = 0; i < listListaDesejo.size(); i++){
+			listaDesejoDAO.save(listListaDesejo.get(i));
+		}
 	}
 
 }
