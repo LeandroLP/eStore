@@ -52,3 +52,4 @@ Temporary Items
 .project
 build/classes/br/com/fiap/nac/factory/ConnectionFactory.class
 sh.exe.stackdump
+build/classes/br/com/fiap/nac/factory/ConnectionFactory.class

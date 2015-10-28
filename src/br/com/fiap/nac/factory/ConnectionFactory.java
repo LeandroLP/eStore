@@ -15,7 +15,7 @@ public class ConnectionFactory {
 		String driverName = "com.mysql.jdbc.Driver";
 		String url = "jdbc:mysql://localhost:3306/estore";
 		String username = "root";	
-		String password = "fiap";
+		String password = "root";
 
 		// Load the JDBC driver
 		Class.forName(driverName);

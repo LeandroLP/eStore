@@ -116,15 +116,13 @@ public class CarrinhoBean {
 		try {
 			listaDesejo.setDataHora(new Date());
 			listaDesejo.setQuantidade(carrinho.getQuantidade());
-			listaDesejo.setTotal(carrinho.getTotal());
-			listaDesejo.setLivro(new Livro());
+			listaDesejo.setTotal(carrinho.getQuantidade() * carrinho.getLivro().getValor());
 			listaDesejo.getLivro().setLivroId(carrinho.getLivro().getLivroId());
 			
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			if(externalContext.getSessionMap() != null && externalContext.getSessionMap().get("usuario") != null){
-				Usuario usuario = (Usuario) externalContext.getSessionMap().get("usuario");
-				listaDesejo.setUsuario(new Usuario());
-				listaDesejo.getUsuario().setUsuarioId(usuario.getUsuarioId());
+			Usuario usuarioSession = (Usuario) externalContext.getSessionMap().get("usuario");
+			if(usuarioSession != null){				
+				listaDesejo.getUsuario().setUsuarioId(usuarioSession.getUsuarioId());
 			}
 			
 			if (listaDesejoDAO.save(listaDesejo) != null) {
@@ -147,11 +145,16 @@ public class CarrinhoBean {
 
 	private void limparCarregar() {
 		carrinho = new Carrinho();
+		carrinho.setUsuario(new Usuario());
+		
 		listaDesejo = new ListaDesejo();
+		listaDesejo.setLivro(new Livro());
+		listaDesejo.setUsuario(new Usuario());
 
 		FacesMessage message = null;
 		try {
 			listCarrinho = carrinhoDAO.getAll();
+			listListaDesejo = listaDesejoDAO.getAll();
 
 			calcularValorTotal();
 		} catch (ClassNotFoundException e) {
@@ -178,6 +181,63 @@ public class CarrinhoBean {
 		}
 
 		setValorTotal(valorTotal);
+	}
+	
+	public String adicionarListaDesejoCarrinho(ListaDesejo listaDesejo){
+		FacesMessage message = null;
+		try {
+			Carrinho carrinho = new Carrinho();
+			carrinho.setData(new Date());
+			carrinho.setQuantidade(listaDesejo.getQuantidade());
+			carrinho.setLivro(listaDesejo.getLivro());
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();			
+			Usuario usuarioSession = (Usuario) externalContext.getSessionMap().get("usuario");
+			if(usuarioSession != null){				
+				carrinho.setUsuario(usuarioSession);
+			}
+
+			if (carrinhoDAO.save(carrinho) != null) {
+				message = new FacesMessage("Item adicionado ao carrinho com sucesso!");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(e.getMessage());
+		}
+
+		if (message != null) {
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+
+		limparCarregar();
+
+		return null;
+	}
+	
+	public String finalizarCompra(){
+		FacesMessage message = null;
+		try {
+			for(int i = 0; i < listCarrinho.size(); i++){
+				carrinhoDAO.save(listCarrinho.get(i));
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			message = new FacesMessage(e.getMessage());
+		}
+
+		if (message != null) {
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+
+		limparCarregar();
+
+		return null;
 	}
 
 }

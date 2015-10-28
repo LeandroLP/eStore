@@ -72,7 +72,7 @@
 					<li role="presentation" class="dropdown" style="z-index: 5"><a
 						class="dropdown-toggle" data-toggle="dropdown" href="#"
 						role="button" aria-expanded="false"> <span
-							class="glyphicon glyphicon-wrench"></span>ManutenÃ§Ã£o <span
+							class="glyphicon glyphicon-wrench"></span>Manutenção <span
 							class="caret" style="z-index: 5"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu" style="z-index: 5">
@@ -80,8 +80,8 @@
 							<li><a href="editora.jsf">Editora</a></li>
 							<li><a href="autor.jsf">Autor</a></li>
 							<li><a href="categoria.jsf">Categoria</a></li>
-							<li><a href="genero.jsf">GÃªnero</a></li>
-							<li><a href="usuario.jsf">UsuÃ¡rio</a></li>
+							<li><a href="genero.jsf">Gênero</a></li>
+							<li><a href="usuario.jsf">Usuário</a></li>
 						</ul></li>
 					<li><a href="carrinho.jsf"><span
 							class="glyphicon glyphicon-shopping-cart"></span> Carinho</a></li>
@@ -109,114 +109,72 @@
 		</div>
 		<br /> <br />
 
+		<h:form>
+			<h:messages />
 
-		<div role="tabpanel">
 
-			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#carinho"
-					aria-controls="home" role="tab" data-toggle="tab">Carinho</a></li>
-				<li role="presentation"><a href="#ListaDesejo"
-					aria-controls="profile" role="tab" data-toggle="tab">Lista de
-						Desejo</a></li>
-			</ul>
+			<div role="tabpanel">
 
-			<!-- Tab panes -->
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="carinho">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#carinho"
+						aria-controls="home" role="tab" data-toggle="tab">Carinho</a></li>
+					<li role="presentation"><a href="#ListaDesejo"
+						aria-controls="profile" role="tab" data-toggle="tab">Lista de
+							Desejo</a></li>
+				</ul>
 
-					<div class="table - responsive">
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="carinho">
 
-						<!-- Table -->
-						<table class="table table-hover">
+						<div class="table - responsive">
 
-							<h:panelGroup rendered="#{carrinhoBean.listCarrinho.size() != 0}">
-								<h:dataTable id="carrinhos" var="carrinho"
-									value="#{carrinhoBean.listCarrinho}"
-									styleClass="table table-hover">
+							<!-- Table -->
+							<table class="table table-hover">
 
-									<f:facet name="header">
+								<h:panelGroup
+									rendered="#{carrinhoBean.listCarrinho.size() != 0}">
+									<h:dataTable id="carrinhos" var="carrinho"
+										value="#{carrinhoBean.listCarrinho}"
+										styleClass="table table-hover">
+
+										<f:facet name="header">
            								Itens
        								</f:facet>
 
-									<h:column>
-										<f:facet name="header">Imagem</f:facet>
-										<h:graphicImage
-											value="data:image/jpg;base64,#{carrinho.livro.imagem2}"
-											height="50px" width="50px" />
-									</h:column>
+										<h:column>
+											<f:facet name="header">Imagem</f:facet>
+											<h:graphicImage
+												value="data:image/jpg;base64,#{carrinho.livro.imagem2}"
+												height="50px" width="50px" />
+										</h:column>
 
-									<h:column>
-										<f:facet name="header">DescriÃ§Ã£o</f:facet>
-										<h:outputText value="#{carrinho.livro.descricao}" />
-									</h:column>
+										<h:column>
+											<f:facet name="header">Descrição</f:facet>
+											<h:outputText value="#{carrinho.livro.descricao}" />
+										</h:column>
 
-									<h:column>
+										<h:column>
 
-										<f:facet name="header">Quantidade</f:facet>
-										<h:outputText value="#{carrinho.quantidade}" />
-									</h:column>
+											<f:facet name="header">Quantidade</f:facet>
+											<h:outputText value="#{carrinho.quantidade}" />
+										</h:column>
 
-									<h:column>
-										<f:facet name="header">Valor UnitÃ¡rio</f:facet>
-										<h:outputText value="#{carrinho.precoUnitario}" />
-									</h:column>
+										<h:column>
+											<f:facet name="header">Valor Unitário</f:facet>
+											<h:outputText value="#{carrinho.precoUnitario}" />
+										</h:column>
 
-									<h:column>
-										<f:facet name="header">Valor Total</f:facet>
-										<h:outputText value="#{carrinho.total}" />
-									</h:column>
-								</h:dataTable>
-							</h:panelGroup>
-
-							<h:panelGroup rendered="#{carrinhoBean.listCarrinho.size() == 0}">
-								<tr>
-									<td colspan="11">
-										<div class="alert alert-info" role="alert">
-											<b>Nenhum</b> livro cadastrado.
-										</div>
-									</td>
-								</tr>
-							</h:panelGroup>
-							<h:panelGroup rendered="#{carrinhoBean.valorTotal != 0}">
-								<tr>
-									<td class="text-right" colspan="4">Total</td>
-									<td>R$#{carrinhoBean.valorTotal}</td>
-								</tr>
-							</h:panelGroup>
-							<h:panelGroup rendered="#{carrinhoBean.valorTotal == 0}">
-								<tr>
-									<td class="text-right" colspan="4">Total</td>
-									<td>R$0.0</td>
-								</tr>
-							</h:panelGroup>
-
-							<!-- 
-							<thead>
-								<tr>
-									<th>Item</th>
-									<th>DescriÃ§Ã£o</th>
-									<th>Quantidade</th>
-									<th>Valor UnitÃ¡rio</th>
-									<th>Valor Total</th>
-								</tr>
-							</thead>
-							<tbody>
-
-								<h:panelGroup rendered="#{carrinhoBean.listCarrinho.size() != 0}">
-									<f:repeat var="carrinho" value="#{carrinhoBean.listCarrinho}"
-										varStatus="status">
-										<tr>
-											<td><h:graphicImage height="50px" width="50px"
-													value="data:image/jpg;base64,#{carrinho.livro.imagem2}" /></td>
-											<td>#{carrinho.livro.descricao}</td>
-											<td>#{carrinho.quantidade}</td>
-											<td>R$#{carrinho.precoUnitario}</td>
-											<td>R$#{carrinho.total}</td>
-										</tr>
-									</f:repeat>
+										<h:column>
+											<f:facet name="header">Valor Total</f:facet>
+											<h:outputText value="#{carrinho.total}" />
+										</h:column>
+									</h:dataTable>
 								</h:panelGroup>
-								<h:panelGroup rendered="#{carrinhoBean.listCarrinho.size() == 0}">
+
+								<h:panelGroup
+									rendered="#{carrinhoBean.listCarrinho.size() == 0}">
 									<tr>
 										<td colspan="11">
 											<div class="alert alert-info" role="alert">
@@ -237,40 +195,61 @@
 										<td>R$0.0</td>
 									</tr>
 								</h:panelGroup>
-							</tbody>
-							 -->
-						</table>
+							</table>
+						</div>
 					</div>
-				</div>
 
 
-				<div role="tabpanel" class="tab-pane" id="ListaDesejo">
+					<div role="tabpanel" class="tab-pane" id="ListaDesejo">
 
-					<!-- Table -->
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>DescriÃ§Ã£o</th>
-								<th>Valor</th>
-							</tr>
-						</thead>
-						<tbody>
+						<!-- Table -->
+						<table class="table table-hover">
 
-							<h:panelGroup rendered="#{carrinhoBean.listCarrinho.size() != 0}">
-								<ui:repeat var="carrinho" value="#{carrinhoBean.listCarrinho}"
-									varStatus="status">
-									<tr>
-										<td><h:graphicImage
-												value="data:image/jpg;base64,#{carrinho.livro.imagem2}" /></td>
-										<td>#{carrinho.livro.descricao}</td>
-										<td>R$#{carrinho.precoUnitario}</td>
-										<td><span class="glyphicon glyphicon-shopping-cart"></span>
-											<a class="btnbtn-primary">Adicionar ao Carinho</a></td>
-									</tr>
-								</ui:repeat>
+							<h:panelGroup
+								rendered="#{carrinhoBean.listListaDesejo.size() != 0}">
+								<h:dataTable id="listaDesejos" var="listaDesejo"
+									value="#{carrinhoBean.listListaDesejo}"
+									styleClass="table table-hover">
+
+									<f:facet name="header">
+           								Itens
+       								</f:facet>
+
+									<h:column>
+										<f:facet name="header">Imagem</f:facet>
+										<h:graphicImage
+											value="data:image/jpg;base64,#{listaDesejo.livro.imagem2}"
+											height="50px" width="50px" />
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Descrição</f:facet>
+										<h:outputText value="#{listaDesejo.livro.descricao}" />
+									</h:column>
+
+									<h:column>
+
+										<f:facet name="header">Quantidade</f:facet>
+										<h:outputText value="#{listaDesejo.quantidade}" />
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Valor Unitário</f:facet>
+										<h:outputText value="#{listaDesejo.livro.valor}" />
+									</h:column>
+
+									<h:column>
+										<f:facet name="header"></f:facet>
+										<span class="glyphicon glyphicon-shopping-cart"></span>
+										<h:commandLink
+											action="#{carrinhoBean.adicionarListaDesejoCarrinho(listaDesejo)}"
+											value="Adicionar ao Carinho" class="btnbtn-primary" />
+									</h:column>
+								</h:dataTable>
 							</h:panelGroup>
-							<h:panelGroup rendered="#{carrinhoBean.listCarrinho.size() == 0}">
+
+							<h:panelGroup
+								rendered="#{carrinhoBean.listListaDesejo.size() == 0}">
 								<tr>
 									<td colspan="11">
 										<div class="alert alert-info" role="alert">
@@ -279,58 +258,20 @@
 									</td>
 								</tr>
 							</h:panelGroup>
+						</table>
 
-							<!-- 
-							<c:choose>
-								<c:when test="${!empty wishBooks}">
-
-									<c:forEach items="${wishBooks}" var="wish">
-										<tr>
-											<td><img src="img/capa/${wish.imageDirectory}" alt=""
-												height="80" width="80"></td>
-											<td>${wish.description}</td>
-											<td>R$${wish.price}</td>
-											<td><span class="glyphicon glyphicon-shopping-cart"></span>
-												<a href="wishlist?op=adicionar&id=${wish.id}"
-												class="btnbtn-primary">Adicionar ao Carinho</a></td>
-										</tr>
-									</c:forEach>
-								</c:when>
-								<c:when test="${erro == 1}">
-									<tr>
-										<td colspan="11">
-											<div class="alert alert-info" role="alert">
-												<b>Nenhum</b> livro cadastrado.
-											</div>
-										</td>
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<tr>
-										<td colspan="11">
-											<div class="alert alert-info" role="alert">
-												<b>Nenhum</b> livro cadastrado.
-											</div>
-										</td>
-									</tr>
-								</c:otherwise>
-							</c:choose>
-							 -->
-						</tbody>
-					</table>
-
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="text-right">
-			<p>
-				<!-- <button type="button" class="btn btn-primary">
-					<span class="glyphicon glyphicon-plus"></span> Continuar Comprando
-				</button> -->
+			<div class="text-right">
+				<p>
+					<a href="index.jsf" type="button" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus"></span> Continuar Comprando
+					</a>
 
-				<a href="checkout" class="btn btn-success">Finalizar Compra</a>
+					<h:commandButton actionListener="#{carrinhoBean.finalizarCompra}" value="Finalizar Compra" class="btn btn-success" />
 
-				<!-- 
+					<!-- 
 				<c:if test="${isLogged == 0}">
 					<div class="alert alert-warning" role="alert">
 						Favor logar para executar esta aï¿½ï¿½o.
@@ -341,8 +282,10 @@
 					</div>
 				</c:if>
  				-->
-			</p>
-		</div>
+				</p>
+			</div>
+
+		</h:form>
 
 	</div>
 

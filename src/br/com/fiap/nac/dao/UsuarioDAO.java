@@ -98,6 +98,55 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
 		}
 		return false;
 	}
+	
+	public Usuario getByLogin(Usuario object) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+
+		String selectTableSQL = "SELECT * FROM usuario WHERE login = ? AND senha = ?;";
+
+		try {
+			dbConnection = ConnectionFactory.getConnection();
+			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
+
+			preparedStatement.setString(1, object.getLogin());
+			preparedStatement.setString(2, object.getSenha());
+
+			// execute select SQL stetement
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				Usuario usuario = new Usuario();
+
+				usuario.setUsuarioId(rs.getInt("ID_USUARIO"));
+				usuario.setNome(rs.getString("NOME"));
+				usuario.setCpf(rs.getString("CPF_CNPJ"));
+				usuario.setEmail(rs.getString("EMAIL"));
+				usuario.setSexo(rs.getString("SEXO"));
+				usuario.setTelefone(rs.getString("TELEFONE"));
+				usuario.setCep(rs.getString("CEP"));
+				usuario.setLogradouro(rs.getString("LOGRADOURO"));
+				usuario.setBairro(rs.getString("BAIRRO"));
+				usuario.setNumero(rs.getString("NUMERO"));
+				usuario.setLogin(rs.getString("LOGIN"));
+				usuario.setSenha(rs.getString("SENHA"));
+				usuario.setCidade(rs.getString("CIDADE"));
+				usuario.setEstado(rs.getString("ESTADO"));
+				usuario.setTipoAcessoId(rs.getInt("ID_TIPO_ACESSO"));
+
+				return usuario;
+			}
+		} finally {
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+		
+		return null;
+	}
 
 	@Override
 	public Usuario save(Usuario object) throws ClassNotFoundException, SQLException {

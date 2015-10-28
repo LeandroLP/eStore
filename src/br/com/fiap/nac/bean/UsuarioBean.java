@@ -153,11 +153,11 @@ public class UsuarioBean {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			if (usuarioDAO.logar(usuario)) {
-
 				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 				Map<String, Object> sessionMap = externalContext.getSessionMap();
-				sessionMap.put("usuario", usuario);
-				setUsuarioLogado(usuario);
+				Usuario usuarioSession = usuarioDAO.getByLogin(usuario);
+				sessionMap.put("usuario", usuarioSession);
+				setUsuarioLogado(usuarioSession);
 
 				return null;
 			} else {

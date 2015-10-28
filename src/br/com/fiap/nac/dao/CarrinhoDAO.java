@@ -81,7 +81,7 @@ public class CarrinhoDAO implements GenericDAO<Carrinho> {
 			preparedStatement.setDouble(3, object.getLivro().getValor());
 			preparedStatement.setDouble(4, object.getLivro().getValor() * object.getQuantidade());
 			preparedStatement.setInt(5, object.getLivro().getLivroId());
-			preparedStatement.setInt(6, 1);
+			preparedStatement.setInt(6, object.getUsuario().getUsuarioId());
 
 			if (preparedStatement.executeUpdate() == 1) {
 				// execute insert SQL stetement
