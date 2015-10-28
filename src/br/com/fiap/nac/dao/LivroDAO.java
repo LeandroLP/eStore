@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import br.com.fiap.nac.factory.ConnectionFactory;
-import br.com.fiap.nac.to.BuscarLivro;
 import br.com.fiap.nac.to.Categoria;
 import br.com.fiap.nac.to.Livro;
 
@@ -117,21 +116,21 @@ public class LivroDAO implements GenericDAO<Livro> {
 		return listLivro;
 	}
 	
-	public List<Livro> getByCategoria(BuscarLivro buscarLivro) throws ClassNotFoundException, SQLException {
+	public List<Livro> buscarLivroAutorEditora(String busca) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		List<Livro> listLivro = new ArrayList<Livro>();
 		Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String selectTableSQL = "SELECT * FROM LIVRO LEFT JOIN WHERE NOME = ? OR ";
+		String selectTableSQL = "SELECT l.* FROM LIVRO AS l LEFT JOIN AUTOR AS a ON l.ID_AUTOR = a.ID_AUTOR LEFT JOIN EDITORA AS e ON l.ID_EDITORA = e.ID_EDITORA WHERE l.TITULO like ? OR a.NOME like ? OR e.NOME like ?";
 
 		try {
 			dbConnection = ConnectionFactory.getConnection();
 			preparedStatement = dbConnection.prepareStatement(selectTableSQL);
 
-			preparedStatement.setString(1, buscarLivro.getNome());
-			preparedStatement.setString(2, buscarLivro.getNomeAutor());
-			preparedStatement.setString(3, buscarLivro.getNomeEditora());
+			preparedStatement.setString(1,"%" + busca + "%");
+			preparedStatement.setString(2, "%" + busca + "%");
+			preparedStatement.setString(3, "%" + busca + "%");
 
 			// execute select SQL stetement
 			ResultSet rs = preparedStatement.executeQuery();

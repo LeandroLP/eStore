@@ -1,6 +1,5 @@
 package br.com.fiap.nac.bean;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,23 +11,22 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.fiap.nac.dao.LivroDAO;
-import br.com.fiap.nac.to.BuscarLivro;
 import br.com.fiap.nac.to.Livro;
 
 @ManagedBean
 @SessionScoped
 public class BuscarLivroBean {
 
-	private BuscarLivro buscarLivro;
+	private String busca;
 	private LivroDAO livroDAO;
 	private List<Livro> listLivro;
 
-	public BuscarLivro getBuscarLivro() {
-		return buscarLivro;
+	public String getBusca() {
+		return busca;
 	}
 
-	public void setBuscarLivro(BuscarLivro buscarLivro) {
-		this.buscarLivro = buscarLivro;
+	public void setBusca(String busca) {
+		this.busca = busca;
 	}
 
 	public List<Livro> getListLivro() {
@@ -41,23 +39,20 @@ public class BuscarLivroBean {
 
 	@PostConstruct
 	public void init() {
-		buscarLivro = new BuscarLivro();
 		livroDAO = new LivroDAO();
 
 		limparCarregar();
 	}
 
 	private void limparCarregar() {
+		busca = null;
 		listLivro = new ArrayList<>();
 	}
-	
-	public void buscar(){
+
+	public String buscar(){
 		FacesMessage message = null;
 		try {			
-			listLivro = livroDAO.bus
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			message = new FacesMessage(e.getMessage());
+			listLivro = livroDAO.buscarLivroAutorEditora(busca);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			message = new FacesMessage(e.getMessage());
@@ -66,7 +61,17 @@ public class BuscarLivroBean {
 			message = new FacesMessage(e.getMessage());
 		}
 
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		if(message != null){
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		
+		return null;
+	}
+	
+	public String novo(){
+		limparCarregar();
+		
+		return null;
 	}
 
 }
